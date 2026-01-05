@@ -21,7 +21,12 @@ const Chatbot = () => {
     };
 
     useEffect(() => {
-        scrollToBottom();
+        if (isOpen) {
+            // Wait for animation to finish before scrolling
+            setTimeout(scrollToBottom, 300);
+        } else {
+            scrollToBottom();
+        }
     }, [messages, isOpen, isTyping]);
 
     const handleSendMessage = (e) => {
@@ -67,7 +72,7 @@ const Chatbot = () => {
         <>
             {/* Floating Bubble */}
             <motion.button
-                className="fixed bottom-24 right-8 z-50 p-4 bg-gold-500 text-black rounded-full shadow-lg shadow-gold-500/20 hover:scale-110 transition-all border-2 border-transparent hover:border-gold-300 group"
+                className="fixed bottom-24 right-8 z-50 p-3 bg-gold-500 text-black rounded-full shadow-lg shadow-gold-500/20 hover:scale-110 transition-all border-2 border-transparent hover:border-gold-300 group"
                 onClick={() => setIsOpen(!isOpen)}
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
@@ -82,7 +87,7 @@ const Chatbot = () => {
                             exit={{ rotate: 90, opacity: 0 }}
                             transition={{ duration: 0.2 }}
                         >
-                            <X size={28} />
+                            <X size={24} />
                         </motion.div>
                     ) : (
                         <motion.div
@@ -92,13 +97,13 @@ const Chatbot = () => {
                             exit={{ rotate: -90, opacity: 0 }}
                             transition={{ duration: 0.2 }}
                         >
-                            <MessageCircle size={28} className="fill-black/10" />
+                            <MessageCircle size={24} className="fill-black/10" />
                         </motion.div>
                     )}
                 </AnimatePresence>
 
                 {!isOpen && (
-                    <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-black animate-pulse"></span>
+                    <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-black animate-pulse"></span>
                 )}
             </motion.button>
 
@@ -110,7 +115,7 @@ const Chatbot = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="fixed bottom-40 right-4 md:right-8 w-[calc(100vw-2rem)] md:w-96 h-[550px] bg-black/80 backdrop-blur-2xl border border-zinc-800 rounded-3xl shadow-2xl z-50 flex flex-col overflow-hidden ring-1 ring-gold-500/10"
+                        className="fixed bottom-24 right-4 md:right-8 w-[calc(100vw-2rem)] md:w-80 h-[450px] bg-black/80 backdrop-blur-2xl border border-zinc-800 rounded-3xl shadow-2xl z-50 flex flex-col overflow-hidden ring-1 ring-gold-500/10"
                     >
                         {/* Header */}
                         <div className="p-4 border-b border-zinc-800 bg-zinc-900/80 flex items-center gap-3 shadow-sm">
@@ -152,8 +157,8 @@ const Chatbot = () => {
                                     <div className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'} max-w-[75%]`}>
                                         <div
                                             className={`px-4 py-2.5 text-sm leading-relaxed shadow-md ${msg.sender === 'user'
-                                                    ? 'bg-gold-500 text-black rounded-2xl rounded-tr-sm'
-                                                    : 'bg-zinc-800 text-zinc-200 border border-zinc-700 rounded-2xl rounded-tl-sm'
+                                                ? 'bg-gold-500 text-black rounded-2xl rounded-tr-sm'
+                                                : 'bg-zinc-800 text-zinc-200 border border-zinc-700 rounded-2xl rounded-tl-sm'
                                                 }`}
                                         >
                                             {msg.text}
