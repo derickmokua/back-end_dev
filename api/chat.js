@@ -83,12 +83,17 @@ export default async function handler(req, res) {
         const response = await result.response;
         const text = response.text();
 
+        // Ensure we never send back an empty response
+        if (!text) {
+            return res.status(200).json({ response: "I'm detecting some static on the line. Could you repeat that?" });
+        }
+
         res.status(200).json({ response: text });
     } catch (error) {
         console.error("Gemini API full error:", error);
-        return res.status(500).json({
-            error: error.message || 'Failed to generate response',
-            details: error.toString()
+        // Return 200 with error message so the UI displays it as a chat message
+        return res.status(200).json({
+            response: "Connection interrupted. My systems are currently rebooting. Please try again in a moment."
         });
     }
 }
