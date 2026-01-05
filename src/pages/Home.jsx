@@ -685,7 +685,7 @@ const Home = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.5 }}
                         onClick={scrollToTop}
-                        className="fixed bottom-8 right-8 bg-gold-500 text-black p-3 rounded-full shadow-lg hover:bg-gold-400 transition-colors z-40"
+                        className="fixed bottom-8 right-8 bg-black text-gold-500 border border-gold-500 p-3 rounded-full shadow-lg hover:bg-zinc-900 transition-colors z-40"
                         aria-label="Back to top"
                     >
                         <ArrowUp size={24} />
