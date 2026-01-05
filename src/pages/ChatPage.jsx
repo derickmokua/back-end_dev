@@ -7,7 +7,7 @@ const ChatPage = () => {
     const [messages, setMessages] = useState([
         {
             id: 1,
-            text: "Greetings. I am Saibae, Derick's AI assistant. I have dedicated this secure channel for our communication. How can I assist you today?",
+            text: "Greetings. I am Ruby, Derick's AI assistant. I have dedicated this secure channel for our communication. How can I assist you today?",
             sender: 'bot',
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         }
@@ -99,7 +99,7 @@ const ChatPage = () => {
                             <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-black rounded-full"></span>
                         </div>
                         <div>
-                            <h1 className="font-bold text-white text-lg leading-none">Saibae AI</h1>
+                            <h1 className="font-bold text-white text-lg leading-none">Ruby AI</h1>
                             <p className="text-xs text-gold-500 font-mono tracking-wide">SECURE_CHANNEL_ACTIVE</p>
                         </div>
                     </div>
@@ -200,7 +200,7 @@ const ChatPage = () => {
                     <div className="text-center mt-3">
                         <p className="text-[10px] text-zinc-600 flex items-center justify-center gap-1.5 uppercase tracking-widest">
                             <Sparkles size={8} className="text-gold-500" />
-                            <span>Saibae Neural Interface V1.0.4</span>
+                            <span>Ruby Neural Interface V1.0.4</span>
                         </p>
                     </div>
                 </div>
