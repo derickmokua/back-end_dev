@@ -31,20 +31,23 @@ Professional first. Fun always. Boring never. Confidence level: "Nairobi skyline
 `;
 
 export default async function handler(req, res) {
-    // Enable CORS
+    // Set CORS headers
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-    // Handle preflight request
+    // Handle preflight
     if (req.method === 'OPTIONS') {
         return res.status(200).end();
     }
 
-    // Only allow POST requests
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
+
+    // Add logging to debug
+    console.log('Request received:', req.body);
+    console.log('API Key exists:', !!process.env.GEMINI_API_KEY);
 
     try {
         const { message } = req.body;
@@ -54,28 +57,29 @@ export default async function handler(req, res) {
         }
 
         if (!process.env.GEMINI_API_KEY) {
-            throw new Error("GEMINI_API_KEY is missing");
+            console.error('GEMINI_API_KEY not found in environment');
+            return res.status(500).json({ error: 'API key not configured' });
         }
 
-        // Initialize Gemini AI
         const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-        // Use gemini-2.5-flash as indicated by available models
         const model = genAI.getGenerativeModel({
             model: "gemini-2.5-flash",
             systemInstruction: SYSTEM_PROMPT
         });
 
+        console.log('Sending request to Gemini...');
         const result = await model.generateContent(message);
         const response = await result.response;
         const reply = response.text();
 
-        res.status(200).json({ reply });
+        console.log('Got response from Gemini:', reply.substring(0, 50));
+
+        return res.status(200).json({ reply });
     } catch (error) {
         console.error('Gemini API Error:', error);
-        // Return a friendly error message as a chat reply so the UI doesn't break
-        res.status(200).json({
-            reply: "Connection interrupted. My systems are currently rebooting. Please try again in a moment."
+        return res.status(500).json({
+            error: 'Failed to get response from AI',
+            details: error.message
         });
     }
 }
