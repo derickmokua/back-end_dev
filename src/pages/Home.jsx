@@ -90,26 +90,27 @@ const Home = () => {
     // Smooth scroll handler
     const scrollToSection = (e, href) => {
         e.preventDefault();
+        setIsMenuOpen(false);
+
         if (href.startsWith('#')) {
             const element = document.querySelector(href);
             if (element) {
                 const headerOffset = 80;
                 const elementPosition = element.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                const offsetPosition = window.pageYOffset + elementPosition - headerOffset;
 
                 window.scrollTo({
                     top: offsetPosition,
                     behavior: 'smooth'
                 });
-                setIsMenuOpen(false);
             }
         } else {
-            // Handle external links or other pages
             window.location.href = href;
         }
     };
 
     const scrollToTop = () => {
+        setIsMenuOpen(false);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
@@ -201,19 +202,36 @@ const Home = () => {
                 <AnimatePresence>
                     {isMenuOpen && (
                         <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            className="md:hidden absolute top-16 left-0 w-full bg-black border-b border-zinc-800 p-6 flex flex-col gap-4 overflow-hidden"
+                            key="mobile-nav-menu"
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.2 }}
+                            className="md:hidden fixed top-16 left-0 w-full h-[calc(100vh-4rem)] bg-black/95 backdrop-blur-xl border-b border-zinc-800 p-8 flex flex-col gap-6 shadow-2xl z-[60] overflow-y-auto"
                         >
-                            <a href="#home" onClick={(e) => scrollToSection(e, '#home')} className="text-lg hover:text-gold-400">Home</a>
+                            <a
+                                href="#home"
+                                onClick={(e) => scrollToSection(e, '#home')}
+                                className="text-xl font-medium text-zinc-300 hover:text-gold-400 py-4 border-b border-white/5 transition-colors block w-full"
+                            >
+                                Home
+                            </a>
                             {navLinks.map((link) => (
-                                <a key={link.name} href={link.href} onClick={(e) => scrollToSection(e, link.href)} className="text-lg hover:text-gold-400">
+                                <a
+                                    key={link.name}
+                                    href={link.href}
+                                    onClick={(e) => scrollToSection(e, link.href)}
+                                    className="text-xl font-medium text-zinc-300 hover:text-gold-400 py-4 border-b border-white/5 transition-colors block w-full"
+                                >
                                     {link.name}
                                 </a>
                             ))}
-                            <Link to="/chat" className="text-lg hover:text-gold-400 flex items-center gap-2">
-                                <MessageCircle size={18} /> Chat
+                            <Link
+                                to="/chat"
+                                onClick={() => setIsMenuOpen(false)}
+                                className="text-xl font-medium text-zinc-300 hover:text-gold-400 py-4 flex items-center gap-3 transition-colors block w-full"
+                            >
+                                <MessageCircle size={20} className="text-gold-500" /> Chat
                             </Link>
                         </motion.div>
                     )}
