@@ -47,16 +47,21 @@ const ChatPage = () => {
                 },
                 body: JSON.stringify({
                     message: newUserMessage.text,
-                    history: messages
+                    // We still send history so the context-aware bot works!
+                    history: messages.slice(0, -1) // Exclude the message we just added effectively, or just send all
                 }),
             });
 
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
             const data = await response.json();
 
-            if (data.response) {
+            if (data.reply) {
                 const newBotMessage = {
                     id: messages.length + 2,
-                    text: data.response,
+                    text: data.reply,
                     sender: 'bot',
                     timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
                 };

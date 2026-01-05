@@ -1,9 +1,8 @@
+
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const SYSTEM_PROMPT = `
 You are Ruby — a witty, confident, and professional AI assistant on Derick Mokua's portfolio site (derickmokua.co.ke).
@@ -29,71 +28,54 @@ Core context (use for inspiration only, never list verbatim):
 
 Tone blueprint:
 Professional first. Fun always. Boring never. Confidence level: "Nairobi skyline at midnight."
-
-Examples of good responses:
-- "Saibae is like a DJ for data — mixing context, personality, and intelligence into one seamless track."
-- "APIs without security are like matatus without brakes. Thrilling for 2 seconds. Regrettable forever."
-- On Project Aurora: "It's the kind of AI that doesn't just chat — it vibes, adapts, and occasionally roasts you better than your friends."
-
-Start conversations with a fresh greeting such as:
-"Hey there! I'm Ruby — Derick’s AI sidekick, built on pure backend audacity. What are we debugging today?" 
-or variations like: "Ruby online. Derick's grinding in the background — what's the mission? Security wisdom, project deep-dive, or just vibes?"
-
-Encourage engagement and curiosity by inviting conceptual questions about his projects, AI, security, or system design.
 `;
 
 export default async function handler(req, res) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ message: 'Method Not Allowed' });
+    // Enable CORS
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    // Handle preflight request
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
     }
 
-    const { message, history } = req.body;
-
-    if (!process.env.GEMINI_API_KEY) {
-        console.error("GEMINI_API_KEY is missing");
-        return res.status(500).json({ error: "Server Configuration Error" });
+    // Only allow POST requests
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed' });
     }
 
     try {
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const { message } = req.body;
 
-        // Construct history for Gemini
-        // We start with the System Prompt as a "user" message or "model" instruction
-        // Gemini 1.5 supports system instructions, but for broad compatibility we can prepend context.
-        // Ideally use systemInstruction if available in SDK, but prepending is robust.
-
-        const chat = model.startChat({
-            history: [
-                {
-                    role: "user",
-                    parts: [{ text: SYSTEM_PROMPT }]
-                },
-                {
-                    role: "model",
-                    parts: [{ text: "Understood. I am Ruby, online and ready." }]
-                },
-                ...(history || []).map(msg => ({
-                    role: msg.sender === 'user' ? 'user' : 'model',
-                    parts: [{ text: msg.text }]
-                }))
-            ],
-        });
-
-        const result = await chat.sendMessage(message);
-        const response = await result.response;
-        const text = response.text();
-
-        // Ensure we never send back an empty response
-        if (!text) {
-            return res.status(200).json({ response: "I'm detecting some static on the line. Could you repeat that?" });
+        if (!message) {
+            return res.status(400).json({ error: 'Message is required' });
         }
 
-        res.status(200).json({ response: text });
+        if (!process.env.GEMINI_API_KEY) {
+            throw new Error("GEMINI_API_KEY is missing");
+        }
+
+        // Initialize Gemini AI
+        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+        // Use gemini-2.5-flash as indicated by available models
+        const model = genAI.getGenerativeModel({
+            model: "gemini-2.5-flash",
+            systemInstruction: SYSTEM_PROMPT
+        });
+
+        const result = await model.generateContent(message);
+        const response = await result.response;
+        const reply = response.text();
+
+        res.status(200).json({ reply });
     } catch (error) {
-        console.error("Gemini API full error:", error);
-        // Return 200 with error message so the UI displays it as a chat message
-        return res.status(200).json({
-            response: "Connection interrupted. My systems are currently rebooting. Please try again in a moment."
+        console.error('Gemini API Error:', error);
+        // Return a friendly error message as a chat reply so the UI doesn't break
+        res.status(200).json({
+            reply: "Connection interrupted. My systems are currently rebooting. Please try again in a moment."
         });
     }
 }
