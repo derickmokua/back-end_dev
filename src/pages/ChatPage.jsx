@@ -24,7 +24,7 @@ const ChatPage = () => {
         scrollToBottom();
     }, [messages, isTyping]);
 
-    const handleSendMessage = (e) => {
+    const handleSendMessage = async (e) => {
         e.preventDefault();
         if (!inputValue.trim()) return;
 
@@ -35,32 +35,47 @@ const ChatPage = () => {
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         };
 
-        setMessages([...messages, newUserMessage]);
+        setMessages(prev => [...prev, newUserMessage]);
         setInputValue('');
         setIsTyping(true);
 
-        // Simulate bot response
-        setTimeout(() => {
-            const botResponses = [
-                "I've noted that. Derick will be pleased to hear it.",
-                "An interesting perspective. My algorithms suggest this aligns with Derick's expertise.",
-                "I am currently operating in demo mode, but I can assure you Derick is the best choice for this project.",
-                "Accessing database... affirmative.",
-                "Would you like me to schedule a meeting with Derick?",
-                "That's a great question. Let me consult my knowledge base."
-            ];
-            const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)];
+        try {
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: newUserMessage.text,
+                    history: messages
+                }),
+            });
 
-            const newBotMessage = {
+            const data = await response.json();
+
+            if (data.response) {
+                const newBotMessage = {
+                    id: messages.length + 2,
+                    text: data.response,
+                    sender: 'bot',
+                    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                };
+                setMessages(prev => [...prev, newBotMessage]);
+            } else {
+                console.error("API Error or Empty Response", data);
+            }
+        } catch (error) {
+            console.error("Fetch Error:", error);
+            const errorMessage = {
                 id: messages.length + 2,
-                text: randomResponse,
+                text: "I am currently experiencing a connection issue. Please try again later.",
                 sender: 'bot',
                 timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             };
-
+            setMessages(prev => [...prev, errorMessage]);
+        } finally {
             setIsTyping(false);
-            setMessages(prev => [...prev, newBotMessage]);
-        }, 1500);
+        }
     };
 
     return (
