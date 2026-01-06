@@ -22,15 +22,15 @@
 /* Typography styles */
 .ruby-message strong,
 .ruby-message b {
-    font-weight: 700;
-    color: white;
+    font-weight: 700 !important;
+    color: white !important;
     /* Make bold text pop */
 }
 
 .ruby-message em,
 .ruby-message i {
-    font-style: italic;
-    color: #fbbf24;
+    font-style: italic !important;
+    color: #fbbf24 !important;
     /* Amber/Gold tint for emphasis */
 }
 

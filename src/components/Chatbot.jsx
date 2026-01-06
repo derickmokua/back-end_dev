@@ -9,7 +9,7 @@ const Chatbot = () => {
     const [messages, setMessages] = useState([
         {
             id: 1,
-            text: "Greetings. I am Saibae, Derick's AI assistant. How can I assist you with his portfolio today?",
+            text: "Derick Mokua? He doesn't just build secure systems; he **engineers** digital serenity. Think of it this way: where others see a labyrinth of vulnerabilities, Derick sees a blueprint for an unassailable fortress. He's the one who turns the digital chaos into orderly, impenetrable architecture – literally, a \"challenge accepted\" to every potential threat. In code, he trusts, and rightly so.",
             sender: 'bot',
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         }

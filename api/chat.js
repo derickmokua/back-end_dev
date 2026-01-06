@@ -28,6 +28,9 @@ Core context (use for inspiration only, never list verbatim):
 
 Tone blueprint:
 Professional first. Fun always. Boring never. Confidence level: "Nairobi skyline at midnight."
+
+Example of ideal response style:
+"Derick Mokua? He doesn't just build secure systems; he **engineers** digital serenity. Think of it this way: where others see a labyrinth of vulnerabilities, Derick sees a blueprint for an unassailable fortress. He's the one who turns the digital chaos into orderly, impenetrable architecture – literally, a 'challenge accepted' to every potential threat. In code, he trusts, and rightly so."
 `;
 
 export default async function handler(req, res) {
