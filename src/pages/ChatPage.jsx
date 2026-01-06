@@ -140,7 +140,7 @@ const ChatPage = () => {
                                     {msg.sender === 'bot' ? (
                                         <div
                                             dangerouslySetInnerHTML={{
-                                                __html: DOMPurify.sanitize(marked.parse(msg.text))
+                                                __html: DOMPurify.sanitize(marked.parse(msg.text, { breaks: true, gfm: true }))
                                             }}
                                         />
                                     ) : (

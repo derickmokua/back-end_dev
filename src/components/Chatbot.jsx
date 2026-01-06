@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Bot, Sparkles, User, MoreHorizontal } from 'lucide-react';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 
 const Chatbot = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -158,10 +160,18 @@ const Chatbot = () => {
                                         <div
                                             className={`px-4 py-2.5 text-sm leading-relaxed shadow-md ${msg.sender === 'user'
                                                 ? 'bg-gold-500 text-black rounded-2xl rounded-tr-sm'
-                                                : 'bg-zinc-800 text-zinc-200 border border-zinc-700 rounded-2xl rounded-tl-sm'
+                                                : 'bg-zinc-800 text-zinc-200 border border-zinc-700 rounded-2xl rounded-tl-sm ruby-message'
                                                 }`}
                                         >
-                                            {msg.text}
+                                            {msg.sender === 'bot' ? (
+                                                <div
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: DOMPurify.sanitize(marked.parse(msg.text, { breaks: true, gfm: true }))
+                                                    }}
+                                                />
+                                            ) : (
+                                                msg.text
+                                            )}
                                         </div>
                                         <span className="text-[10px] text-zinc-600 mt-1 px-1">
                                             {msg.timestamp}
