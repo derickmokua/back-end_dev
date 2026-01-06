@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, Send, Bot, Sparkles, User, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 
 const ChatPage = () => {
     const [messages, setMessages] = useState([
@@ -132,10 +133,14 @@ const ChatPage = () => {
                                 <div
                                     className={`px-5 py-3.5 text-base leading-relaxed shadow-lg ${msg.sender === 'user'
                                         ? 'bg-gold-500 text-black rounded-2xl rounded-tr-sm'
-                                        : 'bg-zinc-900 border border-zinc-800 text-zinc-200 rounded-2xl rounded-tl-sm'
+                                        : 'bg-zinc-900 border border-zinc-800 text-zinc-200 rounded-2xl rounded-tl-sm ruby-message'
                                         }`}
                                 >
-                                    {msg.text}
+                                    {msg.sender === 'bot' ? (
+                                        <ReactMarkdown>{msg.text}</ReactMarkdown>
+                                    ) : (
+                                        msg.text
+                                    )}
                                 </div>
                                 <span className="text-xs text-zinc-600 mt-1.5 px-1">
                                     {msg.timestamp}
