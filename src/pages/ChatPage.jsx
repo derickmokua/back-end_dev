@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, Send, Bot, Sparkles, User, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 
 const ChatPage = () => {
     const [messages, setMessages] = useState([
@@ -137,7 +138,11 @@ const ChatPage = () => {
                                         }`}
                                 >
                                     {msg.sender === 'bot' ? (
-                                        <ReactMarkdown>{msg.text}</ReactMarkdown>
+                                        <div
+                                            dangerouslySetInnerHTML={{
+                                                __html: DOMPurify.sanitize(marked.parse(msg.text))
+                                            }}
+                                        />
                                     ) : (
                                         msg.text
                                     )}
