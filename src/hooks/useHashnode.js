@@ -10,6 +10,10 @@ const useHashnodePosts = () => {
   const apiUrl = import.meta.env.VITE_HASHNODE_API_URL || 'https://gql.hashnode.com';
 
   useEffect(() => {
+    console.log('Hashnode Hook Initialized');
+    console.log('Host:', host);
+    console.log('API URL:', apiUrl);
+
     const fetchPosts = async () => {
       // Querying by 'publication' is the standard for the v3 API
       const query = `
