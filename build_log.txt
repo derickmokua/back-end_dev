@@ -1,0 +1,24 @@
+
+> my-portfolio@0.0.0 build
+> vite build
+
+[dotenv@17.2.3] injecting env (3) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+[dotenv@17.2.3] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+[36mvite v5.4.21 [32mbuilding for production...[36m[39m
+transforming...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[32m✓[39m 22 modules transformed.
+[31mx[39m Build failed in 2.76s
+[31merror during build:
+[31m[vite]: Rollup failed to resolve import "react-markdown" from "C:/Users/ADMIN/Desktop/projects/my-portfolio/src/pages/Home.jsx".
+This is most likely unintended because it can break your application at runtime.
+If you do want to externalize this module explicitly add it to
+`build.rollupOptions.external`[31m
+    at viteWarn (file:///C:/Users/ADMIN/Desktop/projects/my-portfolio/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:65855:17)
+    at onwarn (file:///C:/Users/ADMIN/Desktop/projects/my-portfolio/node_modules/@vitejs/plugin-react/dist/index.js:90:7)
+    at onRollupWarning (file:///C:/Users/ADMIN/Desktop/projects/my-portfolio/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:65885:5)
+    at onwarn (file:///C:/Users/ADMIN/Desktop/projects/my-portfolio/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:65550:7)
+    at file:///C:/Users/ADMIN/Desktop/projects/my-portfolio/node_modules/rollup/dist/es/shared/node-entry.js:20961:13
+    at Object.logger [as onLog] (file:///C:/Users/ADMIN/Desktop/projects/my-portfolio/node_modules/rollup/dist/es/shared/node-entry.js:22834:9)
+    at ModuleLoader.handleInvalidResolvedId (file:///C:/Users/ADMIN/Desktop/projects/my-portfolio/node_modules/rollup/dist/es/shared/node-entry.js:21578:26)
+    at file:///C:/Users/ADMIN/Desktop/projects/my-portfolio/node_modules/rollup/dist/es/shared/node-entry.js:21536:26[39m
