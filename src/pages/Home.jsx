@@ -5,6 +5,7 @@ import { Terminal, Code, Cpu, Globe, ExternalLink, Github, Mail, Smartphone, Dat
 import { skills, projects, services, testimonials, blogPosts as staticBlogPosts, navLinks } from '../data/portfolioData';
 import useHashnodePosts from '../hooks/useHashnode';
 import ReactMarkdown from 'react-markdown';
+import DOMPurify from 'dompurify';
 import { Link, useNavigate } from 'react-router-dom';
 
 // Animation Variants
@@ -758,6 +759,7 @@ const Home = () => {
 
                                 <div className="prose prose-invert prose-gold max-w-none">
                                     {/* Render dynamic markdown content if available */}
+
                                     {selectedBlogPost.markdown ? (
                                         <ReactMarkdown
                                             components={{
@@ -777,6 +779,11 @@ const Home = () => {
                                         >
                                             {selectedBlogPost.markdown}
                                         </ReactMarkdown>
+                                    ) : selectedBlogPost.html ? (
+                                        <div
+                                            className="prose prose-invert prose-gold max-w-none [&>figure]:my-8 [&>figure>img]:rounded-xl [&>p]:text-zinc-300 [&>p]:leading-relaxed [&>h3]:text-xl [&>h3]:font-bold [&>h3]:text-white [&>h3]:mt-8 [&>h3]:mb-4"
+                                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selectedBlogPost.html) }}
+                                        />
                                     ) : selectedBlogPost.content ? (
                                         // Fallback for static/legacy posts (array of strings)
                                         selectedBlogPost.content.map((paragraph, index) => (

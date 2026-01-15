@@ -10,9 +10,9 @@ const useHashnodePosts = () => {
   const apiUrl = import.meta.env.VITE_HASHNODE_API_URL || 'https://gql.hashnode.com';
 
   useEffect(() => {
-    console.log('Hashnode Hook Initialized');
-    console.log('Host:', host);
-    console.log('API URL:', apiUrl);
+    // console.log('Hashnode Hook Initialized');
+    // console.log('Host:', host);
+    // console.log('API URL:', apiUrl);
 
     const fetchPosts = async () => {
       // Querying by 'publication' is the standard for the v3 API
@@ -34,7 +34,7 @@ const useHashnodePosts = () => {
                   }
                   url
                   content {
-                    markdown
+                    html
                   }
                 }
               }
@@ -46,6 +46,7 @@ const useHashnodePosts = () => {
       try {
         const response = await fetch(apiUrl, {
           method: 'POST',
+          cache: 'no-store', // Prevent caching
           headers: {
             'Content-Type': 'application/json',
           },
@@ -78,7 +79,7 @@ const useHashnodePosts = () => {
           }),
           tags: node.tags ? node.tags.map((t) => t.name) : [],
           link: node.url, // Keep the link just in case
-          markdown: node.content.markdown, // Full markdown content
+          html: node.content.html, // Full HTML content
           coverImage: node.coverImage ? node.coverImage.url : null,
         }));
 
