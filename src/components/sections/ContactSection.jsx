@@ -30,7 +30,7 @@ const ContactSection = ({ variants, formData, handleInputChange, handleFormSubmi
           <a href="mailto:contact@derickmokua.dev" className="relative group text-gray-400 hover:text-cyan-400 transition-colors duration-300"><Mail /><span className="tooltip">Email</span></a>
           <a href="https://github.com/derickmokua" target="_blank" rel="noopener noreferrer" className="relative group text-gray-400 hover:text-cyan-400 transition-colors duration-300"><Github /><span className="tooltip">GitHub</span></a>
           <a href="https://www.linkedin.com/in/derick-mokua-b05165369" target="_blank" rel="noopener noreferrer" className="relative group text-gray-400 hover:text-cyan-400 transition-colors duration-300"><Linkedin /><span className="tooltip">LinkedIn</span></a>
-          <a href="https://wa.me/254735122178" target="_blank" rel="noopener noreferrer" className="relative group text-gray-400 hover:text-cyan-400 transition-colors duration-300"><WhatsappIcon /><span className="tooltip">WhatsApp</span></a>
+          <a href="https://api.whatsapp.com/send?phone=254735122178" target="_blank" rel="noopener noreferrer" className="relative group text-gray-400 hover:text-cyan-400 transition-colors duration-300"><WhatsappIcon /><span className="tooltip">WhatsApp</span></a>
         </div>
       </div>
     </div>

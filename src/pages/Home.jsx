@@ -538,276 +538,275 @@ const Home = () => {
                                 </button>
                             </div>
                         )}
-                    </div>
-                </FadeIn>
-            </section>
+                    </FadeIn>
+                </section>
 
-            {/* TESTIMONIALS SECTION */}
-            <section id="testimonials">
-                <FadeIn>
-                    <h2 className="text-2xl font-bold mb-10 flex items-center gap-3 text-white">
-                        <Star className="text-gold-500" />
-                        <span>Client_Transmissions</span>
-                    </h2>
-                    <div className="grid md:grid-cols-2 gap-6">
-                        {testimonials.map((test) => (
-                            <div key={test.name} className="p-6 border border-zinc-800 rounded-2xl bg-zinc-900/20 relative">
-                                <span className="absolute top-4 right-6 text-6xl text-gold-900 opacity-20 serif">"</span>
-                                <p className="text-zinc-300 italic mb-6 relative z-10">"{test.text}"</p>
-                                <div className="flex items-center gap-4">
-                                    <div className="w-10 h-10 rounded-full bg-gold-600 flex items-center justify-center text-black font-bold">
-                                        {test.initials}
+                {/* TESTIMONIALS SECTION */}
+                <section id="testimonials">
+                    <FadeIn>
+                        <h2 className="text-2xl font-bold mb-10 flex items-center gap-3 text-white">
+                            <Star className="text-gold-500" />
+                            <span>Client_Transmissions</span>
+                        </h2>
+                        <div className="grid md:grid-cols-2 gap-6">
+                            {testimonials.map((test) => (
+                                <div key={test.name} className="p-6 border border-zinc-800 rounded-2xl bg-zinc-900/20 relative">
+                                    <span className="absolute top-4 right-6 text-6xl text-gold-900 opacity-20 serif">"</span>
+                                    <p className="text-zinc-300 italic mb-6 relative z-10">"{test.text}"</p>
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-gold-600 flex items-center justify-center text-black font-bold">
+                                            {test.initials}
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-white">{test.name}</h4>
+                                            <p className="text-xs text-gold-500">{test.role} @ {test.company}</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h4 className="font-bold text-white">{test.name}</h4>
-                                        <p className="text-xs text-gold-500">{test.role} @ {test.company}</p>
-                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                </FadeIn>
-            </section>
-
-            {/* CONTACT SECTION WITH FORM */}
-            <section id="contact" className="max-w-4xl mx-auto">
-                <FadeIn>
-                    <div className="grid md:grid-cols-2 gap-12 bg-zinc-900/30 border border-gold-500/20 p-8 md:p-12 rounded-3xl relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-gold-500/5 to-transparent pointer-events-none"></div>
-
-                        {/* Contact Info */}
-                        <div className="flex flex-col justify-center">
-                            <Smartphone className="w-12 h-12 text-gold-500 mb-6" />
-                            <h2 className="text-3xl font-bold text-white mb-4">Establish Connection</h2>
-                            <p className="text-zinc-400 mb-8 leading-relaxed">
-                                Ready to secure your infrastructure or build the next big thing? I'm currently available for new projects.
-                            </p>
-                            <div className="space-y-4">
-                                <a href="mailto:hello@derickmokua.co.ke" className="flex items-center gap-3 text-zinc-300 hover:text-gold-400 transition-colors">
-                                    <Mail size={20} /> hello@derickmokua.co.ke
-                                </a>
-                                <a href="https://github.com/derickmokua" className="flex items-center gap-3 text-zinc-300 hover:text-gold-400 transition-colors">
-                                    <Github size={20} /> github.com/derickmokua
-                                </a>
-                            </div>
-                        </div>
-
-                        {/* Contact Form */}
-                        <div className="bg-black/50 p-6 rounded-2xl border border-zinc-800">
-                            <form onSubmit={handleFormSubmit} className="space-y-4">
-                                <div>
-                                    <label className="block text-xs font-bold text-gold-500 mb-2 uppercase tracking-wider">Identity</label>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        required
-                                        value={formState.name}
-                                        onChange={handleFormChange}
-                                        placeholder="Your Name"
-                                        className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-gold-500 mb-2 uppercase tracking-wider">Frequency</label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        required
-                                        value={formState.email}
-                                        onChange={handleFormChange}
-                                        placeholder="your@email.com"
-                                        className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-gold-500 mb-2 uppercase tracking-wider">Transmission</label>
-                                    <textarea
-                                        name="message"
-                                        required
-                                        value={formState.message}
-                                        onChange={handleFormChange}
-                                        rows="4"
-                                        placeholder="Project details..."
-                                        className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors"
-                                    ></textarea>
-                                </div>
-                                <button
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    className="w-full bg-gold-600 hover:bg-gold-500 text-black font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                                >
-                                    {isSubmitting ? (
-                                        <Loader2 className="animate-spin" />
-                                    ) : (
-                                        <>Send Transmission <Send size={18} /></>
-                                    )}
-                                </button>
-                                {submitStatus === 'success' && (
-                                    <motion.p
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        className="text-green-400 text-center text-sm mt-2"
-                                    >
-                                        Transmission Received. Stand by.
-                                    </motion.p>
-                                )}
-                                {submitStatus === 'missing_config' && (
-                                    <motion.p
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        className="text-red-400 text-center text-sm mt-2 font-bold"
-                                    >
-                                        Error: Missing Configuration. Check .env file.
-                                    </motion.p>
-                                )}
-                                {submitStatus === 'api_error' && (
-                                    <motion.p
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        className="text-red-400 text-center text-sm mt-2"
-                                    >
-                                        Error: Sending Failed. Details in Console.
-                                    </motion.p>
-                                )}
-                            </form>
-                        </div>
-                    </div>
-                </FadeIn >
-            </section >
-
-            {/* Footer */}
-            {/* Footer */}
-            {/* Footer */}
-            {/* Footer */}
-            <footer className="border-t border-zinc-900 py-8 text-zinc-400 text-sm">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-
-                    <div className="flex flex-col gap-1 mb-4 md:mb-0 text-center md:text-left">
-                        <p>© 2025 Derick Mokua. All Rights Reserved.</p>
-                    </div>
-
-                    <div className="flex gap-4">
-                        {[
-                            { icon: <Linkedin size={18} />, href: "https://www.linkedin.com/in/derick-mokua-b05165369/", label: "LinkedIn" },
-                            { icon: <Github size={18} />, href: "https://github.com/derickmokua", label: "GitHub", className: "md:hidden" },
-                            { icon: <MessageCircle size={18} />, href: "https://wa.me/254735122178", label: "WhatsApp" },
-                            { icon: <Phone size={18} />, href: "tel:+254735122178", label: "Call" }
-                        ].map((social, index) => (
-                            <motion.a
-                                key={index}
-                                href={social.href}
-                                whileHover={{ scale: 1.2, color: '#e6b000' }}
-                                className={`relative group text-zinc-300 transition-colors p-2 ${social.className || ''}`}
-                            >
-                                {social.icon}
-                                <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-zinc-900 border border-zinc-800 text-gold-500 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-                                    {social.label}
-                                </span>
-                            </motion.a>
-                        ))}
-                    </div>
-
-                </div>
-            </footer>
-
-        </main >
-
-            {/* Back to Top */ }
-    < AnimatePresence >
-        {showBackToTop && (
-            <motion.button
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.5 }}
-                onClick={scrollToTop}
-                className="fixed bottom-8 right-8 text-gold-500 hover:text-gold-400 transition-transform hover:-translate-y-1 z-40"
-                aria-label="Back to top"
-            >
-                <ArrowUp size={32} />
-            </motion.button>
-        )}
-    </AnimatePresence >
-
-    {/* Blog Modal */ }
-    < AnimatePresence >
-        {selectedBlogPost && (
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-                onClick={() => setSelectedBlogPost(null)}
-            >
-                <motion.div
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.9, opacity: 0 }}
-                    onClick={(e) => e.stopPropagation()}
-                    className="bg-zinc-900 border border-zinc-800 rounded-3xl max-w-2xl w-full max-h-[80vh] overflow-y-auto relative"
-                >
-                    <button
-                        onClick={() => setSelectedBlogPost(null)}
-                        className="absolute top-4 right-4 text-zinc-400 hover:text-white bg-black/50 p-2 rounded-full"
-                        aria-label="Close modal"
-                    >
-                        <X size={20} />
-                    </button>
-
-                    <div className="p-8">
-                        <div className="text-gold-500 font-mono text-sm mb-4">{selectedBlogPost.date}</div>
-                        <h2 className="text-3xl font-bold text-white mb-6">{selectedBlogPost.title}</h2>
-
-                        <div className="prose prose-invert prose-gold max-w-none">
-                            {/* Render dynamic markdown content if available */}
-                            {selectedBlogPost.markdown ? (
-                                <ReactMarkdown
-                                    components={{
-                                        // Custom styling for specific elements if needed
-                                        a: ({ node, ...props }) => <a {...props} className="text-gold-500 hover:text-gold-400 underline" target="_blank" rel="noopener noreferrer" />,
-                                        img: ({ node, ...props }) => <img {...props} className="rounded-xl border border-zinc-800 my-6" />,
-                                        code: ({ node, inline, className, children, ...props }) => {
-                                            return inline ? (
-                                                <code className="bg-zinc-800 text-gold-200 px-1 rounded" {...props}>{children}</code>
-                                            ) : (
-                                                <code className="block bg-black p-4 rounded-lg border border-zinc-800 overflow-x-auto text-sm font-mono text-zinc-300 my-4" {...props}>
-                                                    {children}
-                                                </code>
-                                            )
-                                        }
-                                    }}
-                                >
-                                    {selectedBlogPost.markdown}
-                                </ReactMarkdown>
-                            ) : selectedBlogPost.content ? (
-                                // Fallback for static/legacy posts (array of strings)
-                                selectedBlogPost.content.map((paragraph, index) => (
-                                    <p key={index} className="text-zinc-300 text-lg leading-relaxed mb-6">
-                                        {paragraph}
-                                    </p>
-                                ))
-                            ) : (
-                                <p className="text-zinc-400">Content unavailable.</p>
-                            )}
-                        </div>
-
-
-                        <div className="bg-black p-4 rounded-xl border border-zinc-800 my-6 font-mono text-sm text-zinc-400">
-                            $ echo "Security is a process, not a product."
-                        </div>
-
-
-                        <div className="mt-8 pt-8 border-t border-zinc-800 flex flex-wrap gap-2">
-                            {selectedBlogPost.tags.map(tag => (
-                                <span key={tag} className="px-3 py-1 bg-black border border-zinc-800 rounded-full text-zinc-500 text-sm">
-                                    #{tag}
-                                </span>
                             ))}
                         </div>
+                    </FadeIn>
+                </section>
+
+                {/* CONTACT SECTION WITH FORM */}
+                <section id="contact" className="max-w-4xl mx-auto">
+                    <FadeIn>
+                        <div className="grid md:grid-cols-2 gap-12 bg-zinc-900/30 border border-gold-500/20 p-8 md:p-12 rounded-3xl relative overflow-hidden">
+                            <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-gold-500/5 to-transparent pointer-events-none"></div>
+
+                            {/* Contact Info */}
+                            <div className="flex flex-col justify-center">
+                                <Smartphone className="w-12 h-12 text-gold-500 mb-6" />
+                                <h2 className="text-3xl font-bold text-white mb-4">Establish Connection</h2>
+                                <p className="text-zinc-400 mb-8 leading-relaxed">
+                                    Ready to secure your infrastructure or build the next big thing? I'm currently available for new projects.
+                                </p>
+                                <div className="space-y-4">
+                                    <a href="mailto:hello@derickmokua.co.ke" className="flex items-center gap-3 text-zinc-300 hover:text-gold-400 transition-colors">
+                                        <Mail size={20} /> hello@derickmokua.co.ke
+                                    </a>
+                                    <a href="https://github.com/derickmokua" className="flex items-center gap-3 text-zinc-300 hover:text-gold-400 transition-colors">
+                                        <Github size={20} /> github.com/derickmokua
+                                    </a>
+                                </div>
+                            </div>
+
+                            {/* Contact Form */}
+                            <div className="bg-black/50 p-6 rounded-2xl border border-zinc-800">
+                                <form onSubmit={handleFormSubmit} className="space-y-4">
+                                    <div>
+                                        <label className="block text-xs font-bold text-gold-500 mb-2 uppercase tracking-wider">Identity</label>
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            required
+                                            value={formState.name}
+                                            onChange={handleFormChange}
+                                            placeholder="Your Name"
+                                            className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-bold text-gold-500 mb-2 uppercase tracking-wider">Frequency</label>
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            required
+                                            value={formState.email}
+                                            onChange={handleFormChange}
+                                            placeholder="your@email.com"
+                                            className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-bold text-gold-500 mb-2 uppercase tracking-wider">Transmission</label>
+                                        <textarea
+                                            name="message"
+                                            required
+                                            value={formState.message}
+                                            onChange={handleFormChange}
+                                            rows="4"
+                                            placeholder="Project details..."
+                                            className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors"
+                                        ></textarea>
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="w-full bg-gold-600 hover:bg-gold-500 text-black font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        {isSubmitting ? (
+                                            <Loader2 className="animate-spin" />
+                                        ) : (
+                                            <>Send Transmission <Send size={18} /></>
+                                        )}
+                                    </button>
+                                    {submitStatus === 'success' && (
+                                        <motion.p
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            className="text-green-400 text-center text-sm mt-2"
+                                        >
+                                            Transmission Received. Stand by.
+                                        </motion.p>
+                                    )}
+                                    {submitStatus === 'missing_config' && (
+                                        <motion.p
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            className="text-red-400 text-center text-sm mt-2 font-bold"
+                                        >
+                                            Error: Missing Configuration. Check .env file.
+                                        </motion.p>
+                                    )}
+                                    {submitStatus === 'api_error' && (
+                                        <motion.p
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            className="text-red-400 text-center text-sm mt-2"
+                                        >
+                                            Error: Sending Failed. Details in Console.
+                                        </motion.p>
+                                    )}
+                                </form>
+                            </div>
+                        </div>
+                    </FadeIn >
+                </section >
+
+                {/* Footer */}
+                {/* Footer */}
+                {/* Footer */}
+                {/* Footer */}
+                <footer className="border-t border-zinc-900 py-8 text-zinc-400 text-sm">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+
+                        <div className="flex flex-col gap-1 mb-4 md:mb-0 text-center md:text-left">
+                            <p>© 2025 Derick Mokua. All Rights Reserved.</p>
+                        </div>
+
+                        <div className="flex gap-4">
+                            {[
+                                { icon: <Linkedin size={18} />, href: "https://www.linkedin.com/in/derick-mokua-b05165369/", label: "LinkedIn" },
+                                { icon: <Github size={18} />, href: "https://github.com/derickmokua", label: "GitHub", className: "md:hidden" },
+                                { icon: <MessageCircle size={18} />, href: "https://api.whatsapp.com/send?phone=254735122178", label: "WhatsApp" },
+                                { icon: <Phone size={18} />, href: "tel:+254735122178", label: "Call" }
+                            ].map((social, index) => (
+                                <motion.a
+                                    key={index}
+                                    href={social.href}
+                                    whileHover={{ scale: 1.2, color: '#e6b000' }}
+                                    className={`relative group text-zinc-300 transition-colors p-2 ${social.className || ''}`}
+                                >
+                                    {social.icon}
+                                    <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-zinc-900 border border-zinc-800 text-gold-500 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+                                        {social.label}
+                                    </span>
+                                </motion.a>
+                            ))}
+                        </div>
+
                     </div>
-                </motion.div>
-            </motion.div>
-        )}
-    </AnimatePresence>
+                </footer>
+
+            </main >
+
+            {/* Back to Top */}
+            < AnimatePresence >
+                {showBackToTop && (
+                    <motion.button
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.5 }}
+                        onClick={scrollToTop}
+                        className="fixed bottom-8 right-8 text-gold-500 hover:text-gold-400 transition-transform hover:-translate-y-1 z-40"
+                        aria-label="Back to top"
+                    >
+                        <ArrowUp size={32} />
+                    </motion.button>
+                )}
+            </AnimatePresence >
+
+            {/* Blog Modal */}
+            < AnimatePresence >
+                {selectedBlogPost && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+                        onClick={() => setSelectedBlogPost(null)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            onClick={(e) => e.stopPropagation()}
+                            className="bg-zinc-900 border border-zinc-800 rounded-3xl max-w-2xl w-full max-h-[80vh] overflow-y-auto relative"
+                        >
+                            <button
+                                onClick={() => setSelectedBlogPost(null)}
+                                className="absolute top-4 right-4 text-zinc-400 hover:text-white bg-black/50 p-2 rounded-full"
+                                aria-label="Close modal"
+                            >
+                                <X size={20} />
+                            </button>
+
+                            <div className="p-8">
+                                <div className="text-gold-500 font-mono text-sm mb-4">{selectedBlogPost.date}</div>
+                                <h2 className="text-3xl font-bold text-white mb-6">{selectedBlogPost.title}</h2>
+
+                                <div className="prose prose-invert prose-gold max-w-none">
+                                    {/* Render dynamic markdown content if available */}
+                                    {selectedBlogPost.markdown ? (
+                                        <ReactMarkdown
+                                            components={{
+                                                // Custom styling for specific elements if needed
+                                                a: ({ node, ...props }) => <a {...props} className="text-gold-500 hover:text-gold-400 underline" target="_blank" rel="noopener noreferrer" />,
+                                                img: ({ node, ...props }) => <img {...props} className="rounded-xl border border-zinc-800 my-6" />,
+                                                code: ({ node, inline, className, children, ...props }) => {
+                                                    return inline ? (
+                                                        <code className="bg-zinc-800 text-gold-200 px-1 rounded" {...props}>{children}</code>
+                                                    ) : (
+                                                        <code className="block bg-black p-4 rounded-lg border border-zinc-800 overflow-x-auto text-sm font-mono text-zinc-300 my-4" {...props}>
+                                                            {children}
+                                                        </code>
+                                                    )
+                                                }
+                                            }}
+                                        >
+                                            {selectedBlogPost.markdown}
+                                        </ReactMarkdown>
+                                    ) : selectedBlogPost.content ? (
+                                        // Fallback for static/legacy posts (array of strings)
+                                        selectedBlogPost.content.map((paragraph, index) => (
+                                            <p key={index} className="text-zinc-300 text-lg leading-relaxed mb-6">
+                                                {paragraph}
+                                            </p>
+                                        ))
+                                    ) : (
+                                        <p className="text-zinc-400">Content unavailable.</p>
+                                    )}
+                                </div>
+
+
+                                <div className="bg-black p-4 rounded-xl border border-zinc-800 my-6 font-mono text-sm text-zinc-400">
+                                    $ echo "Security is a process, not a product."
+                                </div>
+
+
+                                <div className="mt-8 pt-8 border-t border-zinc-800 flex flex-wrap gap-2">
+                                    {selectedBlogPost.tags.map(tag => (
+                                        <span key={tag} className="px-3 py-1 bg-black border border-zinc-800 rounded-full text-zinc-500 text-sm">
+                                            #{tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
         </div >
     );
