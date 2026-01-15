@@ -673,8 +673,8 @@ const Home = () => {
                             {[
                                 { icon: <Linkedin size={18} />, href: "https://www.linkedin.com/in/derick-mokua-b05165369/", label: "LinkedIn" },
                                 { icon: <Github size={18} />, href: "https://github.com/derickmokua", label: "GitHub", className: "md:hidden" },
-                                { icon: <MessageCircle size={18} />, href: "https://wa.me/254716883375", label: "WhatsApp" },
-                                { icon: <Phone size={18} />, href: "tel:+254716883375", label: "Call" }
+                                { icon: <MessageCircle size={18} />, href: "https://wa.me/254735122178", label: "WhatsApp" },
+                                { icon: <Phone size={18} />, href: "tel:+254735122178", label: "Call" }
                             ].map((social, index) => (
                                 <motion.a
                                     key={index}
