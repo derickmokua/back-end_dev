@@ -318,10 +318,10 @@ const Home = () => {
                         <div className="w-full bg-zinc-900/30 border border-zinc-800 p-8 md:p-12 rounded-3xl hover:border-gold-500/30 transition-all">
                             <div className="space-y-6 text-zinc-400 leading-relaxed text-lg text-left">
                                 <p>
-                                    I am a passionate <span className="text-gold-400">Backend Developer</span> and <span className="text-gold-400">Cybersecurity Engineer</span> based in Nairobi. My mission is to build systems that are not only performant but inherently secure.
+                                    Most systems work until they’re pushed. I build them to stand their ground.
                                 </p>
                                 <p>
-                                    With expertise ranging from low-level network security to high-level AI integrations, I bridge the gap between "it works" and "it's unassailable." I specialize in robust backend architectures using <strong className="text-gold-400">Node.js</strong>, <strong className="text-gold-400">Python</strong>, <strong className="text-gold-400">PostgreSQL</strong>, <strong className="text-gold-400">Redis</strong>, and <strong className="text-gold-400">Docker</strong>.
+                                    I’m a backend engineer in Nairobi focused on two things: speed and security. From low-level network hardening to scaling AI integrations, I make sure your architecture is as unassailable as it is fast. My go-to tools are <strong className="text-gold-400">Node.js</strong>, <strong className="text-gold-400">Python</strong>, <strong className="text-gold-400">PostgreSQL</strong>, and <strong className="text-gold-400">Docker</strong>.
                                 </p>
                             </div>
                         </div>
