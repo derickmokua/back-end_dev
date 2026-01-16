@@ -263,9 +263,9 @@ const Home = () => {
                             transition={{ delay: 0.4 }}
                             className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white leading-tight"
                         >
-                            I bring structure to <br />
+                            I build the parts of the app <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-500 to-gold-700">
-                                digital entropy.
+                                you can't afford to lose.
                             </span>
                         </motion.h1>
 
