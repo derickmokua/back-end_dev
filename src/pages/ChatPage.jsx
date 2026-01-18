@@ -130,9 +130,9 @@ const ChatPage = () => {
                                 </div>
                             )}
 
-                            <div className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'} max-w-[80%] md:max-w-[70%]`}>
+                            <div className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'} max-w-[85%] md:max-w-[70%] min-w-0`}>
                                 <div
-                                    className={`px-5 py-3.5 text-base leading-relaxed shadow-lg ${msg.sender === 'user'
+                                    className={`px-4 py-3 md:px-5 md:py-3.5 text-sm md:text-base leading-relaxed shadow-lg break-words w-full ${msg.sender === 'user'
                                         ? 'bg-gold-500 text-black rounded-2xl rounded-tr-sm'
                                         : 'bg-zinc-900 border border-zinc-800 text-zinc-200 rounded-2xl rounded-tl-sm ruby-message'
                                         }`}

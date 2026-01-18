@@ -8,6 +8,10 @@
     line-height: 1.6;
     color: #e4e4e7;
     /* zinc-200 to match theme */
+    overflow-wrap: break-word;
+    word-break: break-word;
+    min-width: 0;
+    /* Helps flex containers handle truncation */
 }
 
 /* Paragraph spacing */
