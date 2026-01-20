@@ -1,88 +1,88 @@
 export const skills = [
-  { name: 'Network Security', level: 90, icon: '🔐' },
-  { name: 'Penetration Testing', level: 85, icon: '🎯' },
-  { name: 'Backend Development', level: 88, icon: '⚙️' },
-  { name: 'Python/Node.js', level: 92, icon: '🐍' },
-  { name: 'Cloud Security', level: 80, icon: '☁️' },
-  { name: 'API Development', level: 87, icon: '🔌' }
+  { name: 'Python', level: 95, icon: '🐍' },
+  { name: 'FastAPI / Django', level: 90, icon: '⚡' },
+  { name: 'Backend Architecture', level: 88, icon: '🏗️' },
+  { name: 'PostgreSQL / MySQL', level: 85, icon: '🗄️' },
+  { name: 'Docker & CI/CD', level: 80, icon: '🐳' },
+  { name: 'API Design', level: 92, icon: '🔌' }
 ];
 
 export const projects = [
   {
-    title: 'Vulnerability Scanner',
-    desc: 'Automated security assessment tool for web applications',
-    tags: ['Python', 'Security', 'Automation'],
+    title: 'Saibae AI Agent',
+    desc: 'Context-aware AI assistant built with Python & LLMs.',
+    tags: ['Python', 'AI', 'FastAPI'],
     status: 'Active'
   },
   {
-    title: 'Secure API Gateway',
-    desc: 'Enterprise-grade API gateway with advanced authentication',
-    tags: ['Node.js', 'JWT', 'Redis'],
+    title: 'ALX Travel App',
+    desc: 'A robust booking and itinerary management system built for scalability.',
+    tags: ['Python', 'Django', 'PostgreSQL'],
     status: 'Production'
   },
   {
-    title: 'AI Girlfriend (Project Aurora)',
-    desc: 'Emotionally aware conversational AI companion built to learn your vibe and humor.',
-    tags: ['AI', 'NLP', 'React', 'OpenAI'],
-    status: 'Experimental'
+    title: 'Poultry Management API',
+    desc: 'Bespoke API for livestock tracking, analytics, and resource optimization.',
+    tags: ['FastAPI', 'Analytics', 'React'],
+    status: 'Live'
   },
   {
-    title: 'Threat Intelligence Platform',
-    desc: 'Real-time threat detection and analysis system',
-    tags: ['Python', 'ML', 'Database'],
-    status: 'Beta'
+    title: 'Secure API Gateway',
+    desc: 'High-performance gateway handling auth, rate-limiting, and routing.',
+    tags: ['Node.js', 'Redis', 'Docker'],
+    status: 'Production'
   }
 ];
 
 export const services = [
   {
-    title: 'Security Consultation',
-    icon: '🛡️',
-    desc: 'Comprehensive security audits and strategic consulting',
-    features: ['Vulnerability Assessment', 'Security Architecture Review', 'Compliance Guidance']
+    title: 'Backend Development',
+    icon: '⚙️',
+    desc: 'Building robust, scalable server-side applications with Python & Node.js',
+    features: ['API Design', 'Microservices', 'Database Architecture']
   },
   {
-    title: 'Penetration Testing',
-    icon: '🎯',
-    desc: 'Ethical hacking to identify and fix vulnerabilities',
-    features: ['Web Application Testing', 'Network Security Testing', 'API Security Testing']
+    title: 'System Architecture',
+    icon: '🏗️',
+    desc: 'Designing resilient infrastructure for high-load applications',
+    features: ['Cloud Deployment', 'Dockerization', 'CI/CD Pipelines']
   },
   {
-    title: 'Secure Development',
-    icon: '💻',
-    desc: 'Build security into your applications from day one',
-    features: ['Secure Code Review', 'DevSecOps Integration', 'Threat Modeling']
+    title: 'API Integration',
+    icon: '🔌',
+    desc: 'Seamlessly connecting services and third-party tools',
+    features: ['Payment Gateways', 'AI Integration', 'Real-time Data']
   }
 ];
 
 export const testimonials = [
   {
-    text: "Derick's penetration testing revealed critical vulnerabilities we didn't know existed. His detailed report and remediation guidance were invaluable.",
+    text: "Derick's backend architecture scaled effortlessly as our user base grew. His attention to database optimization is unmatched.",
     name: "Sarah Mitchell",
     initials: "SM",
     role: "CTO",
     company: "TechStart Inc."
   },
   {
-    text: "Outstanding security consultation. Derick helped us implement a robust security architecture that met compliance requirements while staying practical.",
+    text: "The API Derick designed for us is rock-solid. Documentation, error handling, and performance are all top-tier.",
     name: "James Omondi",
     initials: "JO",
     role: "Head of Engineering",
     company: "DataSecure Kenya"
   },
   {
-    text: "Professional, thorough, and incredibly knowledgeable. Derick's code review caught issues that would have been costly in production.",
+    text: "A developer who actually understands deployment. Derick set up our CI/CD pipelines and Docker containers perfectly.",
     name: "Maria Santos",
     initials: "MS",
     role: "Product Manager",
     company: "CloudFlow Solutions"
   },
   {
-    text: "Working with Derick was a game-changer for our security posture. His expertise in both development and security is rare and valuable.",
+    text: "Working with Derick on our inventory system API was a breeze. He delivers clean, maintainable code.",
     name: "David Kimani",
     initials: "DK",
     role: "Founder & CEO",
-    company: "SecureApps Africa"
+    company: "AgriTech Africa"
   }
 ];
 

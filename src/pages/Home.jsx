@@ -43,7 +43,7 @@ const Home = () => {
     const [showBackToTop, setShowBackToTop] = useState(false);
     const [selectedBlogPost, setSelectedBlogPost] = useState(null);
     const [showAllPosts, setShowAllPosts] = useState(false);
-    const fullText = "> initializing_gold_standard...";
+    const fullText = "> initializing_backend_core...";
     const navigate = useNavigate();
 
     // Contact Form State
@@ -263,9 +263,9 @@ const Home = () => {
                             transition={{ delay: 0.4 }}
                             className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white leading-tight"
                         >
-                            I build the parts of the app <br />
+                            I build scalable systems <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-500 to-gold-700">
-                                you can't afford to lose.
+                                that just work.
                             </span>
                         </motion.h1>
 
@@ -288,7 +288,7 @@ const Home = () => {
                             transition={{ delay: 0.8 }}
                             className="max-w-xl text-lg text-zinc-400 leading-relaxed border-l-2 border-zinc-900 pl-6 mb-8"
                         >
-                            I'm Derick. I engineer robust full-stack architectures and intelligent agents.
+                            Backend Developer | Python, FastAPI & Django. Building Deployable APIs.
                             Creator of <strong className="text-gold-400">Saibae</strong>.
                         </motion.p>
 
@@ -318,10 +318,10 @@ const Home = () => {
                         <div className="w-full bg-zinc-900/30 border border-zinc-800 p-8 md:p-12 rounded-3xl hover:border-gold-500/30 transition-all">
                             <div className="space-y-6 text-zinc-400 leading-relaxed text-lg text-left">
                                 <p>
-                                    Most systems work until they’re pushed. I build them to stand their ground.
+                                    I build scalable backend systems using Python and Django/FastAPI. My focus is API design, database architecture, asynchronous processing, and deploying real-world applications.
                                 </p>
                                 <p>
-                                    I’m a backend engineer in Nairobi focused on two things: speed and security. From low-level network hardening to scaling AI integrations, I make sure your architecture is as unassailable as it is fast. My go-to tools are <strong className="text-gold-400">Node.js</strong>, <strong className="text-gold-400">Python</strong>, <strong className="text-gold-400">PostgreSQL</strong>, and <strong className="text-gold-400">Docker</strong>.
+                                    Security is applied as part of all my projects to ensure reliable, robust systems. My go-to tools are <strong className="text-gold-400">Python</strong>, <strong className="text-gold-400">FastAPI</strong>, <strong className="text-gold-400">PostgreSQL</strong>, and <strong className="text-gold-400">Docker</strong>.
                                 </p>
                             </div>
                         </div>
@@ -484,7 +484,7 @@ const Home = () => {
                     <FadeIn>
                         <h2 className="text-2xl font-bold mb-10 flex items-center gap-3 text-white">
                             <Database className="text-gold-500" />
-                            <span>Latest_Intel</span>
+                            <span>Technical_Articles</span>
                         </h2>
                         <div className="space-y-4">
                             {/* Loading State causes layout shift, so min-height */}
@@ -547,7 +547,7 @@ const Home = () => {
                     <FadeIn>
                         <h2 className="text-2xl font-bold mb-10 flex items-center gap-3 text-white">
                             <Star className="text-gold-500" />
-                            <span>Client_Transmissions</span>
+                            <span>Testimonials</span>
                         </h2>
                         <div className="grid md:grid-cols-2 gap-6">
                             {testimonials.map((test) => (
@@ -578,7 +578,7 @@ const Home = () => {
                             {/* Contact Info */}
                             <div className="flex flex-col justify-center">
                                 <Smartphone className="w-12 h-12 text-gold-500 mb-6" />
-                                <h2 className="text-3xl font-bold text-white mb-4">Establish Connection</h2>
+                                <h2 className="text-3xl font-bold text-white mb-4">Get in Touch</h2>
                                 <p className="text-zinc-400 mb-8 leading-relaxed">
                                     Ready to secure your infrastructure or build the next big thing? I'm currently available for new projects.
                                 </p>
@@ -596,7 +596,7 @@ const Home = () => {
                             <div className="bg-black/50 p-6 rounded-2xl border border-zinc-800">
                                 <form onSubmit={handleFormSubmit} className="space-y-4">
                                     <div>
-                                        <label className="block text-xs font-bold text-gold-500 mb-2 uppercase tracking-wider">Identity</label>
+                                        <label className="block text-xs font-bold text-gold-500 mb-2 uppercase tracking-wider">Name</label>
                                         <input
                                             type="text"
                                             name="name"
@@ -608,7 +608,7 @@ const Home = () => {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-bold text-gold-500 mb-2 uppercase tracking-wider">Frequency</label>
+                                        <label className="block text-xs font-bold text-gold-500 mb-2 uppercase tracking-wider">Email</label>
                                         <input
                                             type="email"
                                             name="email"
@@ -620,7 +620,7 @@ const Home = () => {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-xs font-bold text-gold-500 mb-2 uppercase tracking-wider">Transmission</label>
+                                        <label className="block text-xs font-bold text-gold-500 mb-2 uppercase tracking-wider">Message</label>
                                         <textarea
                                             name="message"
                                             required
@@ -639,7 +639,7 @@ const Home = () => {
                                         {isSubmitting ? (
                                             <Loader2 className="animate-spin" />
                                         ) : (
-                                            <>Send Transmission <Send size={18} /></>
+                                            <>Send Message <Send size={18} /></>
                                         )}
                                     </button>
                                     {submitStatus === 'success' && (
@@ -648,7 +648,7 @@ const Home = () => {
                                             animate={{ opacity: 1 }}
                                             className="text-green-400 text-center text-sm mt-2"
                                         >
-                                            Transmission Received. Stand by.
+                                            Message Received. I'll get back to you soon.
                                         </motion.p>
                                     )}
                                     {submitStatus === 'missing_config' && (
