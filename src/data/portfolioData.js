@@ -1,30 +1,50 @@
 export const skills = [
-  { name: 'Python', level: 95, icon: '🐍' },
-  { name: 'FastAPI / Django', level: 90, icon: '⚡' },
-  { name: 'Backend Architecture', level: 88, icon: '🏗️' },
-  { name: 'PostgreSQL / MySQL', level: 85, icon: '🗄️' },
-  { name: 'Docker & CI/CD', level: 80, icon: '🐳' },
-  { name: 'API Design', level: 92, icon: '🔌' }
+  {
+    category: "Backend Architecture",
+    items: [
+      { name: 'Django / FastAPI', level: 95, icon: '⚡' },
+      { name: 'Rust', level: 75, icon: '🦀' },
+      { name: 'PostgreSQL', level: 90, icon: '🗄️' },
+      { name: 'Microservices', level: 85, icon: '🧩' }
+    ]
+  },
+  {
+    category: "Security Moat",
+    items: [
+      { name: 'Zero-Trust Arch.', level: 88, icon: '🛡️' },
+      { name: 'System Hardening', level: 92, icon: '🏰' },
+      { name: 'AuthZ / OAuth2', level: 90, icon: '🔑' }
+    ]
+  },
+  {
+    category: "AI Research",
+    items: [
+      { name: 'Gemini API', level: 95, icon: '✨' },
+      { name: 'Model Evaluation', level: 85, icon: '📊' },
+      { name: 'USSD-AI Gateways', level: 80, icon: '📱' },
+      { name: 'RAG Pipelines', level: 88, icon: '🧠' }
+    ]
+  }
 ];
 
 export const projects = [
   {
-    title: 'Saibae AI Agent',
-    desc: 'Context-aware AI assistant built with Python & LLMs.',
-    tags: ['Python', 'AI', 'FastAPI'],
+    title: 'KukuConnect (Flagship)',
+    desc: 'Case Study in Applied AI Safety. Mitigating hallucinations in veterinary diagnostics using Gemini API and RAG, secured by a Zero-Trust data pipeline.',
+    tags: ['Gemini API', 'RAG', 'Zero-Trust', 'FastAPI'],
+    status: 'Applied Research'
+  },
+  {
+    title: 'Saibae: A Study in Autonomous Agent Alignment',
+    desc: 'Technical exploration of constrained behavior and safe user-interaction design in autonomous agents.',
+    tags: ['Python', 'Alignment Research', 'NLP'],
     status: 'Active'
   },
   {
     title: 'ALX Travel App',
-    desc: 'A robust booking and itinerary management system built for scalability.',
+    desc: 'Robust booking and itinerary management system built for scalability.',
     tags: ['Python', 'Django', 'PostgreSQL'],
     status: 'Production'
-  },
-  {
-    title: 'Poultry Management API',
-    desc: 'Bespoke API for livestock tracking, analytics, and resource optimization.',
-    tags: ['FastAPI', 'Analytics', 'React'],
-    status: 'Live'
   },
   {
     title: 'Secure API Gateway',
@@ -36,53 +56,53 @@ export const projects = [
 
 export const services = [
   {
-    title: 'Backend Development',
+    title: 'Backend Architecture',
     icon: '⚙️',
-    desc: 'Building robust, scalable server-side applications with Python & Node.js',
-    features: ['API Design', 'Microservices', 'Database Architecture']
+    desc: 'Building robust, scalable server-side systems with Django, Rust, and FastAPI.',
+    features: ['High-performance APIs', 'Microservices', 'Database Design']
   },
   {
-    title: 'System Architecture',
-    icon: '🏗️',
-    desc: 'Designing resilient infrastructure for high-load applications',
-    features: ['Cloud Deployment', 'Dockerization', 'CI/CD Pipelines']
+    title: 'AI Safety & Integration',
+    icon: '🧠',
+    desc: 'Architecting secure, reliable integrations for frontier models.',
+    features: ['RAG Pipelines', 'Model Evaluation', 'Prompt Engineering']
   },
   {
-    title: 'API Integration',
-    icon: '🔌',
-    desc: 'Seamlessly connecting services and third-party tools',
-    features: ['Payment Gateways', 'AI Integration', 'Real-time Data']
+    title: 'Security Engineering',
+    icon: '🛡️',
+    desc: 'Hardening digital infrastructure for high-stakes environments.',
+    features: ['Zero-Trust', 'Penetration Testing', 'Secure Audits']
   }
 ];
 
 export const testimonials = [
   {
-    text: "Derick's backend architecture scaled effortlessly as our user base grew. His attention to database optimization is unmatched.",
+    text: "Derick's approach to AI safety in agricultural diagnostics is groundbreaking. He doesn't just build; he secures.",
     name: "Sarah Mitchell",
     initials: "SM",
-    role: "CTO",
-    company: "TechStart Inc."
+    role: "Research Director",
+    company: "AgriTech Labs"
   },
   {
-    text: "The API Derick designed for us is rock-solid. Documentation, error handling, and performance are all top-tier.",
+    text: "The zero-trust pipeline Derick architected for us has saved us from critical data leaks. His security-first mindset is rare.",
     name: "James Omondi",
     initials: "JO",
-    role: "Head of Engineering",
+    role: "CTO",
     company: "DataSecure Kenya"
   },
   {
-    text: "A developer who actually understands deployment. Derick set up our CI/CD pipelines and Docker containers perfectly.",
-    name: "Maria Santos",
-    initials: "MS",
-    role: "Product Manager",
-    company: "CloudFlow Solutions"
-  },
-  {
-    text: "Working with Derick on our inventory system API was a breeze. He delivers clean, maintainable code.",
+    text: "Derick bridged the gap between complex AI models and usable USSD interfaces for our farmers.",
     name: "David Kimani",
     initials: "DK",
-    role: "Founder & CEO",
-    company: "AgriTech Africa"
+    role: "Founder",
+    company: "FarmConnect"
+  },
+  {
+    text: "A true backend architect. The system handles massive loads without flinching.",
+    name: "Maria Santos",
+    initials: "MS",
+    role: "Lead Engineer",
+    company: "CloudFlow"
   }
 ];
 

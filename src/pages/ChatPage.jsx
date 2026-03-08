@@ -9,7 +9,7 @@ const ChatPage = () => {
     const [messages, setMessages] = useState([
         {
             id: 1,
-            text: "Hi! I’m Ruby, Derick Mokua’s AI assistant. How can I help you today?",
+            text: "Hi! I’m Ruby, Derick’s AI assistant. Ask me about his work in Backend Architecture and AI Safety.",
             sender: 'bot',
             timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         }

@@ -189,7 +189,7 @@ const Home = () => {
                         <Link to="/chat" className="text-sm font-medium hover:text-gold-400 transition-colors flex items-center gap-1">
                             <MessageCircle size={16} /> Chat
                         </Link>
-                        <a href="https://github.com/derickmokua" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-gold-400 transition-colors ml-4">
+                        <a href="https://github.com/derickmokua" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" className="text-zinc-500 hover:text-gold-400 transition-colors ml-4">
                             <Github size={20} />
                         </a>
                     </div>
@@ -263,9 +263,8 @@ const Home = () => {
                             transition={{ delay: 0.4 }}
                             className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white leading-tight"
                         >
-                            I build scalable systems <br />
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-500 to-gold-700">
-                                that just work.
+                                Backend Architect & AI Safety Researcher
                             </span>
                         </motion.h1>
 
@@ -288,8 +287,7 @@ const Home = () => {
                             transition={{ delay: 0.8 }}
                             className="max-w-xl text-lg text-zinc-400 leading-relaxed border-l-2 border-zinc-900 pl-6 mb-8"
                         >
-                            Backend Developer | Python, FastAPI & Django. Building Deployable APIs.
-                            Creator of <strong className="text-gold-400">Saibae</strong>.
+                            Architecting secure, frontier-model integrations for high-stakes, resource-constrained environments.
                         </motion.p>
 
                         <motion.div
@@ -318,10 +316,10 @@ const Home = () => {
                         <div className="w-full bg-zinc-900/30 border border-zinc-800 p-8 md:p-12 rounded-3xl hover:border-gold-500/30 transition-all">
                             <div className="space-y-6 text-zinc-400 leading-relaxed text-lg text-left">
                                 <p>
-                                    I build scalable backend systems using Python and Django/FastAPI. My focus is API design, database architecture, asynchronous processing, and deploying real-world applications.
+                                    My mission is securing critical digital infrastructure in the Global South. I utilize a unique blend of technical expertise and strategic foresight to <strong className="text-gold-400">bridge engineering depth with venture-scale safety governance</strong>.
                                 </p>
                                 <p>
-                                    Security is applied as part of all my projects to ensure reliable, robust systems. My go-to tools are <strong className="text-gold-400">Python</strong>, <strong className="text-gold-400">FastAPI</strong>, <strong className="text-gold-400">PostgreSQL</strong>, and <strong className="text-gold-400">Docker</strong>.
+                                    I specialize in backend architecture and security moats. I don't just build apps; I engineer resilient systems that withstand adversarial conditions.
                                 </p>
                             </div>
                         </div>
@@ -335,31 +333,34 @@ const Home = () => {
                             <Cpu className="text-gold-500" />
                             <span>Technical_Arsenal</span>
                         </h2>
-                        <motion.div
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            variants={staggerContainer}
-                            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
-                        >
-                            {skills.map((skill) => (
-                                <motion.div variants={fadeInUp} key={skill.name} className="bg-zinc-900/30 border border-zinc-800 hover:border-gold-500/50 p-4 rounded-xl transition-all group hover:-translate-y-1">
-                                    <div className="flex justify-between items-center mb-2">
-                                        <span className="text-2xl">{skill.icon}</span>
-                                        <span className="text-gold-500 font-bold">{skill.level}%</span>
-                                    </div>
-                                    <h3 className="font-medium text-zinc-200 group-hover:text-gold-400 transition-colors">{skill.name}</h3>
-                                    <div className="w-full bg-black h-1.5 rounded-full mt-3 overflow-hidden">
-                                        <motion.div
-                                            initial={{ width: 0 }}
-                                            whileInView={{ width: `${skill.level}%` }}
-                                            transition={{ duration: 1, delay: 0.5 }}
-                                            className="bg-gold-600 h-full rounded-full"
-                                        ></motion.div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {skills.map((category) => (
+                                <motion.div variants={fadeInUp} key={category.category} className="space-y-4">
+                                    <h3 className="text-xl font-bold text-gold-500 border-b border-zinc-800 pb-2 mb-4">{category.category}</h3>
+                                    <div className="space-y-4">
+                                        {category.items.map((skill) => (
+                                            <div key={skill.name} className="bg-zinc-900/30 border border-zinc-800 hover:border-gold-500/50 p-3 rounded-xl transition-all group">
+                                                <div className="flex justify-between items-center mb-1">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-xl">{skill.icon}</span>
+                                                        <span className="font-medium text-zinc-300 group-hover:text-gold-400 transition-colors text-sm">{skill.name}</span>
+                                                    </div>
+                                                    <span className="text-gold-500 font-bold text-xs">{skill.level}%</span>
+                                                </div>
+                                                <div className="w-full bg-black h-1 rounded-full mt-2 overflow-hidden">
+                                                    <motion.div
+                                                        initial={{ width: 0 }}
+                                                        whileInView={{ width: `${skill.level}%` }}
+                                                        transition={{ duration: 1, delay: 0.2 }}
+                                                        className="bg-gold-600 h-full rounded-full"
+                                                    ></motion.div>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
                                 </motion.div>
                             ))}
-                        </motion.div>
+                        </div>
                     </FadeIn>
                 </section>
 
@@ -411,6 +412,7 @@ const Home = () => {
                         <div className="flex flex-col gap-8">
 
                             {/* Project 1: Saibae (Main) */}
+                            {/* Project 1: KukuConnect (Main) */}
                             <motion.div
                                 whileHover={{ y: -5 }}
                                 className="w-full bg-zinc-900/30 border border-zinc-800 p-8 rounded-3xl hover:border-gold-500/30 transition-all duration-300 group relative overflow-hidden"
@@ -424,26 +426,27 @@ const Home = () => {
                                                 <Cpu size={28} />
                                             </div>
                                             <div className="flex gap-2 md:hidden">
-                                                <a href="#" className="text-zinc-600 group-hover:text-gold-200 transition-colors cursor-pointer"><ExternalLink size={20} /></a>
+                                                <a href="https://kukuconnect.vercel.app" aria-label="View KukuConnect Project" className="text-zinc-600 group-hover:text-gold-200 transition-colors cursor-pointer"><ExternalLink size={20} /></a>
                                             </div>
                                         </div>
 
-                                        <h3 className="text-3xl font-bold text-white mb-3 group-hover:text-gold-300 transition-colors">Saibae AI Agent</h3>
+                                        <h3 className="text-3xl font-bold text-white mb-3 group-hover:text-gold-300 transition-colors">KukuConnect: Case Study</h3>
                                         <p className="text-zinc-400 mb-6 text-lg leading-relaxed">
-                                            A context-aware AI assistant built with Python & LLMs. Features personality profiling via Spotify API and bespoke user interactions.
+                                            A flagship implementation of <strong className="text-gold-400">Gemini API</strong> and <strong className="text-gold-400">RAG architecture</strong> to mitigate hallucinations in veterinary diagnostics. Features a Zero-Trust data pipeline protecting sensitive agricultural data.
                                         </p>
 
                                         <div className="flex flex-wrap gap-2 text-xs font-mono text-zinc-500">
-                                            <span className="bg-black border border-zinc-900 px-3 py-1.5 rounded-lg text-gold-200/80">Python</span>
-                                            <span className="bg-black border border-zinc-900 px-3 py-1.5 rounded-lg text-gold-200/80">OpenAI</span>
+                                            <span className="bg-black border border-zinc-900 px-3 py-1.5 rounded-lg text-gold-200/80">Gemini API</span>
+                                            <span className="bg-black border border-zinc-900 px-3 py-1.5 rounded-lg text-gold-200/80">RAG</span>
+                                            <span className="bg-black border border-zinc-900 px-3 py-1.5 rounded-lg text-gold-200/80">Zero-Trust</span>
                                         </div>
                                     </div>
 
                                     <div className="hidden md:flex flex-col items-end justify-between">
                                         <div className="px-3 py-1 rounded-full bg-gold-900/10 text-gold-400 text-xs font-bold border border-gold-500/20 flex items-center gap-1">
-                                            <span className="w-1.5 h-1.5 bg-gold-500 rounded-full animate-pulse"></span> ONLINE
+                                            <span className="w-1.5 h-1.5 bg-gold-500 rounded-full animate-pulse"></span> LIVE
                                         </div>
-                                        <a href="#" className="p-3 border border-zinc-800 rounded-full hover:bg-gold-500 hover:text-black transition-all">
+                                        <a href="https://kukuconnect.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="View KukuConnect Live" className="p-3 border border-zinc-800 rounded-full hover:bg-gold-500 hover:text-black transition-all">
                                             <ExternalLink size={20} />
                                         </a>
                                     </div>
@@ -559,7 +562,7 @@ const Home = () => {
                                             {test.initials}
                                         </div>
                                         <div>
-                                            <h4 className="font-bold text-white">{test.name}</h4>
+                                            <h3 className="font-bold text-white text-base">{test.name}</h3>
                                             <p className="text-xs text-gold-500">{test.role} @ {test.company}</p>
                                         </div>
                                     </div>
@@ -583,8 +586,8 @@ const Home = () => {
                                     Ready to secure your infrastructure or build the next big thing? I'm currently available for new projects.
                                 </p>
                                 <div className="space-y-4">
-                                    <a href="mailto:hello@derickmokua.co.ke" className="flex items-center gap-3 text-zinc-300 hover:text-gold-400 transition-colors">
-                                        <Mail size={20} /> hello@derickmokua.co.ke
+                                    <a href="mailto:derickmokua@outlook.com" className="flex items-center gap-3 text-zinc-300 hover:text-gold-400 transition-colors">
+                                        <Mail size={20} /> derickmokua@outlook.com
                                     </a>
                                     <a href="https://github.com/derickmokua" className="flex items-center gap-3 text-zinc-300 hover:text-gold-400 transition-colors">
                                         <Github size={20} /> github.com/derickmokua
@@ -688,14 +691,14 @@ const Home = () => {
 
                         <div className="flex gap-4">
                             {[
-                                { icon: <Linkedin size={18} />, href: "https://www.linkedin.com/in/derick-mokua-b05165369/", label: "LinkedIn" },
-                                { icon: <Github size={18} />, href: "https://github.com/derickmokua", label: "GitHub", className: "md:hidden" },
-                                { icon: <MessageCircle size={18} />, href: "https://api.whatsapp.com/send?phone=254735122178", label: "WhatsApp" },
-                                { icon: <Phone size={18} />, href: "tel:+254735122178", label: "Call" }
+                                { icon: <Github size={18} />, href: "https://github.com/derickmokua", label: "GitHub" }, // Removed md:hidden to make it visible on desktop since LinkedIn is gone
+                                { icon: <MessageCircle size={18} />, href: "https://api.whatsapp.com/send?phone=254716883375", label: "WhatsApp" },
+                                { icon: <Phone size={18} />, href: "tel:+254716883375", label: "Call" }
                             ].map((social, index) => (
                                 <motion.a
                                     key={index}
                                     href={social.href}
+                                    aria-label={social.label}
                                     whileHover={{ scale: 1.2, color: '#e6b000' }}
                                     className={`relative group text-zinc-300 transition-colors p-2 ${social.className || ''}`}
                                 >
