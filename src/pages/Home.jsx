@@ -191,7 +191,7 @@ const Home = () => {
             >
                 <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                     <Link to="/" onClick={scrollToTop} onDoubleClick={() => setShowBirthdayAnimation(true)} className="text-xl font-bold tracking-tighter text-gold-500 hover:text-gold-400 transition-colors select-none cursor-pointer" title="Double click for a birthday surprise!">
-                        derick_mokua<span className="text-zinc-600">.co.ke</span>
+                        derickmokua<span className="text-zinc-600">.co.ke</span>
                     </Link>
 
                     {/* Desktop Nav */}
