@@ -4,6 +4,7 @@ import { MessageCircle, Send, Bot, Sparkles, User, ArrowLeft } from 'lucide-reac
 import { Link } from 'react-router-dom';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
+import BirthdayAnimation from '../components/effects/BirthdayAnimation';
 
 const ChatPage = () => {
     const [messages, setMessages] = useState([
@@ -17,6 +18,7 @@ const ChatPage = () => {
     const [inputValue, setInputValue] = useState('');
     const [isTyping, setIsTyping] = useState(false);
     const messagesEndRef = useRef(null);
+    const [showChatConfetti, setShowChatConfetti] = useState(false);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -40,6 +42,22 @@ const ChatPage = () => {
         setMessages(prev => [...prev, newUserMessage]);
         setInputValue('');
         setIsTyping(true);
+
+        const cleanedText = inputValue.trim().toLowerCase();
+        if (cleanedText === '/birthday' || cleanedText === 'happy birthday' || cleanedText.includes('happy birthday')) {
+            setShowChatConfetti(true);
+            setTimeout(() => {
+                const newBotMessage = {
+                    id: messages.length + 2,
+                    text: "**Initializing protocol: CAKE_DAY** 🎂\n\nCommencing gold confetti payload... **Happy Birthday, Derick!** Wishing you a secure, high-performance year ahead! 🚀",
+                    sender: 'bot',
+                    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                };
+                setMessages(prev => [...prev, newBotMessage]);
+                setIsTyping(false);
+            }, 800);
+            return;
+        }
 
         try {
             const response = await fetch('/api/chat', {
@@ -220,6 +238,9 @@ const ChatPage = () => {
                     </div>
                 </div>
             </div>
+            {showChatConfetti && (
+                <BirthdayAnimation onComplete={() => setShowChatConfetti(false)} HUDEnabled={false} />
+            )}
         </div>
     );
 };

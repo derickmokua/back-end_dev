@@ -164,3 +164,8 @@ export const typewriterLines = [
   '└─$ cat posts/latest.md',
   '└─$ ./connect.sh'
 ];
+
+export const birthdayConfig = {
+  month: 6, // June
+  day: 11   // 11th (Defaults to today, June 11th, for testing. Can be configured.)
+};

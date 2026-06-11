@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Code, Cpu, Globe, ExternalLink, Github, Mail, Smartphone, Database, Wind, Menu, X, ChevronRight, Star, ArrowUp, Send, Loader2, Linkedin, Phone, MessageCircle } from 'lucide-react';
-import { skills, projects, services, testimonials, blogPosts as staticBlogPosts, navLinks } from '../data/portfolioData';
+import { skills, projects, services, testimonials, blogPosts as staticBlogPosts, navLinks, birthdayConfig } from '../data/portfolioData';
+import BirthdayAnimation from '../components/effects/BirthdayAnimation';
 import useHashnodePosts from '../hooks/useHashnode';
 import ReactMarkdown from 'react-markdown';
 import DOMPurify from 'dompurify';
@@ -45,6 +46,21 @@ const Home = () => {
     const [showAllPosts, setShowAllPosts] = useState(false);
     const fullText = "> initializing_backend_core...";
     const navigate = useNavigate();
+
+    const [showBirthdayAnimation, setShowBirthdayAnimation] = useState(false);
+    const [isBirthday, setIsBirthday] = useState(false);
+
+    useEffect(() => {
+        const today = new Date();
+        const currentMonth = today.getMonth() + 1;
+        const currentDate = today.getDate();
+
+        if (birthdayConfig && currentMonth === birthdayConfig.month && currentDate === birthdayConfig.day) {
+            setIsBirthday(true);
+            setShowBirthdayAnimation(true);
+        }
+    }, []);
+
 
     // Contact Form State
     const [formState, setFormState] = useState({ name: '', email: '', message: '' });
@@ -174,7 +190,7 @@ const Home = () => {
                 className="fixed w-full z-50 bg-black/90 backdrop-blur-md border-b border-zinc-900 shadow-lg shadow-gold-900/5"
             >
                 <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-                    <Link to="/" onClick={scrollToTop} className="text-xl font-bold tracking-tighter text-gold-500 hover:text-gold-400 transition-colors">
+                    <Link to="/" onClick={scrollToTop} onDoubleClick={() => setShowBirthdayAnimation(true)} className="text-xl font-bold tracking-tighter text-gold-500 hover:text-gold-400 transition-colors select-none cursor-pointer" title="Double click for a birthday surprise!">
                         derick_mokua<span className="text-zinc-600">.co.ke</span>
                     </Link>
 
@@ -247,15 +263,32 @@ const Home = () => {
                     <div className="absolute -top-20 -left-20 w-96 h-96 bg-gold-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
                     <div className="relative z-10">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                            className="inline-flex items-center gap-2 px-3 py-1 mb-6 text-xs font-bold tracking-wider text-gold-400 bg-gold-900/10 rounded-full border border-gold-500/20"
-                        >
-                            <span className="w-2 h-2 bg-gold-500 rounded-full animate-pulse"></span>
-                            AVAILABLE FOR HIRE
-                        </motion.div>
+                        <div className="flex flex-wrap gap-3 mb-6 items-center">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.2 }}
+                                className="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold tracking-wider text-gold-400 bg-gold-900/10 rounded-full border border-gold-500/20"
+                            >
+                                <span className="w-2 h-2 bg-gold-500 rounded-full animate-pulse"></span>
+                                AVAILABLE FOR HIRE
+                            </motion.div>
+
+                            {isBirthday && (
+                                <motion.button
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                    onClick={() => setShowBirthdayAnimation(true)}
+                                    className="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold tracking-wider text-black bg-gold-500 hover:bg-gold-400 rounded-full border border-gold-500 shadow-[0_0_15px_rgba(230,176,0,0.4)] cursor-pointer select-none"
+                                    title="It's my birthday today! Click for a surprise!"
+                                >
+                                    <span className="text-sm">🎂</span>
+                                    <span>IT'S MY BIRTHDAY!</span>
+                                </motion.button>
+                            )}
+                        </div>
 
                         <motion.h1
                             initial={{ opacity: 0, y: 20 }}
@@ -817,7 +850,9 @@ const Home = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-
+            {showBirthdayAnimation && (
+                <BirthdayAnimation HUDEnabled={false} onComplete={() => setShowBirthdayAnimation(false)} />
+            )}
         </div >
     );
 };
