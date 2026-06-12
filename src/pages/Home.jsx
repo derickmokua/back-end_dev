@@ -68,7 +68,8 @@ const Home = () => {
     const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
 
     // Blog Data
-    const { posts, loading, error } = useHashnodePosts();
+    const { posts: apiPosts, loading, error } = useHashnodePosts();
+    const posts = (apiPosts && apiPosts.length > 0) ? apiPosts : staticBlogPosts;
 
     // Typing effect
     useEffect(() => {
@@ -719,7 +720,7 @@ const Home = () => {
                     <div className="flex flex-col md:flex-row items-center justify-between gap-6">
 
                         <div className="flex flex-col gap-1 mb-4 md:mb-0 text-center md:text-left">
-                            <p>© 2025 Derick Mokua. All Rights Reserved.</p>
+                            <p>© 2026 Derick Mokua. All Rights Reserved.</p>
                         </div>
 
                         <div className="flex gap-4">
@@ -786,12 +787,23 @@ const Home = () => {
                                 className="absolute top-4 right-4 text-zinc-400 hover:text-white bg-black/50 p-2 rounded-full"
                                 aria-label="Close modal"
                             >
-                                <X size={20} />
+                                        <X size={20} />
                             </button>
 
                             <div className="p-8">
                                 <div className="text-gold-500 font-mono text-sm mb-4">{selectedBlogPost.date}</div>
                                 <h2 className="text-3xl font-bold text-white mb-6">{selectedBlogPost.title}</h2>
+
+                                {selectedBlogPost.link && (
+                                    <a
+                                        href={selectedBlogPost.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-2 text-sm text-gold-500 hover:text-gold-400 font-mono mb-6 border border-gold-500/20 bg-gold-500/5 px-4 py-2 rounded-lg hover:bg-gold-500/10 transition-all"
+                                    >
+                                        <ExternalLink size={14} /> Read full article on Hashnode
+                                    </a>
+                                )}
 
                                 <div className="prose prose-invert prose-gold max-w-none">
                                     {/* Render dynamic markdown content if available */}
@@ -851,7 +863,7 @@ const Home = () => {
                 )}
             </AnimatePresence>
             {showBirthdayAnimation && (
-                <BirthdayAnimation HUDEnabled={false} onComplete={() => setShowBirthdayAnimation(false)} />
+                <BirthdayAnimation HUDEnabled={true} onComplete={() => setShowBirthdayAnimation(false)} />
             )}
         </div >
     );

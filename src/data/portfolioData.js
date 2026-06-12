@@ -108,39 +108,37 @@ export const testimonials = [
 
 export const blogPosts = [
   {
-    title: "Deconstructing the Latest Zero-Day Exploit",
-    date: "Oct 15, 2025",
-    desc: "A deep dive into the technical details of the recent CVE-2025-XXXX vulnerability and how we mitigated it.",
-    tags: ["Cybersecurity", "Exploit", "Analysis"],
+    title: "Beyond the Perimeter: Why Zero Trust is the New Standard for Modern Security",
+    date: "Jan 15, 2026",
+    desc: "In the early days of the internet, cybersecurity was built like a medieval castle: thick walls, a moat, and a drawbridge. In today's world of remote work and cloud infrastructure, the castle has no walls.",
+    tags: ["Security", "Zero-Trust", "Cybersecurity"],
+    link: "https://derickmokua.hashnode.dev/beyond-the-perimeter-why-zero-trust-is-the-new-standard-for-modern-security",
     content: [
-      "The discovery of CVE-2025-XXXX sent shockwaves through the InfoSec community. It wasn't just another buffer overflow; it was a sophisticated logic flaw in a widely used authentication protocol. In this post, I'll walk you through the exploit chain, from initial discovery to reliable execution.",
-      "The vulnerability stems from a race condition in the session validation logic. By flooding the auth endpoint with concurrent requests using a specific timing vector, an attacker could trick the server into issuing a valid session token for an arbitrary user ID.",
-      "Our mitigation strategy involved implementing a strict mutex lock on the validation routine and introducing a cryptographically secure nonce for every handshake. This effectively neutralized the race condition without impacting performance.",
-      "Remember: complexity is the enemy of security. The more intricate your state management, the more hiding spots for bugs like this one."
+      "In the early days of the internet, cybersecurity was built like a medieval castle: thick walls, a deep moat, and a single drawbridge. If you were inside the walls, you were trusted. If you were outside, you weren't. But in today’s world of remote work, mobile devices, and sprawling cloud infrastructures, the 'castle' has no walls.",
+      "Zero Trust is a security framework based on the premise: 'Never trust, always verify.' It requires all users, whether inside or outside the organization's network, to be authenticated, authorized, and continuously validated for security configuration and posture before being granted or keeping access to applications and data.",
+      "By decoupling access from network location, we enforce micro-segmentation and least-privilege principles, significantly reducing the lateral movement capabilities of potential attackers."
     ]
   },
   {
-    title: "Building a Secure API with Node.js and JWT",
-    date: "Sep 28, 2025",
-    desc: "Step-by-step guide on implementing robust authentication and authorization using JSON Web Tokens.",
-    tags: ["Node.js", "Security", "Backend"],
+    title: "Defensive Security: Building Resilient Systems in an Ever-Evolving Threat Landscape",
+    date: "Jan 9, 2026",
+    desc: "In today's interconnected digital world, organizations face an unprecedented array of cyber threats. We explore defense-in-depth strategies to build truly resilient infrastructures.",
+    tags: ["Security", "Defensive Security", "Infrastructure"],
+    link: "https://derickmokua.hashnode.dev/defensive-security-building-resilient-systems-in-an-ever-evolving-threat-landscape-1-1",
     content: [
-      "Authentication is the gatekeeper of your application. Get it wrong, and nothing else matters. Today, we're building a production-ready authentication system using Node.js, Express, and JSON Web Tokens (JWT).",
-      "We'll start by defining our schema. Storing passwords? Never. We'll use Argon2 for hashing, as it provides superior resistance to GPU-based cracking attempts compared to bcrypt.",
-      "Next, the JWT strategy. We'll implement short-lived access tokens (15 minutes) paired with rotating refresh tokens stored in HTTP-only cookies. This prevents XSS attacks from stealing tokens while mitigating the risk of CSRF.",
-      "Finally, let's talk about middleware. We'll write a custom 'authorize' middleware that validates the token signature, checks for revocation in Redis, and attaches the user context to the request object."
+      "In today's interconnected digital world, organizations face an unprecedented array of cyber threats. From sophisticated nation-state attacks to opportunistic ransomware campaigns, the modern threat landscape demands a robust and comprehensive approach to protection. This is where defensive security comes into play-a multifaceted strategy that goes beyond simple firewalls and antivirus software to create truly resilient systems.",
+      "Building resilient systems requires defense-in-depth, continuous monitoring, and automated incident response pipelines. We must assume that breach is inevitable and focus on minimizing detection and containment times."
     ]
   },
   {
-    title: "My Penetration Testing Workflow",
-    date: "Sep 10, 2025",
-    desc: "An overview of the tools, techniques, and methodologies I use to uncover critical vulnerabilities.",
-    tags: ["Pentesting", "Workflow", "Tools"],
+    title: "Ethical Hacking 101: Understanding the Rules of Engagement and Data Protection",
+    date: "Jan 4, 2026",
+    desc: "Penetration testing is critical to verifying security posture, but its effectiveness hinges entirely on adhering to strict ethical and legal guidelines.",
+    tags: ["Ethical Hacking", "Pentesting", "Security"],
+    link: "https://derickmokua.hashnode.dev/ethical-hacking-101-understanding-the-rules-of-engagement-and-data-protection",
     content: [
-      "Every penetration test is a new puzzle, but a consistent workflow is what separates the pros from the script kiddies. My process follows the PTES standard but tweaked for modern web architectures.",
-      "Reconnaissance is 90% of the work. I start with passive subdomain enumeration using Amass and Subfinder, followed by active probing with Nmap and masscan. The goal is to maximize the attack surface before sending a single exploit.",
-      "For web apps, Burp Suite Pro is my command center. I rely heavily on custom extensions to hunt for IDORs and business logic flaws—vulnerabilities that automated scanners usually miss.",
-      "Reporting is the final, critical step. A vulnerability isn't fixed until the developer understands it. I prioritize writing clear, reproducible proof-of-concept exploits along with pragmatic remediation advice."
+      "Penetration testing is a critical practice for verifying an organization's security posture. However, its effectiveness hinges entirely on adherence to strict ethical and legal guidelines. Ethical hacking, or pen testing, is not just about finding flaws; it's about doing so responsibly and legally.",
+      "Understanding scope, rules of engagement, and safe handling of sensitive target data is paramount for any security assessment. Without proper authorization and planning, pen testing is indistinguishable from malicious activity."
     ]
   }
 ];
@@ -167,5 +165,5 @@ export const typewriterLines = [
 
 export const birthdayConfig = {
   month: 6, // June
-  day: 11   // 11th (Defaults to today, June 11th, for testing. Can be configured.)
+  day: 12   // 12th
 };

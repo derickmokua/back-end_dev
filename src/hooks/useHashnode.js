@@ -7,7 +7,8 @@ const useHashnodePosts = () => {
 
   // Use the host provided by the user
   const host = import.meta.env.VITE_HASHNODE_HOST || 'derickmokua.hashnode.dev';
-  const apiUrl = import.meta.env.VITE_HASHNODE_API_URL || 'https://gql.hashnode.com';
+  const rawApiUrl = import.meta.env.VITE_HASHNODE_API_URL || 'https://gql.hashnode.com';
+  const apiUrl = rawApiUrl.replace(/\/$/, '');
 
   useEffect(() => {
     // console.log('Hashnode Hook Initialized');
