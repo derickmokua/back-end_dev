@@ -47,7 +47,7 @@ const Home = () => {
     const fullText = "> initializing_backend_core...";
     const navigate = useNavigate();
 
-    const [showBirthdayAnimation, setShowBirthdayAnimation] = useState(false);
+    const [showBirthdayHUD, setShowBirthdayHUD] = useState(false);
     const [isBirthday, setIsBirthday] = useState(false);
 
     useEffect(() => {
@@ -57,7 +57,6 @@ const Home = () => {
 
         if (birthdayConfig && currentMonth === birthdayConfig.month && currentDate === birthdayConfig.day) {
             setIsBirthday(true);
-            setShowBirthdayAnimation(true);
         }
     }, []);
 
@@ -191,7 +190,7 @@ const Home = () => {
                 className="fixed w-full z-50 bg-black/90 backdrop-blur-md border-b border-zinc-900 shadow-lg shadow-gold-900/5"
             >
                 <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-                    <Link to="/" onClick={scrollToTop} onDoubleClick={() => setShowBirthdayAnimation(true)} className="text-xl font-bold tracking-tighter text-gold-500 hover:text-gold-400 transition-colors select-none cursor-pointer" title="Double click for a birthday surprise!">
+                    <Link to="/" onClick={scrollToTop} onDoubleClick={() => setShowBirthdayHUD(true)} className="text-xl font-bold tracking-tighter text-gold-500 hover:text-gold-400 transition-colors select-none cursor-pointer" title="Double click for a birthday surprise!">
                         derickmokua<span className="text-zinc-600">.co.ke</span>
                     </Link>
 
@@ -281,7 +280,7 @@ const Home = () => {
                                     animate={{ opacity: 1, scale: 1 }}
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
-                                    onClick={() => setShowBirthdayAnimation(true)}
+                                    onClick={() => setShowBirthdayHUD(true)}
                                     className="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold tracking-wider text-black bg-gold-500 hover:bg-gold-400 rounded-full border border-gold-500 shadow-[0_0_15px_rgba(230,176,0,0.4)] cursor-pointer select-none"
                                     title="It's my birthday today! Click for a surprise!"
                                 >
@@ -862,8 +861,12 @@ const Home = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-            {showBirthdayAnimation && (
-                <BirthdayAnimation HUDEnabled={true} onComplete={() => setShowBirthdayAnimation(false)} />
+            {showBirthdayHUD ? (
+                <BirthdayAnimation HUDEnabled={true} onComplete={() => setShowBirthdayHUD(false)} />
+            ) : (
+                isBirthday && (
+                    <BirthdayAnimation HUDEnabled={false} persist={true} />
+                )
             )}
         </div >
     );

@@ -2,13 +2,18 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Sparkles, Terminal, Cake, Gift } from 'lucide-react';
 
-const BirthdayAnimation = ({ onComplete, HUDEnabled = true }) => {
+const BirthdayAnimation = ({ onComplete, HUDEnabled = true, persist = false }) => {
   const canvasRef = useRef(null);
   const [showHUD, setShowHUD] = useState(HUDEnabled);
   const [terminalText, setTerminalText] = useState('');
   const textIndexRef = useRef(0);
 
   const fullGreetingText = `> INITIALIZING PROTOCOL: CAKE_DAY_GREETING\n> STATUS: SECURE CONNECTION ESTABLISHED\n> HOST: DERICK MOKUA\n> SYSTEM MESSAGE: Wishing you a brilliant, secure, and glitch-free birthday! Keep architecting resilient systems. Happy Birthday, Derick! 🎉`;
+
+  // Synchronize showHUD state with HUDEnabled prop
+  useEffect(() => {
+    setShowHUD(HUDEnabled);
+  }, [HUDEnabled]);
 
   // Typing effect inside HUD
   useEffect(() => {
@@ -23,7 +28,7 @@ const BirthdayAnimation = ({ onComplete, HUDEnabled = true }) => {
       } else {
         clearInterval(interval);
       }
-    }, 15);
+    }, 20);
 
     return () => clearInterval(interval);
   }, [showHUD]);
@@ -37,20 +42,20 @@ const BirthdayAnimation = ({ onComplete, HUDEnabled = true }) => {
     }
   };
 
-  // Auto close HUD after 15 seconds, or clean up silent animation after 30 seconds
+  // Auto close HUD after 15 seconds, or clean up silent animation after 30 seconds (if not persisting)
   useEffect(() => {
     if (HUDEnabled) {
       const timer = setTimeout(() => {
         handleClose();
       }, 15000);
       return () => clearTimeout(timer);
-    } else {
+    } else if (!persist) {
       const timer = setTimeout(() => {
         if (onComplete) onComplete();
       }, 30000); // 30 seconds for background-only animations
       return () => clearTimeout(timer);
     }
-  }, [HUDEnabled, onComplete]);
+  }, [HUDEnabled, persist, onComplete]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
