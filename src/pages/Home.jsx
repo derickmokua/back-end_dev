@@ -27,7 +27,6 @@ import {
   blogPosts as staticBlogPosts,
   birthdayConfig
 } from "../data/portfolioData";
-import { useCrt } from "../components/CrtContext";
 import CyberGrid from "../components/CyberGrid";
 import TelemetryStream from "../components/TelemetryStream";
 import ArchitectureDiagram from "../components/ArchitectureDiagram";
@@ -39,7 +38,6 @@ import DOMPurify from "dompurify";
 import { marked } from "marked";
 
 export default function Home() {
-  const { isCrtActive, toggleCrt } = useCrt();
   const [typedHero, setTypedHero] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -158,15 +156,6 @@ export default function Home() {
     }
   };
 
-  const asciiArt = `
-┌────────────────────────────────────────────────────────┐
-│  __  __  ___  _  _  _  _  __    __  ___                │
-│ |  \\/  |/   \\| |/ /| |/ /|  \\  /  \\/ __|  v3.12.0      │
-│ | |\\/| | | | |  ' / |  ' /| __|| || \\__ \\  SECURE HOST  │
-│ |_|  |_|\\___/|_|\\_\\|_|\\_\\|_|__| \\__/\\___/                │
-└────────────────────────────────────────────────────────┘
-  `;
-
   return (
     <div className="min-h-screen bg-terminal-bg text-terminal-text font-mono selection:bg-terminal-green selection:text-black overflow-x-hidden relative">
       
@@ -204,23 +193,27 @@ export default function Home() {
                 <Terminal size={12} /> Chat
               </Link>
 
-              <button
-                onClick={toggleCrt}
-                className="px-2.5 py-1 border border-terminal-green/30 text-terminal-green hover:bg-terminal-green/5 rounded transition-all focus:outline-none"
-                title="Toggle retro screen scanline overlay"
+              <a
+                href="https://github.com/derickmokua"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-1 border border-terminal-green/30 text-terminal-green hover:bg-terminal-green/5 rounded transition-all focus:outline-none"
+                title="View GitHub Profile"
               >
-                CRT {isCrtActive ? "OFF" : "ON"}
-              </button>
+                <Github size={16} />
+              </a>
             </div>
 
             {/* Mobile Toggle */}
             <div className="flex md:hidden items-center gap-3">
-              <button
-                onClick={toggleCrt}
-                className="px-2 py-0.5 border border-terminal-green/20 text-terminal-green rounded text-[10px]"
+              <a
+                href="https://github.com/derickmokua"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-1 border border-terminal-green/20 text-terminal-green rounded"
               >
-                CRT
-              </button>
+                <Github size={16} />
+              </a>
               <button
                 className="text-terminal-green"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -268,11 +261,6 @@ export default function Home() {
 
             <div className="space-y-6">
               
-              {/* ASCII Art Signature Logo */}
-              <pre className="hidden md:block text-[9px] leading-tight text-terminal-green/45 select-none font-mono">
-                {asciiArt}
-              </pre>
-
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-terminal-green bg-terminal-green/5 rounded border border-terminal-green/20">
                 <span className="w-1.5 h-1.5 bg-terminal-green rounded-full animate-ping" />
                 STATUS: SECURE_TUNNEL_CONNECTED
