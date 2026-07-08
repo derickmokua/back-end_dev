@@ -105,7 +105,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="min-h-screen bg-terminal-bg text-terminal-text font-mono flex flex-col selection:bg-terminal-green selection:text-black">
+    <div className="h-full bg-terminal-bg text-terminal-text font-mono flex flex-col selection:bg-terminal-green selection:text-black">
       {/* Header */}
       <header className="bg-terminal-bg/85 backdrop-blur-md border-b border-terminal-green/10 p-4 sticky top-0 z-10 select-none shadow-lg">
         <div className="max-w-4xl mx-auto flex items-center justify-between">

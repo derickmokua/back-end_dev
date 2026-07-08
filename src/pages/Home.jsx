@@ -27,7 +27,6 @@ import {
   blogPosts as staticBlogPosts,
   birthdayConfig
 } from "../data/portfolioData";
-import MatrixRain from "../components/MatrixRain";
 import ArchitectureDiagram from "../components/ArchitectureDiagram";
 import DecryptGame from "../components/DecryptGame";
 import RubyChatbot from "../components/RubyChatbot";
@@ -86,11 +85,16 @@ export default function Home() {
 
   // Scroll listener
   useEffect(() => {
-    const handleScroll = () => {
-      setShowBackToTop(window.scrollY > 300);
+    const handleScroll = (e) => {
+      setShowBackToTop(e.target.scrollTop > 300);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const scrollContainer = document.getElementById('terminal-scroll-container');
+    if (scrollContainer) {
+      scrollContainer.addEventListener("scroll", handleScroll);
+    }
+    return () => {
+      if (scrollContainer) scrollContainer.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   // Form handler
@@ -142,32 +146,38 @@ export default function Home() {
     e.preventDefault();
     setIsMenuOpen(false);
     const element = document.querySelector(href);
-    if (element) {
+    const scrollContainer = document.getElementById('terminal-scroll-container');
+    if (element && scrollContainer) {
       const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = window.pageYOffset + elementPosition - headerOffset;
-      window.scrollTo({
+      const containerTop = scrollContainer.getBoundingClientRect().top;
+      const offsetPosition = scrollContainer.scrollTop + elementPosition - containerTop - headerOffset;
+      scrollContainer.scrollTo({
         top: offsetPosition,
         behavior: "smooth"
       });
     }
   };
 
-  return (
-    <div className="min-h-screen bg-terminal-bg text-terminal-text font-mono selection:bg-terminal-green selection:text-black overflow-x-hidden relative">
-      
-      {/* Subtle digital rain background layer */}
-      <MatrixRain />
+  const scrollToTop = () => {
+    const scrollContainer = document.getElementById('terminal-scroll-container');
+    if (scrollContainer) {
+      scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
+  return (
+    <div className="min-h-full bg-terminal-bg text-terminal-text font-mono selection:bg-terminal-green selection:text-black relative">
+      
       {/* Main content layers */}
       <div className="relative z-10">
         
         {/* Navbar */}
-        <nav className="fixed w-full z-40 bg-terminal-bg/90 backdrop-blur-md border-b border-terminal-green/10 shadow-lg shadow-black/50">
+        <nav className="sticky top-0 w-full z-40 bg-terminal-bg/90 backdrop-blur-md border-b border-terminal-green/10 shadow-lg shadow-black/50">
           <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <Link
               to="/"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              onClick={scrollToTop}
               className="text-lg font-bold tracking-tighter hover:glow-green transition-all flex items-center gap-0.5"
             >
               <span className="text-terminal-muted">root@</span>
@@ -680,7 +690,7 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              onClick={scrollToTop}
               className="fixed bottom-6 left-6 z-35 p-2 bg-terminal-bg border border-terminal-green/20 text-terminal-green rounded hover:scale-105 transition-all focus:outline-none"
               title="Return to Core OS"
             >
