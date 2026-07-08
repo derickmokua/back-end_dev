@@ -18,6 +18,14 @@ module.exports = {
           800: '#4d3b00',
           900: '#1a1400',
         },
+        terminal: {
+          bg: '#0a0a0f',
+          card: '#111113',
+          green: '#00ff9f',
+          cyan: '#00e5ff',
+          text: '#e5e7eb',
+          muted: '#9ca3af',
+        }
       },
     },
   },

@@ -1,248 +1,216 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, Send, Bot, Sparkles, User, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { marked } from 'marked';
-import DOMPurify from 'dompurify';
-import BirthdayAnimation from '../components/effects/BirthdayAnimation';
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Send, Bot, User, ArrowLeft, Loader2 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { marked } from "marked";
+import DOMPurify from "dompurify";
+import BirthdayAnimation from "../components/effects/BirthdayAnimation";
 
-const ChatPage = () => {
-    const [messages, setMessages] = useState([
-        {
-            id: 1,
-            text: "Hi! I’m Ruby, Derick’s AI assistant. Ask me about his work in Backend Architecture and AI Safety.",
-            sender: 'bot',
-            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        }
-    ]);
-    const [inputValue, setInputValue] = useState('');
-    const [isTyping, setIsTyping] = useState(false);
-    const messagesEndRef = useRef(null);
-    const [showChatConfetti, setShowChatConfetti] = useState(false);
+export default function ChatPage() {
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      text: "Connection established. I am **Ruby**, Derick's AI secure operations proxy. Query me regarding his work in Backend Architecture, Zero-Trust, or LLM safety.",
+      sender: "bot",
+      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    },
+  ]);
+  const [inputValue, setInputValue] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const containerRef = useRef(null);
+  const [showChatConfetti, setShowChatConfetti] = useState(false);
 
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  const scrollToBottom = () => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping]);
+
+  const handleSendMessage = async (e) => {
+    e.preventDefault();
+    if (!inputValue.trim() || isTyping) return;
+
+    const userMessageText = inputValue.trim();
+    const userMsg = {
+      id: Date.now(),
+      text: userMessageText,
+      sender: "user",
+      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
 
-    useEffect(() => {
-        scrollToBottom();
-    }, [messages, isTyping]);
+    setMessages((prev) => [...prev, userMsg]);
+    setInputValue("");
+    setIsTyping(true);
 
-    const handleSendMessage = async (e) => {
-        e.preventDefault();
-        if (!inputValue.trim()) return;
-
-        const newUserMessage = {
-            id: messages.length + 1,
-            text: inputValue,
-            sender: 'user',
-            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    const cleanedText = userMessageText.toLowerCase();
+    if (cleanedText === "/birthday" || cleanedText === "happy birthday" || cleanedText.includes("happy birthday")) {
+      setShowChatConfetti(true);
+      setTimeout(() => {
+        const botMsg = {
+          id: Date.now() + 1,
+          text: "**Initializing protocol: CAKE_DAY** 🎂\n\nCommencing gold confetti payload... **Happy Birthday, Derick!** Wishing you a secure, high-performance year ahead! 🚀",
+          sender: "bot",
+          timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         };
+        setMessages((prev) => [...prev, botMsg]);
+        setIsTyping(false);
+      }, 800);
+      return;
+    }
 
-        setMessages(prev => [...prev, newUserMessage]);
-        setInputValue('');
-        setIsTyping(true);
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userMessageText }),
+      });
 
-        const cleanedText = inputValue.trim().toLowerCase();
-        if (cleanedText === '/birthday' || cleanedText === 'happy birthday' || cleanedText.includes('happy birthday')) {
-            setShowChatConfetti(true);
-            setTimeout(() => {
-                const newBotMessage = {
-                    id: messages.length + 2,
-                    text: "**Initializing protocol: CAKE_DAY** 🎂\n\nCommencing gold confetti payload... **Happy Birthday, Derick!** Wishing you a secure, high-performance year ahead! 🚀",
-                    sender: 'bot',
-                    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                };
-                setMessages(prev => [...prev, newBotMessage]);
-                setIsTyping(false);
-            }, 800);
-            return;
-        }
+      if (!response.ok) throw new Error("API Channel Error");
+      const data = await response.json();
 
-        try {
-            const response = await fetch('/api/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    message: newUserMessage.text,
-                    // We still send history so the context-aware bot works!
-                    history: messages.slice(0, -1) // Exclude the message we just added effectively, or just send all
-                }),
-            });
+      const botMsg = {
+        id: Date.now() + 1,
+        text: data.reply || "Acknowledged. Operational logic completed.",
+        sender: "bot",
+        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      };
 
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+      setMessages((prev) => [...prev, botMsg]);
+    } catch (err) {
+      console.error(err);
+      const errMsg = {
+        id: Date.now() + 1,
+        text: "ALERT: Backend secure connection interrupted. Please re-query database.",
+        sender: "bot",
+        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      };
+      setMessages((prev) => [...prev, errMsg]);
+    } finally {
+      setIsTyping(false);
+    }
+  };
 
-            const data = await response.json();
+  const renderMessageContent = (text) => {
+    try {
+      const parsed = marked.parse(text);
+      const clean = DOMPurify.sanitize(parsed);
+      return <div className="ruby-message font-mono" dangerouslySetInnerHTML={{ __html: clean }} />;
+    } catch (e) {
+      return <p className="ruby-message whitespace-pre-wrap font-mono">{text}</p>;
+    }
+  };
 
-            if (data.reply) {
-                const newBotMessage = {
-                    id: messages.length + 2,
-                    text: data.reply,
-                    sender: 'bot',
-                    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                };
-                setMessages(prev => [...prev, newBotMessage]);
-            } else {
-                console.error("API Error or Empty Response", data);
-            }
-        } catch (error) {
-            console.error("Fetch Error:", error);
-            const errorMessage = {
-                id: messages.length + 2,
-                text: "I am currently experiencing a connection issue. Please try again later.",
-                sender: 'bot',
-                timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-            };
-            setMessages(prev => [...prev, errorMessage]);
-        } finally {
-            setIsTyping(false);
-        }
-    };
-
-    return (
-        <div className="min-h-screen bg-black text-zinc-200 font-mono flex flex-col">
-            {/* Header */}
-            <motion.header
-                initial={{ y: -50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                className="bg-black/80 backdrop-blur-md border-b border-zinc-900 p-4 sticky top-0 z-10"
-            >
-                <div className="max-w-4xl mx-auto flex items-center justify-between">
-                    <Link to="/" className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors">
-                        <ArrowLeft size={20} />
-                        <span className="text-sm font-bold">Return to Base</span>
-                    </Link>
-                    <div className="flex items-center gap-3">
-                        <div className="relative">
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-black shadow-lg shadow-gold-500/20">
-                                <Bot size={22} className="fill-black/20" />
-                            </div>
-                            <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-black rounded-full"></span>
-                        </div>
-                        <div>
-                            <h1 className="font-bold text-white text-lg leading-none">Ruby AI</h1>
-                            <p className="text-xs text-gold-500 font-mono tracking-wide">SECURE_CHANNEL_ACTIVE</p>
-                        </div>
-                    </div>
-                    <div className="w-24"></div> {/* Spacer for centering */}
-                </div>
-            </motion.header>
-
-            {/* Main Chat Area */}
-            <main className="flex-1 max-w-4xl w-full mx-auto p-4 md:p-8 flex flex-col">
-                <div className="flex-1 overflow-y-auto space-y-6 pb-4">
-                    {messages.map((msg) => (
-                        <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            key={msg.id}
-                            className={`flex items-end gap-3 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-                        >
-                            {msg.sender === 'bot' && (
-                                <div className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center flex-shrink-0 mb-1">
-                                    <Bot size={18} className="text-gold-500" />
-                                </div>
-                            )}
-
-                            <div className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'} max-w-[85%] md:max-w-[70%] min-w-0`}>
-                                <div
-                                    className={`px-4 py-3 md:px-5 md:py-3.5 text-sm md:text-base leading-relaxed shadow-lg break-words w-full ${msg.sender === 'user'
-                                        ? 'bg-gold-500 text-black rounded-2xl rounded-tr-sm'
-                                        : 'bg-zinc-900 border border-zinc-800 text-zinc-200 rounded-2xl rounded-tl-sm ruby-message'
-                                        }`}
-                                >
-                                    {msg.sender === 'bot' ? (
-                                        <div
-                                            dangerouslySetInnerHTML={{
-                                                __html: DOMPurify.sanitize(marked.parse(msg.text, { breaks: true, gfm: true }))
-                                            }}
-                                        />
-                                    ) : (
-                                        msg.text
-                                    )}
-                                </div>
-                                <span className="text-xs text-zinc-600 mt-1.5 px-1">
-                                    {msg.timestamp}
-                                </span>
-                            </div>
-
-                            {msg.sender === 'user' && (
-                                <div className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center flex-shrink-0 mb-1">
-                                    <User size={18} className="text-zinc-400" />
-                                </div>
-                            )}
-                        </motion.div>
-                    ))}
-
-                    {isTyping && (
-                        <motion.div
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="flex items-end gap-3 justify-start"
-                        >
-                            <div className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center flex-shrink-0 mb-1">
-                                <Bot size={18} className="text-gold-500" />
-                            </div>
-                            <div className="bg-zinc-900 border border-zinc-800 px-5 py-4 rounded-2xl rounded-tl-sm shadow-lg flex gap-1.5">
-                                <motion.span
-                                    animate={{ opacity: [0.4, 1, 0.4] }}
-                                    transition={{ duration: 1, repeat: Infinity, delay: 0 }}
-                                    className="w-2 h-2 bg-zinc-400 rounded-full"
-                                />
-                                <motion.span
-                                    animate={{ opacity: [0.4, 1, 0.4] }}
-                                    transition={{ duration: 1, repeat: Infinity, delay: 0.2 }}
-                                    className="w-2 h-2 bg-zinc-400 rounded-full"
-                                />
-                                <motion.span
-                                    animate={{ opacity: [0.4, 1, 0.4] }}
-                                    transition={{ duration: 1, repeat: Infinity, delay: 0.4 }}
-                                    className="w-2 h-2 bg-zinc-400 rounded-full"
-                                />
-                            </div>
-                        </motion.div>
-                    )}
-                    <div ref={messagesEndRef} />
-                </div>
-            </main>
-
-            {/* Input Area */}
-            <div className="sticky bottom-0 bg-black/80 backdrop-blur-md border-t border-zinc-900 p-4 md:p-6">
-                <div className="max-w-4xl mx-auto">
-                    <form onSubmit={handleSendMessage} className="relative flex items-center">
-                        <input
-                            type="text"
-                            value={inputValue}
-                            onChange={(e) => setInputValue(e.target.value)}
-                            placeholder="Initialize query protocol..."
-                            className="w-full bg-zinc-900/50 border border-zinc-800 text-zinc-200 text-base rounded-full pl-6 pr-14 py-4 focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-all placeholder:text-zinc-600 shadow-inner"
-                            autoFocus
-                        />
-                        <button
-                            type="submit"
-                            disabled={!inputValue.trim()}
-                            className="absolute right-2 p-3 bg-gold-500 hover:bg-gold-400 text-black rounded-full disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-gold-500/20"
-                        >
-                            <Send size={20} className="ml-0.5" />
-                        </button>
-                    </form>
-                    <div className="text-center mt-3">
-                        <p className="text-[10px] text-zinc-600 flex items-center justify-center gap-1.5 uppercase tracking-widest">
-                            <Sparkles size={8} className="text-gold-500" />
-                            <span>Ruby Neural Interface V1.0.4</span>
-                        </p>
-                    </div>
-                </div>
+  return (
+    <div className="min-h-screen bg-terminal-bg text-terminal-text font-mono flex flex-col selection:bg-terminal-green selection:text-black">
+      {/* Header */}
+      <header className="bg-terminal-bg/85 backdrop-blur-md border-b border-terminal-green/10 p-4 sticky top-0 z-10 select-none shadow-lg">
+        <div className="max-w-4xl mx-auto flex items-center justify-between">
+          <Link
+            to="/"
+            className="flex items-center gap-2 text-terminal-muted hover:text-white transition-colors text-xs font-bold uppercase tracking-wider"
+          >
+            <ArrowLeft size={16} />
+            <span>Return to base</span>
+          </Link>
+          
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <div className="w-9 h-9 rounded-full bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center text-terminal-green shadow-lg">
+                <Bot size={20} />
+              </div>
+              <span className="absolute bottom-0 right-0 w-2 h-2 bg-green-500 border border-terminal-bg rounded-full animate-pulse" />
             </div>
-            {showChatConfetti && (
-                <BirthdayAnimation onComplete={() => setShowChatConfetti(false)} HUDEnabled={false} />
-            )}
+            <div>
+              <h1 className="font-bold text-white text-sm leading-none">RUBY_AI v1.4</h1>
+              <p className="text-[9px] text-terminal-green font-mono tracking-wider uppercase mt-1">
+                SECURE_LINK_ESTABLISHED
+              </p>
+            </div>
+          </div>
+          <div className="w-20 hidden sm:block" />
         </div>
-    );
-};
+      </header>
 
-export default ChatPage;
+      {/* Main chat viewport */}
+      <main className="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 flex flex-col justify-between overflow-hidden">
+        {/* Messages scroll list */}
+        <div
+          ref={containerRef}
+          className="flex-1 overflow-y-auto space-y-5 pb-6 scrollbar-thin scrollbar-thumb-terminal-green/15"
+        >
+          {messages.map((msg) => (
+            <div
+              key={msg.id}
+              className={`flex items-start gap-3 ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+            >
+              {msg.sender === "bot" && (
+                <div className="w-7 h-7 rounded-full bg-terminal-green/10 border border-terminal-green/25 flex items-center justify-center text-terminal-green flex-shrink-0 mt-0.5">
+                  <Bot size={14} />
+                </div>
+              )}
+
+              <div className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"} max-w-[85%] md:max-w-[70%]`}>
+                <div
+                  className={`px-4 py-3 rounded text-xs md:text-sm leading-relaxed shadow-lg ${
+                    msg.sender === "user"
+                      ? "bg-terminal-green/10 border border-terminal-green/30 text-terminal-green"
+                      : "bg-terminal-card border border-terminal-cyan/15 text-terminal-text"
+                  }`}
+                >
+                  {renderMessageContent(msg.text)}
+                </div>
+                <span className="text-[10px] text-terminal-muted/40 mt-1.5 px-1">{msg.timestamp}</span>
+              </div>
+
+              {msg.sender === "user" && (
+                <div className="w-7 h-7 rounded-full bg-terminal-cyan/10 border border-terminal-cyan/25 flex items-center justify-center text-terminal-cyan flex-shrink-0 mt-0.5">
+                  <User size={14} />
+                </div>
+              )}
+            </div>
+          ))}
+
+          {isTyping && (
+            <div className="flex items-center gap-3 justify-start">
+              <div className="w-7 h-7 rounded-full bg-terminal-green/10 border border-terminal-green/25 flex items-center justify-center text-terminal-green flex-shrink-0">
+                <Bot size={14} />
+              </div>
+              <div className="bg-terminal-card border border-terminal-cyan/15 px-4 py-3 rounded text-xs text-terminal-cyan flex items-center gap-2">
+                <Loader2 size={13} className="animate-spin" />
+                <span>Running logic analysis...</span>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Input box */}
+        <form onSubmit={handleSendMessage} className="bg-terminal-card border border-terminal-green/20 rounded-lg p-3 flex gap-3 glow-border-green">
+          <input
+            type="text"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="Submit secure prompt..."
+            className="flex-1 bg-black border border-terminal-green/15 rounded px-4 py-2.5 text-white placeholder-terminal-muted/40 focus:outline-none focus:border-terminal-green transition-all text-xs md:text-sm font-mono"
+            maxLength={250}
+          />
+          <button
+            type="submit"
+            disabled={isTyping || !inputValue.trim()}
+            className="px-4 py-2 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold uppercase rounded text-xs transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1.5 focus:outline-none"
+          >
+            <Send size={12} />
+            <span>Send</span>
+          </button>
+        </form>
+      </main>
+
+      {showChatConfetti && (
+        <BirthdayAnimation onComplete={() => setShowChatConfetti(false)} HUDEnabled={false} />
+      )}
+    </div>
+  );
+}

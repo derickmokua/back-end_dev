@@ -1,876 +1,851 @@
-import React, { useState, useEffect } from 'react';
-import emailjs from '@emailjs/browser';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Code, Cpu, Globe, ExternalLink, Github, Mail, Smartphone, Database, Wind, Menu, X, ChevronRight, Star, ArrowUp, Send, Loader2, Linkedin, Phone, MessageCircle } from 'lucide-react';
-import { skills, projects, services, testimonials, blogPosts as staticBlogPosts, navLinks, birthdayConfig } from '../data/portfolioData';
-import BirthdayAnimation from '../components/effects/BirthdayAnimation';
-import useHashnodePosts from '../hooks/useHashnode';
-import ReactMarkdown from 'react-markdown';
-import DOMPurify from 'dompurify';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import emailjs from "@emailjs/browser";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Terminal,
+  Cpu,
+  ExternalLink,
+  Github,
+  Mail,
+  Smartphone,
+  Database,
+  Menu,
+  X,
+  Star,
+  ArrowUp,
+  Send,
+  Loader2,
+  Activity,
+  Network
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import {
+  skills,
+  projects,
+  services,
+  testimonials,
+  blogPosts as staticBlogPosts,
+  birthdayConfig
+} from "../data/portfolioData";
+import { useCrt } from "../components/CrtContext";
+import CyberGrid from "../components/CyberGrid";
+import TelemetryStream from "../components/TelemetryStream";
+import ArchitectureDiagram from "../components/ArchitectureDiagram";
+import DecryptGame from "../components/DecryptGame";
+import RubyChatbot from "../components/RubyChatbot";
+import BirthdayAnimation from "../components/effects/BirthdayAnimation";
+import useHashnodePosts from "../hooks/useHashnode";
+import DOMPurify from "dompurify";
+import { marked } from "marked";
 
-// Animation Variants
-const fadeInUp = {
-    hidden: { opacity: 0, y: 60 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-};
+export default function Home() {
+  const { isCrtActive, toggleCrt } = useCrt();
+  const [typedHero, setTypedHero] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
+  const [selectedBlogPost, setSelectedBlogPost] = useState(null);
 
-const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1
-        }
+  // Secure Ops States
+  const [isContactUnlocked, setIsContactUnlocked] = useState(false);
+  const [isNetmapModalOpen, setIsNetmapModalOpen] = useState(false);
+  const [isLogDrawerOpen, setIsLogDrawerOpen] = useState(false);
+
+  // Form state
+  const [formState, setFormState] = useState({ name: "", email: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
+
+  // Birthday HUD State
+  const [showBirthdayHUD, setShowBirthdayHUD] = useState(false);
+  const [isBirthday, setIsBirthday] = useState(false);
+
+  const fullHeroText = "> initializing_secure_ops_tunnel...";
+
+  // Check Birthday
+  useEffect(() => {
+    const today = new Date();
+    const currentMonth = today.getMonth() + 1;
+    const currentDate = today.getDate();
+    if (birthdayConfig && currentMonth === birthdayConfig.month && currentDate === birthdayConfig.day) {
+      setIsBirthday(true);
     }
-};
+  }, []);
 
-const FadeIn = ({ children, className }) => (
-    <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        variants={fadeInUp}
-        className={className}
-    >
-        {children}
-    </motion.div>
-);
+  // Typing effect
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index <= fullHeroText.length) {
+        setTypedHero(fullHeroText.slice(0, index));
+        index++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 45);
+    return () => clearInterval(interval);
+  }, []);
 
-const Home = () => {
-    const [text, setText] = useState('');
-    const [showCursor, setShowCursor] = useState(true);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [showBackToTop, setShowBackToTop] = useState(false);
-    const [selectedBlogPost, setSelectedBlogPost] = useState(null);
-    const [showAllPosts, setShowAllPosts] = useState(false);
-    const fullText = "> initializing_backend_core...";
-    const navigate = useNavigate();
+  // Fetch Hashnode posts dynamically via custom hook
+  const { posts: apiPosts, loading: blogLoading } = useHashnodePosts();
+  const activePosts = apiPosts && apiPosts.length > 0 ? apiPosts : staticBlogPosts;
 
-    const [showBirthdayHUD, setShowBirthdayHUD] = useState(false);
-    const [isBirthday, setIsBirthday] = useState(false);
+  // Scroll listener
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 300);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    useEffect(() => {
-        const today = new Date();
-        const currentMonth = today.getMonth() + 1;
-        const currentDate = today.getDate();
+  // Form handler
+  const handleFormChange = (e) => {
+    setFormState({ ...formState, [e.target.name]: e.target.value });
+  };
 
-        if (birthdayConfig && currentMonth === birthdayConfig.month && currentDate === birthdayConfig.day) {
-            setIsBirthday(true);
-        }
-    }, []);
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
 
+    const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_default";
+    const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_default";
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "";
 
-    // Contact Form State
-    const [formState, setFormState] = useState({ name: '', email: '', message: '' });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState(null); // 'success' | 'error' | null
+    if (!publicKey) {
+      console.error("EmailJS public key configuration missing");
+      setSubmitStatus("missing_config");
+      setTimeout(() => setSubmitStatus(null), 5000);
+      setIsSubmitting(false);
+      return;
+    }
 
-    // Blog Data
-    const { posts: apiPosts, loading, error } = useHashnodePosts();
-    const posts = (apiPosts && apiPosts.length > 0) ? apiPosts : staticBlogPosts;
-
-    // Typing effect
-    useEffect(() => {
-        let index = 0;
-        const interval = setInterval(() => {
-            if (index <= fullText.length) {
-                setText(fullText.slice(0, index));
-                index++;
-            } else {
-                clearInterval(interval);
-            }
-        }, 50);
-        return () => clearInterval(interval);
-    }, []);
-
-    // Cursor blinking effect
-    useEffect(() => {
-        const cursorInterval = setInterval(() => {
-            setShowCursor((prev) => !prev);
-        }, 530);
-        return () => clearInterval(cursorInterval);
-    }, []);
-
-    // Scroll Listener for BackToTop
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 300) {
-                setShowBackToTop(true);
-            } else {
-                setShowBackToTop(false);
-            }
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    // Smooth scroll handler
-    const scrollToSection = (e, href) => {
-        e.preventDefault();
-        setIsMenuOpen(false);
-
-        if (href.startsWith('#')) {
-            const element = document.querySelector(href);
-            if (element) {
-                const headerOffset = 80;
-                const elementPosition = element.getBoundingClientRect().top;
-                const offsetPosition = window.pageYOffset + elementPosition - headerOffset;
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        } else {
-            window.location.href = href;
-        }
+    const templateParams = {
+      from_name: formState.name,
+      from_email: formState.email,
+      message: formState.message,
+      to_name: "Derick Mokua",
     };
 
-    const scrollToTop = () => {
-        setIsMenuOpen(false);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+    emailjs
+      .send(serviceID, templateID, templateParams, publicKey)
+      .then(() => {
+        setSubmitStatus("success");
+        setFormState({ name: "", email: "", message: "" });
+        setTimeout(() => setSubmitStatus(null), 5000);
+      })
+      .catch((err) => {
+        console.error("EmailJS Error:", err);
+        setSubmitStatus("api_error");
+        setTimeout(() => setSubmitStatus(null), 5000);
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
+  };
 
-    // Form Handlers
-    const handleFormChange = (e) => {
-        setFormState({ ...formState, [e.target.name]: e.target.value });
-    };
+  const scrollToSection = (e, href) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+    const element = document.querySelector(href);
+    if (element) {
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = window.pageYOffset + elementPosition - headerOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+  };
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault();
-        setIsSubmitting(true);
+  const asciiArt = `
+┌────────────────────────────────────────────────────────┐
+│  __  __  ___  _  _  _  _  __    __  ___                │
+│ |  \\/  |/   \\| |/ /| |/ /|  \\  /  \\/ __|  v3.12.0      │
+│ | |\\/| | | | |  ' / |  ' /| __|| || \\__ \\  SECURE HOST  │
+│ |_|  |_|\\___/|_|\\_\\|_|\\_\\|_|__| \\__/\\___/                │
+└────────────────────────────────────────────────────────┘
+  `;
 
-        // Configuration from .env file
-        const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-        const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-        const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+  return (
+    <div className="min-h-screen bg-terminal-bg text-terminal-text font-mono selection:bg-terminal-green selection:text-black overflow-x-hidden relative">
+      
+      {/* Subtle digital rain background layer */}
+      <CyberGrid />
 
-        if (!serviceID || !templateID || !publicKey) {
-            console.error('EmailJS environment variables are missing.');
-            setSubmitStatus('missing_config'); // Specific error state
-            setTimeout(() => setSubmitStatus(null), 5000);
-            setIsSubmitting(false);
-            return;
-        }
-
-        const templateParams = {
-            from_name: formState.name,
-            from_email: formState.email,
-            message: formState.message,
-            to_name: 'Derick Mokua',
-        };
-
-        emailjs.send(serviceID, templateID, templateParams, publicKey)
-            .then((response) => {
-                console.log('SUCCESS!', response.status, response.text);
-                setSubmitStatus('success');
-                setFormState({ name: '', email: '', message: '' });
-                setTimeout(() => setSubmitStatus(null), 5000);
-            })
-            .catch((err) => {
-                console.error('FAILED...', err);
-                if (err.text) console.error('Error Text:', err.text); // EmailJS specific error text
-                setSubmitStatus('api_error');
-                setTimeout(() => setSubmitStatus(null), 5000);
-            })
-            .finally(() => {
-                setIsSubmitting(false);
-            });
-    };
-
-    return (
-        <div className="min-h-screen bg-black text-zinc-200 font-mono selection:bg-gold-500 selection:text-black overflow-x-hidden">
-
-            {/* Navbar */}
-            <motion.nav
-                initial={{ y: -100 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="fixed w-full z-50 bg-black/90 backdrop-blur-md border-b border-zinc-900 shadow-lg shadow-gold-900/5"
+      {/* Main content layers */}
+      <div className="relative z-10">
+        
+        {/* Navbar */}
+        <nav className="fixed w-full z-40 bg-terminal-bg/90 backdrop-blur-md border-b border-terminal-green/10 shadow-lg shadow-black/50">
+          <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <Link
+              to="/"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="text-lg font-bold tracking-tighter text-terminal-green hover:glow-green transition-all"
             >
-                <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-                    <Link to="/" onClick={scrollToTop} onDoubleClick={() => setShowBirthdayHUD(true)} className="text-xl font-bold tracking-tighter text-gold-500 hover:text-gold-400 transition-colors select-none cursor-pointer" title="Double click for a birthday surprise!">
-                        derickmokua<span className="text-zinc-600">.co.ke</span>
-                    </Link>
+              derickmokua<span className="text-terminal-cyan">.co.ke</span>
+            </Link>
 
-                    {/* Desktop Nav */}
-                    <div className="hidden md:flex gap-6 items-center">
-                        <a href="#home" onClick={(e) => scrollToSection(e, '#home')} className="text-sm font-medium hover:text-gold-400 transition-colors">Home</a>
-                        {navLinks.map((link) => (
-                            <a key={link.name} href={link.href} onClick={(e) => scrollToSection(e, link.href)} className="text-sm font-medium hover:text-gold-400 transition-colors">
-                                {link.name}
-                            </a>
-                        ))}
-                        <Link to="/chat" className="text-sm font-medium hover:text-gold-400 transition-colors flex items-center gap-1">
-                            <MessageCircle size={16} /> Chat
-                        </Link>
-                        <a href="https://github.com/derickmokua" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile" className="text-zinc-500 hover:text-gold-400 transition-colors ml-4">
-                            <Github size={20} />
-                        </a>
+            {/* Desktop Links */}
+            <div className="hidden md:flex gap-6 items-center text-xs font-bold uppercase tracking-wider">
+              <a href="#about" onClick={(e) => scrollToSection(e, "#about")} className="hover:text-terminal-green transition-colors">About</a>
+              <a href="#skills" onClick={(e) => scrollToSection(e, "#skills")} className="hover:text-terminal-green transition-colors">Skills</a>
+              <a href="#services" onClick={(e) => scrollToSection(e, "#services")} className="hover:text-terminal-cyan transition-colors">Services</a>
+              <a href="#projects" onClick={(e) => scrollToSection(e, "#projects")} className="hover:text-terminal-green transition-colors">Projects</a>
+              <a href="#blog" onClick={(e) => scrollToSection(e, "#blog")} className="hover:text-terminal-cyan transition-colors">Articles</a>
+              <a href="#testimonials" onClick={(e) => scrollToSection(e, "#testimonials")} className="hover:text-terminal-green transition-colors">Signals</a>
+              <a href="#contact" onClick={(e) => scrollToSection(e, "#contact")} className="hover:text-terminal-green transition-colors">Contact</a>
+              
+              <Link
+                to="/chat"
+                className="px-2.5 py-1 border border-terminal-cyan/30 text-terminal-cyan hover:bg-terminal-cyan/5 rounded flex items-center gap-1 transition-all"
+              >
+                <Terminal size={12} /> Chat
+              </Link>
+
+              <button
+                onClick={toggleCrt}
+                className="px-2.5 py-1 border border-terminal-green/30 text-terminal-green hover:bg-terminal-green/5 rounded transition-all focus:outline-none"
+                title="Toggle retro screen scanline overlay"
+              >
+                CRT {isCrtActive ? "OFF" : "ON"}
+              </button>
+            </div>
+
+            {/* Mobile Toggle */}
+            <div className="flex md:hidden items-center gap-3">
+              <button
+                onClick={toggleCrt}
+                className="px-2 py-0.5 border border-terminal-green/20 text-terminal-green rounded text-[10px]"
+              >
+                CRT
+              </button>
+              <button
+                className="text-terminal-green"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label="Toggle mobile menu"
+              >
+                {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Nav */}
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="md:hidden w-full bg-terminal-card border-b border-terminal-green/25 p-6 flex flex-col gap-4 text-xs font-bold uppercase tracking-wider shadow-2xl"
+              >
+                <a href="#about" onClick={(e) => scrollToSection(e, "#about")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-green">About</a>
+                <a href="#skills" onClick={(e) => scrollToSection(e, "#skills")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-green">Skills</a>
+                <a href="#services" onClick={(e) => scrollToSection(e, "#services")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-cyan">Services</a>
+                <a href="#projects" onClick={(e) => scrollToSection(e, "#projects")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-green">Projects</a>
+                <a href="#blog" onClick={(e) => scrollToSection(e, "#blog")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-cyan">Articles</a>
+                <a href="#testimonials" onClick={(e) => scrollToSection(e, "#testimonials")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-green">Signals</a>
+                <a href="#contact" onClick={(e) => scrollToSection(e, "#contact")} className="py-2 hover:text-terminal-green font-bold">Contact</a>
+                <Link
+                  to="/chat"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="py-2 text-terminal-cyan flex items-center gap-1.5 font-bold"
+                >
+                  <Terminal size={14} /> Ruby secure chat channel
+                </Link>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </nav>
+
+        {/* Main stacked sections */}
+        <main className="max-w-4xl mx-auto px-6 pt-28 pb-20 space-y-20">
+          
+          {/* HERO SECTION */}
+          <section className="min-h-[55vh] flex flex-col justify-center relative">
+            <div className="absolute top-0 -left-10 w-72 h-72 bg-terminal-green/5 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="space-y-6">
+              
+              {/* ASCII Art Signature Logo */}
+              <pre className="hidden md:block text-[9px] leading-tight text-terminal-green/45 select-none font-mono">
+                {asciiArt}
+              </pre>
+
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-terminal-green bg-terminal-green/5 rounded border border-terminal-green/20">
+                <span className="w-1.5 h-1.5 bg-terminal-green rounded-full animate-ping" />
+                STATUS: SECURE_TUNNEL_CONNECTED
+              </div>
+
+              <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-white leading-tight">
+                Backend Architect &{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-terminal-green to-terminal-cyan">
+                  AI Safety Researcher
+                </span>
+              </h1>
+
+              <div className="flex items-center gap-2 text-terminal-muted text-sm md:text-base font-bold min-h-[24px]">
+                <Terminal size={18} className="text-terminal-green" />
+                <span>
+                  {typedHero}
+                  <span className="terminal-cursor" />
+                </span>
+              </div>
+
+              <p className="max-w-2xl text-sm md:text-base text-terminal-text/80 leading-relaxed pl-4 border-l border-terminal-green/25 font-sans">
+                Architecting secure, frontier-model integrations for high-stakes, resource-constrained environments in the Global South.
+              </p>
+
+              <div className="flex gap-4 pt-2">
+                <a
+                  href="#contact"
+                  onClick={(e) => scrollToSection(e, "#contact")}
+                  className="px-5 py-2.5 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold rounded text-xs uppercase tracking-wider transition-all hover:shadow-[0_0_15px_rgba(0,255,159,0.3)]"
+                >
+                  Secure Handshake
+                </a>
+                <a
+                  href="#projects"
+                  onClick={(e) => scrollToSection(e, "#projects")}
+                  className="px-5 py-2.5 border border-terminal-green/30 hover:border-terminal-green hover:bg-terminal-green/5 text-terminal-green rounded text-xs uppercase tracking-wider transition-all"
+                >
+                  Access Archives
+                </a>
+              </div>
+            </div>
+          </section>
+
+          {/* ABOUT SECTION (Formatted as terminal cat readout) */}
+          <section id="about" className="space-y-4">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
+              // 01. ABOUT_ME_POSTURE
+            </h2>
+            <div className="bg-terminal-card border border-terminal-green/20 rounded-lg overflow-hidden glow-border-green">
+              
+              {/* Fake Terminal Header */}
+              <div className="bg-black/90 px-4 py-2 border-b border-terminal-green/10 flex items-center justify-between text-[10px] text-terminal-muted select-none">
+                <div className="flex items-center gap-2">
+                  <Terminal size={12} className="text-terminal-green" />
+                  <span>visitor@mokua-host:~$ cat about_me.md</span>
+                </div>
+                <span>1024 Bytes</span>
+              </div>
+
+              {/* Terminal Code Readout body */}
+              <div className="p-4 md:p-6 space-y-4 text-xs md:text-sm font-mono leading-relaxed flex">
+                {/* Line numbers column */}
+                <div className="text-terminal-green/20 text-right pr-4 select-none border-r border-terminal-green/10 flex flex-col font-bold">
+                  <span>01</span>
+                  <span>02</span>
+                  <span>03</span>
+                  <span>04</span>
+                  <span>05</span>
+                  <span>06</span>
+                  <span>07</span>
+                </div>
+                {/* Main text */}
+                <div className="pl-4 space-y-4 text-terminal-text/90 flex-1">
+                  <p>
+                    My mission is securing critical digital infrastructure in the Global South. I utilize a unique blend of technical expertise and strategic foresight to <strong className="text-terminal-green font-bold font-mono">bridge engineering depth with venture-scale safety governance</strong>.
+                  </p>
+                  <p>
+                    I specialize in backend architecture and security moats. I don't just build apps; I engineer resilient systems that withstand adversarial conditions. My research focuses on developing safe, vector-supported prompt translation layers and zero-trust data brokers for high-stakes implementations.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* SKILLS SECTION */}
+          <section id="skills" className="space-y-4">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
+              // 02. TECHNICAL_ARSENAL
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {skills.map((category) => (
+                <div key={category.category} className="space-y-3">
+                  <h3 className="text-xs font-bold text-terminal-cyan border-b border-terminal-cyan/20 pb-1.5 uppercase tracking-widest">
+                    {category.category}
+                  </h3>
+                  <div className="space-y-2.5">
+                    {category.items.map((skill) => (
+                      <div
+                        key={skill.name}
+                        className="bg-terminal-card border border-terminal-green/10 hover:border-terminal-green/30 p-3 rounded transition-all group"
+                      >
+                        <div className="flex justify-between items-center text-[10px] mb-1">
+                          <span className="font-medium text-terminal-text group-hover:text-terminal-green transition-colors font-bold">
+                            {skill.icon} {skill.name}
+                          </span>
+                          <span className="text-terminal-green font-bold">{skill.level}%</span>
+                        </div>
+                        <div className="w-full bg-black h-1 rounded overflow-hidden">
+                          <div
+                            className="bg-terminal-green h-full rounded transition-all duration-1000"
+                            style={{ width: `${skill.level}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* SERVICES SECTION */}
+          <section id="services" className="space-y-4">
+            <div className="flex items-center justify-between border-b border-terminal-green/20 pb-1.5">
+              <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
+                // 03. CORE_COMPETENCIES
+              </h2>
+              {/* Modal trigger */}
+              <button
+                onClick={() => setIsNetmapModalOpen(true)}
+                className="text-[9px] font-bold text-terminal-cyan border border-terminal-cyan/30 hover:border-terminal-cyan bg-terminal-cyan/5 hover:bg-terminal-cyan/15 px-2 py-0.5 rounded transition-all flex items-center gap-1 focus:outline-none"
+              >
+                <Network size={10} />
+                Trace VPC Infrastructure Map
+              </button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {services.map((service) => (
+                <div
+                  key={service.title}
+                  className="bg-terminal-card border border-terminal-green/15 p-5 rounded hover:border-terminal-cyan/45 transition-all flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="text-2xl mb-2">{service.icon}</div>
+                    <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2">
+                      {service.title}
+                    </h3>
+                    <p className="text-[10px] text-terminal-muted leading-relaxed mb-4">
+                      {service.desc}
+                    </p>
+                  </div>
+                  <ul className="space-y-1.5 border-t border-terminal-green/5 pt-3">
+                    {service.features.map((feature) => (
+                      <li key={feature} className="text-[9px] text-terminal-cyan flex items-center gap-1.5">
+                        <span className="w-1 h-1 bg-terminal-cyan rounded-full" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* PROJECTS SECTION */}
+          <section id="projects" className="space-y-4">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
+              // 04. SELECTED_WORKS
+            </h2>
+            <div className="space-y-4">
+              
+              {/* Flagship Case Study */}
+              <div className="w-full bg-terminal-card border border-terminal-green/20 p-6 rounded-lg glow-border-green relative overflow-hidden group">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
+                  <div>
+                    <h3 className="text-base font-bold text-white group-hover:text-terminal-green transition-colors">
+                      KukuConnect (Flagship Case Study)
+                    </h3>
+                    <span className="text-[9px] text-terminal-muted">APPLIED AI SAFETY DEPLOYMENT</span>
+                  </div>
+                  <span className="bg-terminal-green/10 border border-terminal-green/25 text-terminal-green text-[9px] px-2.5 py-0.5 rounded uppercase font-bold tracking-wide">
+                    Research Active
+                  </span>
+                </div>
+                <p className="text-xs text-terminal-text/80 leading-relaxed mb-5 font-sans">
+                  Mitigating hallucinations in veterinary diagnostics using the Gemini API and Retrieval-Augmented Generation (RAG). Enforces a Zero-Trust data pipeline to screen prompts and isolate queries within resource-constrained environments.
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {["Gemini API", "RAG", "Zero-Trust", "FastAPI", "PostgreSQL"].map((tag) => (
+                    <span key={tag} className="bg-black/60 border border-terminal-cyan/15 text-terminal-cyan text-[9px] px-2 py-0.5 rounded">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Other Projects */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {projects.slice(1).map((project) => (
+                  <div
+                    key={project.title}
+                    className="bg-terminal-card border border-terminal-green/10 hover:border-terminal-green/30 p-4 rounded transition-all flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex justify-between items-start gap-2 mb-2.5">
+                        <h4 className="text-xs font-bold text-white leading-tight">
+                          {project.title.split(":")[0]}
+                        </h4>
+                        <span className="text-[8px] bg-terminal-cyan/10 border border-terminal-cyan/20 text-terminal-cyan px-1.5 rounded uppercase font-bold tracking-tight">
+                          {project.status}
+                        </span>
+                      </div>
+                      <p className="text-[10px] text-terminal-muted leading-relaxed mb-4 font-sans">
+                        {project.desc}
+                      </p>
                     </div>
+                    <div className="flex flex-wrap gap-1">
+                      {project.tags.slice(0, 3).map((tag) => (
+                        <span
+                          key={tag}
+                          className="bg-black/50 text-terminal-cyan border border-terminal-cyan/10 text-[8px] px-1.5 py-0.5 rounded"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
 
-                    {/* Mobile Menu Toggle */}
-                    <button className="md:hidden text-zinc-400 hover:text-gold-500" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="Toggle mobile menu">
-                        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
+            </div>
+          </section>
+
+          {/* ARTICLES SECTION */}
+          <section id="blog" className="space-y-4">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
+              // 05. TECHNICAL_ARTICLES
+            </h2>
+            <div className="space-y-4">
+              {blogLoading ? (
+                <div className="text-xs text-terminal-cyan animate-pulse">
+                  {">"} Syncing with publication database...
+                </div>
+              ) : (
+                activePosts.map((post) => (
+                  <div
+                    key={post.title}
+                    onClick={() => setSelectedBlogPost(post)}
+                    className="block p-5 border border-terminal-green/10 rounded-lg bg-terminal-card hover:border-terminal-cyan/35 hover:bg-terminal-cyan/5 transition-all group cursor-pointer"
+                  >
+                    <div className="flex justify-between text-[9px] text-terminal-cyan mb-1.5 font-bold uppercase tracking-wider">
+                      <span>{post.date}</span>
+                      <span>Transmitted // Record</span>
+                    </div>
+                    <h3 className="text-xs font-bold text-white mb-2 group-hover:text-terminal-cyan transition-colors flex items-center gap-1.5">
+                      {post.title}
+                      <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity text-terminal-muted" />
+                    </h3>
+                    <p className="text-[11px] text-terminal-text/75 line-clamp-2 leading-relaxed font-sans">
+                      {post.desc}
+                    </p>
+                  </div>
+                ))
+              )}
+            </div>
+          </section>
+
+          {/* TESTIMONIALS SECTION */}
+          <section id="testimonials" className="space-y-4">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
+              // 06. TESTIMONIALS
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {testimonials.map((test, idx) => (
+                <div
+                  key={idx}
+                  className="bg-terminal-card border border-terminal-green/10 p-5 rounded text-xs flex flex-col justify-between"
+                >
+                  <p className="text-terminal-text/80 italic mb-4 leading-relaxed font-sans">
+                    "{test.text}"
+                  </p>
+                  <div className="flex items-center gap-2.5 border-t border-terminal-green/5 pt-3">
+                    <div className="w-8 h-8 rounded bg-terminal-green/10 border border-terminal-green/25 text-terminal-green font-bold text-xs flex items-center justify-center flex-shrink-0">
+                      {test.initials}
+                    </div>
+                    <div className="min-w-0">
+                      <h4 className="font-bold text-white text-[11px] truncate">{test.name}</h4>
+                      <p className="text-[9px] text-terminal-cyan truncate">{test.role} @ {test.company}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* CONTACT SECTION WITH FORM & DECRYPT GAME */}
+          <section id="contact" className="space-y-4">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
+              // 07. HANDSHAKE_PROTOCOL
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-terminal-card border border-terminal-green/15 p-6 md:p-8 rounded-lg glow-border-cyan relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-terminal-green/5 to-transparent pointer-events-none" />
+
+              {/* Coordinates left column: locked by decryption game */}
+              <div className="flex flex-col justify-center relative z-10 h-full">
+                <DecryptGame
+                  isUnlockedInitially={isContactUnlocked}
+                  onUnlocked={() => setIsContactUnlocked(true)}
+                />
+              </div>
+
+              {/* Contact Form right column */}
+              <div className="bg-black/50 p-4 md:p-5 rounded border border-terminal-green/10">
+                <form onSubmit={handleFormSubmit} className="space-y-3.5 text-xs font-mono">
+                  <div>
+                    <label className="block text-[10px] text-terminal-green uppercase font-bold mb-1">
+                      Sender Alias
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      value={formState.name}
+                      onChange={handleFormChange}
+                      placeholder="e.g. Commander"
+                      className="w-full bg-black border border-terminal-green/20 rounded px-3 py-2 text-white placeholder-terminal-muted/30 focus:outline-none focus:border-terminal-green transition-all"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-[10px] text-terminal-green uppercase font-bold mb-1">
+                      Sender Secure Mail
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      value={formState.email}
+                      onChange={handleFormChange}
+                      placeholder="e.g. agent@domain.local"
+                      className="w-full bg-black border border-terminal-green/20 rounded px-3 py-2 text-white placeholder-terminal-muted/30 focus:outline-none focus:border-terminal-green transition-all"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] text-terminal-green uppercase font-bold mb-1">
+                      Payload Message
+                    </label>
+                    <textarea
+                      name="message"
+                      required
+                      rows={4}
+                      value={formState.message}
+                      onChange={handleFormChange}
+                      placeholder="Enter payload string..."
+                      className="w-full bg-black border border-terminal-green/20 rounded px-3 py-2 text-white placeholder-terminal-muted/30 focus:outline-none focus:border-terminal-green transition-all"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full py-2 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold uppercase rounded flex items-center justify-center gap-1.5 transition-all hover:shadow-[0_0_12px_rgba(0,255,159,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? (
+                      <Loader2 size={13} className="animate-spin" />
+                    ) : (
+                      <>
+                        <Send size={11} />
+                        Transmit Payload
+                      </>
+                    )}
+                  </button>
+
+                  {submitStatus === "success" && (
+                    <p className="text-terminal-green text-center font-bold text-[9px] animate-pulse mt-2">
+                      [+] TRANSMISSION COMPLETE: Package safely compiled.
+                    </p>
+                  )}
+                  {submitStatus === "api_error" && (
+                    <p className="text-red-400 text-center font-bold text-[9px] mt-2">
+                      [-] ERROR: Secure transmission node fail.
+                    </p>
+                  )}
+                  {submitStatus === "missing_config" && (
+                    <p className="text-red-400 text-center font-bold text-[9px] mt-2">
+                      [-] CONFIGURATION ERROR: Public key environment lock.
+                    </p>
+                  )}
+                </form>
+              </div>
+            </div>
+          </section>
+
+          {/* Footer */}
+          <footer className="border-t border-terminal-green/10 pt-6 text-[10px] text-terminal-muted font-mono flex flex-col sm:flex-row items-center justify-between gap-4 select-none pb-10">
+            <div>
+              <span>© 2026 MokuaOS v3.12.0 // Host ID: 0xDEADBEEF // Nairobi, KE</span>
+            </div>
+            <div className="flex gap-4 font-bold">
+              <a href="https://github.com/derickmokua" target="_blank" rel="noopener noreferrer" className="hover:text-terminal-green transition-colors">
+                GitHub
+              </a>
+              <a href="https://linkedin.com/in/derickmokua" target="_blank" rel="noopener noreferrer" className="hover:text-terminal-cyan transition-colors">
+                LinkedIn
+              </a>
+            </div>
+          </footer>
+
+        </main>
+
+        {/* Floating secure chatbot widget */}
+        <RubyChatbot />
+
+        {/* Floating Back to top helper */}
+        <AnimatePresence>
+          {showBackToTop && (
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="fixed bottom-6 left-6 z-35 p-2 bg-terminal-bg border border-terminal-green/20 text-terminal-green rounded hover:scale-105 transition-all focus:outline-none"
+              title="Return to Core OS"
+            >
+              <ArrowUp size={16} />
+            </motion.button>
+          )}
+        </AnimatePresence>
+
+        {/* Collapsible bottom logs stream drawer */}
+        <div className="fixed bottom-0 right-20 z-40 font-mono text-xs w-[320px] sm:w-[420px] shadow-2xl">
+          {/* Toggle Bar */}
+          <button
+            onClick={() => setIsLogDrawerOpen(!isLogDrawerOpen)}
+            className="w-full bg-black/90 border-t border-x border-terminal-cyan/35 hover:border-terminal-cyan text-terminal-cyan rounded-t px-3 py-1.5 flex items-center justify-between font-bold text-[10px] tracking-wider focus:outline-none select-none"
+          >
+            <div className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 bg-terminal-cyan rounded-full animate-ping" />
+              <span>[ SYSTEM LOG STREAM: {isLogDrawerOpen ? "ACTIVE" : "COLLAPSED"} ]</span>
+            </div>
+            <span>{isLogDrawerOpen ? "[-] Close" : "[+] Open"}</span>
+          </button>
+          {/* Logs Drawer body */}
+          <AnimatePresence>
+            {isLogDrawerOpen && (
+              <motion.div
+                initial={{ height: 0 }}
+                animate={{ height: 235 }}
+                exit={{ height: 0 }}
+                className="overflow-hidden"
+              >
+                <TelemetryStream />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* VPC NetMap Modal Overlay */}
+        <AnimatePresence>
+          {isNetmapModalOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 md:p-6 cursor-zoom-out"
+              onClick={() => setIsNetmapModalOpen(false)}
+            >
+              <motion.div
+                initial={{ scale: 0.95, y: 15 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.95, y: 15 }}
+                className="w-full max-w-4xl bg-terminal-card border border-terminal-cyan/30 rounded-lg p-5 cursor-default font-mono glow-border-cyan"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Header */}
+                <div className="flex justify-between items-center border-b border-terminal-cyan/20 pb-3 mb-4 select-none">
+                  <div className="flex items-center gap-2">
+                    <Activity className="text-terminal-cyan animate-pulse" size={16} />
+                    <div>
+                      <h3 className="text-xs font-bold text-white uppercase tracking-wider">VPC Infrastructure NetMap</h3>
+                      <span className="text-[8px] text-terminal-cyan font-bold">SECURE NETWORK TRACE ROUTE</span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setIsNetmapModalOpen(false)}
+                    className="p-1 text-terminal-muted hover:text-white border border-terminal-cyan/15 rounded focus:outline-none"
+                  >
+                    <X size={16} />
+                  </button>
                 </div>
 
-                {/* Mobile Nav */}
-                <AnimatePresence>
-                    {isMenuOpen && (
-                        <motion.div
-                            key="mobile-nav-menu"
-                            initial={{ opacity: 0, y: -20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.2 }}
-                            className="md:hidden fixed top-16 left-0 w-full h-[calc(100vh-4rem)] bg-black/95 backdrop-blur-xl border-b border-zinc-800 p-8 flex flex-col gap-6 shadow-2xl z-[60] overflow-y-auto"
-                        >
-                            <a
-                                href="#home"
-                                onClick={(e) => scrollToSection(e, '#home')}
-                                className="text-xl font-medium text-zinc-300 hover:text-gold-400 py-4 border-b border-white/5 transition-colors block w-full"
-                            >
-                                Home
-                            </a>
-                            {navLinks.map((link) => (
-                                <a
-                                    key={link.name}
-                                    href={link.href}
-                                    onClick={(e) => scrollToSection(e, link.href)}
-                                    className="text-xl font-medium text-zinc-300 hover:text-gold-400 py-4 border-b border-white/5 transition-colors block w-full"
-                                >
-                                    {link.name}
-                                </a>
-                            ))}
-                            <Link
-                                to="/chat"
-                                onClick={() => setIsMenuOpen(false)}
-                                className="text-xl font-medium text-zinc-300 hover:text-gold-400 py-4 flex items-center gap-3 transition-colors block w-full"
-                            >
-                                <MessageCircle size={20} className="text-gold-500" /> Chat
-                            </Link>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            </motion.nav>
+                {/* Diagram */}
+                <ArchitectureDiagram />
 
-            <main className="max-w-7xl mx-auto px-6 pt-32 pb-20 space-y-20">
+                <div className="mt-4 text-[9px] text-terminal-muted text-center select-none font-bold">
+                  * Click or hover nodes inside the SVG trace block to view socket endpoints
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-                {/* HERO SECTION */}
-                <section id="home" className="min-h-[60vh] flex flex-col justify-center relative">
-                    <div className="absolute -top-20 -left-20 w-96 h-96 bg-gold-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        {/* Blog Overlay Modal */}
+        <AnimatePresence>
+          {selectedBlogPost && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 md:p-6 cursor-zoom-out"
+              onClick={() => setSelectedBlogPost(null)}
+            >
+              <motion.div
+                initial={{ scale: 0.95, y: 15 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.95, y: 15 }}
+                className="w-full max-w-2xl bg-terminal-card border border-terminal-green/30 rounded-lg p-6 max-h-[85vh] overflow-y-auto cursor-default font-mono glow-border-green"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Header */}
+                <div className="flex justify-between items-start border-b border-terminal-green/10 pb-4 mb-4 select-none">
+                  <div>
+                    <span className="text-[10px] text-terminal-cyan font-bold">{selectedBlogPost.date} // Article Record</span>
+                    <h3 className="text-sm md:text-base font-bold text-white mt-1">{selectedBlogPost.title}</h3>
+                  </div>
+                  <button
+                    onClick={() => setSelectedBlogPost(null)}
+                    className="p-1 text-terminal-muted hover:text-white border border-terminal-green/10 rounded focus:outline-none"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
 
-                    <div className="relative z-10">
-                        <div className="flex flex-wrap gap-3 mb-6 items-center">
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.2 }}
-                                className="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold tracking-wider text-gold-400 bg-gold-900/10 rounded-full border border-gold-500/20"
-                            >
-                                <span className="w-2 h-2 bg-gold-500 rounded-full animate-pulse"></span>
-                                AVAILABLE FOR HIRE
-                            </motion.div>
+                {/* Content body */}
+                <div className="text-xs md:text-sm text-terminal-text/90 leading-relaxed space-y-4 ruby-message max-w-none">
+                  {selectedBlogPost.html ? (
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(
+                          marked.parse(selectedBlogPost.html, { breaks: true, gfm: true })
+                        )
+                      }}
+                    />
+                  ) : selectedBlogPost.content ? (
+                    selectedBlogPost.content.map((p, i) => <p key={i}>{p}</p>)
+                  ) : (
+                    <p>Content unavailable.</p>
+                  )}
+                </div>
 
-                            {isBirthday && (
-                                <motion.button
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    whileHover={{ scale: 1.05 }}
-                                    whileTap={{ scale: 0.95 }}
-                                    onClick={() => setShowBirthdayHUD(true)}
-                                    className="inline-flex items-center gap-2 px-3 py-1 text-xs font-bold tracking-wider text-black bg-gold-500 hover:bg-gold-400 rounded-full border border-gold-500 shadow-[0_0_15px_rgba(230,176,0,0.4)] cursor-pointer select-none"
-                                    title="It's my birthday today! Click for a surprise!"
-                                >
-                                    <span className="text-sm">🎂</span>
-                                    <span>IT'S MY BIRTHDAY!</span>
-                                </motion.button>
-                            )}
-                        </div>
+                {/* Tags footer */}
+                <div className="mt-6 pt-4 border-t border-terminal-green/10 flex flex-wrap gap-1.5 select-none">
+                  {selectedBlogPost.tags.map((tag) => (
+                    <span key={tag} className="text-[9px] px-2 py-0.5 rounded bg-black border border-terminal-cyan/15 text-terminal-cyan">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-                        <motion.h1
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4 }}
-                            className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white leading-tight"
-                        >
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-300 via-gold-500 to-gold-700">
-                                Backend Architect & AI Safety Researcher
-                            </span>
-                        </motion.h1>
+      </div>
 
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.6 }}
-                            className="h-8 mb-8 text-zinc-500 font-mono text-lg md:text-xl flex items-center gap-3"
-                        >
-                            <Terminal size={20} className="text-gold-500" />
-                            <span>
-                                {text}
-                                <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity text-gold-500 font-bold`}>_</span>
-                            </span>
-                        </motion.div>
+      {/* Birthday HUD Animations if active */}
+      {showBirthdayHUD ? (
+        <BirthdayAnimation HUDEnabled={true} onComplete={() => setShowBirthdayHUD(false)} />
+      ) : (
+        isBirthday && <BirthdayAnimation HUDEnabled={false} persist={true} />
+      )}
 
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.8 }}
-                            className="max-w-xl text-lg text-zinc-400 leading-relaxed border-l-2 border-zinc-900 pl-6 mb-8"
-                        >
-                            Architecting secure, frontier-model integrations for high-stakes, resource-constrained environments.
-                        </motion.p>
-
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1 }}
-                            className="flex gap-4"
-                        >
-                            <a href="#contact" onClick={(e) => scrollToSection(e, '#contact')} className="px-5 py-2.5 md:px-6 md:py-3 bg-gold-600 hover:bg-gold-500 text-black font-bold rounded-lg transition-all flex items-center gap-2 transform hover:translate-x-1 text-sm md:text-base">
-                                Start Project <ChevronRight size={18} />
-                            </a>
-                            <a href="#projects" onClick={(e) => scrollToSection(e, '#projects')} className="px-5 py-2.5 md:px-6 md:py-3 border border-zinc-800 hover:border-gold-500 text-zinc-300 hover:text-white rounded-lg transition-all text-sm md:text-base">
-                                View Work
-                            </a>
-                        </motion.div>
-                    </div>
-                </section>
-
-                {/* ABOUT SECTION */}
-                <section id="about">
-                    <FadeIn>
-                        <h2 className="text-2xl font-bold mb-10 flex items-center gap-3 text-white">
-                            <Terminal className="text-gold-500" />
-                            <span>About_Me</span>
-                        </h2>
-                        <div className="w-full bg-zinc-900/30 border border-zinc-800 p-8 md:p-12 rounded-3xl hover:border-gold-500/30 transition-all">
-                            <div className="space-y-6 text-zinc-400 leading-relaxed text-lg text-left">
-                                <p>
-                                    My mission is securing critical digital infrastructure in the Global South. I utilize a unique blend of technical expertise and strategic foresight to <strong className="text-gold-400">bridge engineering depth with venture-scale safety governance</strong>.
-                                </p>
-                                <p>
-                                    I specialize in backend architecture and security moats. I don't just build apps; I engineer resilient systems that withstand adversarial conditions.
-                                </p>
-                            </div>
-                        </div>
-                    </FadeIn>
-                </section>
-
-                {/* SKILLS SECTION */}
-                <section id="skills">
-                    <FadeIn>
-                        <h2 className="text-2xl font-bold mb-10 flex items-center gap-3 text-white">
-                            <Cpu className="text-gold-500" />
-                            <span>Technical_Arsenal</span>
-                        </h2>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            {skills.map((category) => (
-                                <motion.div variants={fadeInUp} key={category.category} className="space-y-4">
-                                    <h3 className="text-xl font-bold text-gold-500 border-b border-zinc-800 pb-2 mb-4">{category.category}</h3>
-                                    <div className="space-y-4">
-                                        {category.items.map((skill) => (
-                                            <div key={skill.name} className="bg-zinc-900/30 border border-zinc-800 hover:border-gold-500/50 p-3 rounded-xl transition-all group">
-                                                <div className="flex justify-between items-center mb-1">
-                                                    <div className="flex items-center gap-2">
-                                                        <span className="text-xl">{skill.icon}</span>
-                                                        <span className="font-medium text-zinc-300 group-hover:text-gold-400 transition-colors text-sm">{skill.name}</span>
-                                                    </div>
-                                                    <span className="text-gold-500 font-bold text-xs">{skill.level}%</span>
-                                                </div>
-                                                <div className="w-full bg-black h-1 rounded-full mt-2 overflow-hidden">
-                                                    <motion.div
-                                                        initial={{ width: 0 }}
-                                                        whileInView={{ width: `${skill.level}%` }}
-                                                        transition={{ duration: 1, delay: 0.2 }}
-                                                        className="bg-gold-600 h-full rounded-full"
-                                                    ></motion.div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </FadeIn>
-                </section>
-
-                {/* SERVICES SECTION */}
-                <section id="services">
-                    <FadeIn>
-                        <h2 className="text-2xl font-bold mb-10 flex items-center gap-3 text-white">
-                            <Wind className="text-gold-500" />
-                            <span>Services_Offered</span>
-                        </h2>
-                        <div className="grid md:grid-cols-3 gap-6">
-                            {services.map((service, index) => (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 50 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: index * 0.1 }}
-                                    key={service.title}
-                                    className="bg-zinc-900/30 border border-zinc-800 p-6 rounded-2xl hover:border-gold-500/30 transition-all hover:-translate-y-2 hover:shadow-lg hover:shadow-gold-900/10"
-                                >
-                                    <div className="text-4xl mb-4">{service.icon}</div>
-                                    <h3 className="text-xl font-bold text-white mb-3">{service.title}</h3>
-                                    <p className="text-zinc-400 text-sm leading-relaxed mb-4">{service.desc}</p>
-                                    <ul className="space-y-2">
-                                        {service.features.map((feature) => (
-                                            <li key={feature} className="text-xs text-zinc-500 flex items-center gap-2">
-                                                <span className="w-1 h-1 bg-gold-500 rounded-full"></span> {feature}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </FadeIn>
-                </section>
-
-                {/* PROJECTS SECTION */}
-                <section id="projects">
-                    <FadeIn>
-                        <div className="flex items-center justify-between mb-10">
-                            <h2 className="text-2xl font-bold flex items-center gap-3 text-white">
-                                <Code className="text-gold-500" />
-                                <span>Selected_Works</span>
-                                <span className="text-zinc-600 text-sm font-normal mt-1 hidden md:inline"> // Premium Deployments</span>
-                            </h2>
-
-                        </div>
-
-                        {/* Vertical Stack Container */}
-                        <div className="flex flex-col gap-8">
-
-                            {/* Project 1: Saibae (Main) */}
-                            {/* Project 1: KukuConnect (Main) */}
-                            <motion.div
-                                whileHover={{ y: -5 }}
-                                className="w-full bg-zinc-900/30 border border-zinc-800 p-8 rounded-3xl hover:border-gold-500/30 transition-all duration-300 group relative overflow-hidden"
-                            >
-                                <div className="absolute top-0 right-0 w-64 h-64 bg-gold-500/5 rounded-full blur-3xl -mr-16 -mt-16 transition-all duration-500 group-hover:bg-gold-500/10"></div>
-
-                                <div className="flex flex-col md:flex-row gap-8 justify-between z-10 relative">
-                                    <div className="flex-1">
-                                        <div className="flex justify-between items-start mb-6">
-                                            <div className="p-3 bg-black border border-zinc-900 rounded-xl text-gold-500 group-hover:scale-110 transition-transform duration-300">
-                                                <Cpu size={28} />
-                                            </div>
-                                            <div className="flex gap-2 md:hidden">
-                                                <a href="https://kukuconnect.vercel.app" aria-label="View KukuConnect Project" className="text-zinc-600 group-hover:text-gold-200 transition-colors cursor-pointer"><ExternalLink size={20} /></a>
-                                            </div>
-                                        </div>
-
-                                        <h3 className="text-3xl font-bold text-white mb-3 group-hover:text-gold-300 transition-colors">KukuConnect: Case Study</h3>
-                                        <p className="text-zinc-400 mb-6 text-lg leading-relaxed">
-                                            A flagship implementation of <strong className="text-gold-400">Gemini API</strong> and <strong className="text-gold-400">RAG architecture</strong> to mitigate hallucinations in veterinary diagnostics. Features a Zero-Trust data pipeline protecting sensitive agricultural data.
-                                        </p>
-
-                                        <div className="flex flex-wrap gap-2 text-xs font-mono text-zinc-500">
-                                            <span className="bg-black border border-zinc-900 px-3 py-1.5 rounded-lg text-gold-200/80">Gemini API</span>
-                                            <span className="bg-black border border-zinc-900 px-3 py-1.5 rounded-lg text-gold-200/80">RAG</span>
-                                            <span className="bg-black border border-zinc-900 px-3 py-1.5 rounded-lg text-gold-200/80">Zero-Trust</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="hidden md:flex flex-col items-end justify-between">
-                                        <div className="px-3 py-1 rounded-full bg-gold-900/10 text-gold-400 text-xs font-bold border border-gold-500/20 flex items-center gap-1">
-                                            <span className="w-1.5 h-1.5 bg-gold-500 rounded-full animate-pulse"></span> LIVE
-                                        </div>
-                                        <a href="https://kukuconnect.vercel.app" target="_blank" rel="noopener noreferrer" aria-label="View KukuConnect Live" className="p-3 border border-zinc-800 rounded-full hover:bg-gold-500 hover:text-black transition-all">
-                                            <ExternalLink size={20} />
-                                        </a>
-                                    </div>
-                                </div>
-                            </motion.div>
-
-                            {/* Other Projects Loop - Vertical List */}
-                            {projects.slice(1).map((project, i) => (
-                                <motion.div
-                                    key={project.title}
-                                    whileHover={{ scale: 1.01 }}
-                                    className="w-full border border-zinc-800 p-8 rounded-3xl bg-zinc-900/30 hover:border-gold-500/30 transition-all flex flex-col md:flex-row justify-between items-center gap-6"
-                                >
-                                    <div className="flex-1">
-                                        <div className="flex items-center gap-3 mb-2">
-                                            <Globe className="text-gold-500 w-6 h-6" />
-                                            <h3 className="text-2xl font-bold text-white leading-tight">{project.title}</h3>
-                                        </div>
-                                        <p className="text-zinc-500 text-base leading-relaxed pl-9">{project.desc}</p>
-                                    </div>
-
-                                    <div className="flex gap-2 self-start md:self-center">
-                                        {project.tags.slice(0, 3).map(tag => (
-                                            <span key={tag} className="text-xs border border-zinc-900 bg-black/50 px-3 py-1.5 rounded-md text-zinc-500 font-mono">
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            ))}
-
-                        </div>
-                    </FadeIn>
-                </section>
-
-                {/* BLOG SECTION */}
-                <section id="blog">
-                    <FadeIn>
-                        <h2 className="text-2xl font-bold mb-10 flex items-center gap-3 text-white">
-                            <Database className="text-gold-500" />
-                            <span>Technical_Articles</span>
-                        </h2>
-                        <div className="space-y-4">
-                            {/* Loading State causes layout shift, so min-height */}
-                            {loading && (
-                                <div className="text-zinc-500 font-mono text-sm animate-pulse">
-                                    {">"} fetching_latest_intel_from_hashnode...
-                                </div>
-                            )}
-
-                            {!loading && posts.length === 0 && (
-                                <div className="text-zinc-500 font-mono text-sm">
-                                    {">"} no_active_transmissions_found.
-                                </div>
-                            )}
-
-                            {posts.slice(0, showAllPosts ? posts.length : 3).map((post) => (
-                                <motion.article
-                                    whileHover={{ x: 10 }}
-                                    key={post.title}
-                                    onClick={() => setSelectedBlogPost(post)}
-                                    className="flex flex-col md:flex-row gap-4 p-6 border border-zinc-800 rounded-2xl bg-zinc-900/20 hover:border-gold-600/50 hover:bg-gold-900/5 transition-all cursor-pointer group"
-                                >
-                                    <div className="md:w-32 flex-shrink-0 text-gold-500 font-mono text-sm border-l-2 border-gold-500 pl-4 h-fit">
-                                        {post.date}
-                                    </div>
-                                    <div className="flex-1">
-                                        <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2 group-hover:text-gold-400 transition-colors">
-                                            {post.title} <ExternalLink size={14} className="opacity-0 group-hover:opacity-100 transition-opacity text-zinc-500" />
-                                        </h3>
-                                        <p className="text-zinc-400 mb-3">{post.desc}</p>
-                                        <div className="flex gap-2 flex-wrap">
-                                            {post.tags.map(tag => (
-                                                <span key={tag} className="text-xs px-2 py-1 rounded bg-black border border-zinc-800 text-zinc-500">#{tag}</span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </motion.article>
-                            ))}
-                        </div>
-
-                        {!loading && posts.length > 3 && (
-                            <div className="flex justify-center mt-8">
-                                <button
-                                    onClick={() => setShowAllPosts(!showAllPosts)}
-                                    className="px-6 py-2 border border-zinc-800 bg-zinc-900/50 hover:bg-gold-500 hover:text-black hover:border-gold-500 text-zinc-300 rounded-full transition-all text-sm font-bold tracking-wide flex items-center gap-2"
-                                >
-                                    {showAllPosts ? (
-                                        <>Show Less <ArrowUp size={16} /></>
-                                    ) : (
-                                        <>Show More <ChevronRight size={16} /></>
-                                    )}
-                                </button>
-                            </div>
-                        )}
-                    </FadeIn>
-                </section>
-
-                {/* TESTIMONIALS SECTION */}
-                <section id="testimonials">
-                    <FadeIn>
-                        <h2 className="text-2xl font-bold mb-10 flex items-center gap-3 text-white">
-                            <Star className="text-gold-500" />
-                            <span>Testimonials</span>
-                        </h2>
-                        <div className="grid md:grid-cols-2 gap-6">
-                            {testimonials.map((test) => (
-                                <div key={test.name} className="p-6 border border-zinc-800 rounded-2xl bg-zinc-900/20 relative">
-                                    <span className="absolute top-4 right-6 text-6xl text-gold-900 opacity-20 serif">"</span>
-                                    <p className="text-zinc-300 italic mb-6 relative z-10">"{test.text}"</p>
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-10 h-10 rounded-full bg-gold-600 flex items-center justify-center text-black font-bold">
-                                            {test.initials}
-                                        </div>
-                                        <div>
-                                            <h3 className="font-bold text-white text-base">{test.name}</h3>
-                                            <p className="text-xs text-gold-500">{test.role} @ {test.company}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </FadeIn>
-                </section>
-
-                {/* CONTACT SECTION WITH FORM */}
-                <section id="contact" className="max-w-4xl mx-auto">
-                    <FadeIn>
-                        <div className="grid md:grid-cols-2 gap-12 bg-zinc-900/30 border border-gold-500/20 p-8 md:p-12 rounded-3xl relative overflow-hidden">
-                            <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-gold-500/5 to-transparent pointer-events-none"></div>
-
-                            {/* Contact Info */}
-                            <div className="flex flex-col justify-center">
-                                <Smartphone className="w-12 h-12 text-gold-500 mb-6" />
-                                <h2 className="text-3xl font-bold text-white mb-4">Get in Touch</h2>
-                                <p className="text-zinc-400 mb-8 leading-relaxed">
-                                    Ready to secure your infrastructure or build the next big thing? I'm currently available for new projects.
-                                </p>
-                                <div className="space-y-4">
-                                    <a href="mailto:derickmokua@outlook.com" className="flex items-center gap-3 text-zinc-300 hover:text-gold-400 transition-colors">
-                                        <Mail size={20} /> derickmokua@outlook.com
-                                    </a>
-                                    <a href="https://github.com/derickmokua" className="flex items-center gap-3 text-zinc-300 hover:text-gold-400 transition-colors">
-                                        <Github size={20} /> github.com/derickmokua
-                                    </a>
-                                </div>
-                            </div>
-
-                            {/* Contact Form */}
-                            <div className="bg-black/50 p-6 rounded-2xl border border-zinc-800">
-                                <form onSubmit={handleFormSubmit} className="space-y-4">
-                                    <div>
-                                        <label className="block text-xs font-bold text-gold-500 mb-2 uppercase tracking-wider">Name</label>
-                                        <input
-                                            type="text"
-                                            name="name"
-                                            required
-                                            value={formState.name}
-                                            onChange={handleFormChange}
-                                            placeholder="Your Name"
-                                            className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-bold text-gold-500 mb-2 uppercase tracking-wider">Email</label>
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            required
-                                            value={formState.email}
-                                            onChange={handleFormChange}
-                                            placeholder="your@email.com"
-                                            className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors"
-                                        />
-                                    </div>
-                                    <div>
-                                        <label className="block text-xs font-bold text-gold-500 mb-2 uppercase tracking-wider">Message</label>
-                                        <textarea
-                                            name="message"
-                                            required
-                                            value={formState.message}
-                                            onChange={handleFormChange}
-                                            rows="4"
-                                            placeholder="Project details..."
-                                            className="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors"
-                                        ></textarea>
-                                    </div>
-                                    <button
-                                        type="submit"
-                                        disabled={isSubmitting}
-                                        className="w-full bg-gold-600 hover:bg-gold-500 text-black font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                                    >
-                                        {isSubmitting ? (
-                                            <Loader2 className="animate-spin" />
-                                        ) : (
-                                            <>Send Message <Send size={18} /></>
-                                        )}
-                                    </button>
-                                    {submitStatus === 'success' && (
-                                        <motion.p
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            className="text-green-400 text-center text-sm mt-2"
-                                        >
-                                            Message Received. I'll get back to you soon.
-                                        </motion.p>
-                                    )}
-                                    {submitStatus === 'missing_config' && (
-                                        <motion.p
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            className="text-red-400 text-center text-sm mt-2 font-bold"
-                                        >
-                                            Error: Missing Configuration. Check .env file.
-                                        </motion.p>
-                                    )}
-                                    {submitStatus === 'api_error' && (
-                                        <motion.p
-                                            initial={{ opacity: 0 }}
-                                            animate={{ opacity: 1 }}
-                                            className="text-red-400 text-center text-sm mt-2"
-                                        >
-                                            Error: Sending Failed. Details in Console.
-                                        </motion.p>
-                                    )}
-                                </form>
-                            </div>
-                        </div>
-                    </FadeIn >
-                </section >
-
-                {/* Footer */}
-                {/* Footer */}
-                {/* Footer */}
-                {/* Footer */}
-                <footer className="border-t border-zinc-900 py-8 text-zinc-400 text-sm">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-
-                        <div className="flex flex-col gap-1 mb-4 md:mb-0 text-center md:text-left">
-                            <p>© 2026 Derick Mokua. All Rights Reserved.</p>
-                        </div>
-
-                        <div className="flex gap-4">
-                            {[
-                                { icon: <Github size={18} />, href: "https://github.com/derickmokua", label: "GitHub" }, // Removed md:hidden to make it visible on desktop since LinkedIn is gone
-                                { icon: <MessageCircle size={18} />, href: "https://api.whatsapp.com/send?phone=254716883375", label: "WhatsApp" },
-                                { icon: <Phone size={18} />, href: "tel:+254716883375", label: "Call" }
-                            ].map((social, index) => (
-                                <motion.a
-                                    key={index}
-                                    href={social.href}
-                                    aria-label={social.label}
-                                    whileHover={{ scale: 1.2, color: '#e6b000' }}
-                                    className={`relative group text-zinc-300 transition-colors p-2 ${social.className || ''}`}
-                                >
-                                    {social.icon}
-                                    <span className="absolute -top-10 left-1/2 -translate-x-1/2 bg-zinc-900 border border-zinc-800 text-gold-500 text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-                                        {social.label}
-                                    </span>
-                                </motion.a>
-                            ))}
-                        </div>
-
-                    </div>
-                </footer>
-
-            </main >
-
-            {/* Back to Top */}
-            < AnimatePresence >
-                {showBackToTop && (
-                    <motion.button
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.5 }}
-                        onClick={scrollToTop}
-                        className="fixed bottom-8 right-8 text-gold-500 hover:text-gold-400 transition-transform hover:-translate-y-1 z-40"
-                        aria-label="Back to top"
-                    >
-                        <ArrowUp size={32} />
-                    </motion.button>
-                )}
-            </AnimatePresence >
-
-            {/* Blog Modal */}
-            < AnimatePresence >
-                {selectedBlogPost && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-                        onClick={() => setSelectedBlogPost(null)}
-                    >
-                        <motion.div
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.9, opacity: 0 }}
-                            onClick={(e) => e.stopPropagation()}
-                            className="bg-zinc-900 border border-zinc-800 rounded-3xl max-w-2xl w-full max-h-[80vh] overflow-y-auto relative"
-                        >
-                            <button
-                                onClick={() => setSelectedBlogPost(null)}
-                                className="absolute top-4 right-4 text-zinc-400 hover:text-white bg-black/50 p-2 rounded-full"
-                                aria-label="Close modal"
-                            >
-                                        <X size={20} />
-                            </button>
-
-                            <div className="p-8">
-                                <div className="text-gold-500 font-mono text-sm mb-4">{selectedBlogPost.date}</div>
-                                <h2 className="text-3xl font-bold text-white mb-6">{selectedBlogPost.title}</h2>
-
-                                {selectedBlogPost.link && (
-                                    <a
-                                        href={selectedBlogPost.link}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 text-sm text-gold-500 hover:text-gold-400 font-mono mb-6 border border-gold-500/20 bg-gold-500/5 px-4 py-2 rounded-lg hover:bg-gold-500/10 transition-all"
-                                    >
-                                        <ExternalLink size={14} /> Read full article on Hashnode
-                                    </a>
-                                )}
-
-                                <div className="prose prose-invert prose-gold max-w-none">
-                                    {/* Render dynamic markdown content if available */}
-
-                                    {selectedBlogPost.markdown ? (
-                                        <ReactMarkdown
-                                            components={{
-                                                // Custom styling for specific elements if needed
-                                                a: ({ node, ...props }) => <a {...props} className="text-gold-500 hover:text-gold-400 underline" target="_blank" rel="noopener noreferrer" />,
-                                                img: ({ node, ...props }) => <img {...props} className="rounded-xl border border-zinc-800 my-6" />,
-                                                code: ({ node, inline, className, children, ...props }) => {
-                                                    return inline ? (
-                                                        <code className="bg-zinc-800 text-gold-200 px-1 rounded" {...props}>{children}</code>
-                                                    ) : (
-                                                        <code className="block bg-black p-4 rounded-lg border border-zinc-800 overflow-x-auto text-sm font-mono text-zinc-300 my-4" {...props}>
-                                                            {children}
-                                                        </code>
-                                                    )
-                                                }
-                                            }}
-                                        >
-                                            {selectedBlogPost.markdown}
-                                        </ReactMarkdown>
-                                    ) : selectedBlogPost.html ? (
-                                        <div
-                                            className="prose prose-invert prose-gold max-w-none [&>figure]:my-8 [&>figure>img]:rounded-xl [&>p]:text-zinc-300 [&>p]:leading-relaxed [&>h3]:text-xl [&>h3]:font-bold [&>h3]:text-white [&>h3]:mt-8 [&>h3]:mb-4"
-                                            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(selectedBlogPost.html) }}
-                                        />
-                                    ) : selectedBlogPost.content ? (
-                                        // Fallback for static/legacy posts (array of strings)
-                                        selectedBlogPost.content.map((paragraph, index) => (
-                                            <p key={index} className="text-zinc-300 text-lg leading-relaxed mb-6">
-                                                {paragraph}
-                                            </p>
-                                        ))
-                                    ) : (
-                                        <p className="text-zinc-400">Content unavailable.</p>
-                                    )}
-                                </div>
-
-
-                                <div className="bg-black p-4 rounded-xl border border-zinc-800 my-6 font-mono text-sm text-zinc-400">
-                                    $ echo "Security is a process, not a product."
-                                </div>
-
-
-                                <div className="mt-8 pt-8 border-t border-zinc-800 flex flex-wrap gap-2">
-                                    {selectedBlogPost.tags.map(tag => (
-                                        <span key={tag} className="px-3 py-1 bg-black border border-zinc-800 rounded-full text-zinc-500 text-sm">
-                                            #{tag}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-            {showBirthdayHUD ? (
-                <BirthdayAnimation HUDEnabled={true} onComplete={() => setShowBirthdayHUD(false)} />
-            ) : (
-                isBirthday && (
-                    <BirthdayAnimation HUDEnabled={false} persist={true} />
-                )
-            )}
-        </div >
-    );
-};
-
-export default Home;
-// Trigger deployment v1.1
+    </div>
+  );
+}
