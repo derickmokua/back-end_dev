@@ -15,8 +15,7 @@ import {
   ArrowUp,
   Send,
   Loader2,
-  Activity,
-  Network
+  Activity
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -29,7 +28,6 @@ import {
 } from "../data/portfolioData";
 import MatrixRain from "../components/MatrixRain";
 import TerminalSection from "../components/TerminalSection";
-import ArchitectureDiagram from "../components/ArchitectureDiagram";
 import DecryptGame from "../components/DecryptGame";
 import RubyChatbot from "../components/RubyChatbot";
 import BirthdayAnimation from "../components/effects/BirthdayAnimation";
@@ -44,7 +42,6 @@ export default function Home() {
   const [selectedBlogPost, setSelectedBlogPost] = useState(null);
 
   const [isContactUnlocked, setIsContactUnlocked] = useState(false);
-  const [isNetmapModalOpen, setIsNetmapModalOpen] = useState(false);
 
   // Form state
   const [formState, setFormState] = useState({ name: "", email: "", message: "" });
@@ -436,19 +433,10 @@ export default function Home() {
 
           {/* SERVICES SECTION */}
           <section id="services" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
-            <div className="flex items-center justify-between border-b border-terminal-green/20 pb-1.5">
-              <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
-                // 03. CORE_COMPETENCIES
+              <h2 className="text-[10px] font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+                <span className="w-1 h-4 bg-terminal-green/60 rounded-full inline-block" />
+                Services
               </h2>
-              {/* Modal trigger */}
-              <button
-                onClick={() => setIsNetmapModalOpen(true)}
-                className="text-[9px] font-bold text-terminal-cyan border border-terminal-cyan/30 hover:border-terminal-cyan bg-terminal-cyan/5 hover:bg-terminal-cyan/15 px-2 py-0.5 rounded transition-all flex items-center gap-1 focus:outline-none"
-              >
-                <Network size={10} />
-                Trace VPC Infrastructure Map
-              </button>
-            </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {services.map((service) => (
                 <div
@@ -671,50 +659,6 @@ export default function Home() {
             >
               <ArrowUp size={16} />
             </motion.button>
-          )}
-        </AnimatePresence>
-
-        <AnimatePresence>
-          {isNetmapModalOpen && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 md:p-6 cursor-zoom-out"
-              onClick={() => setIsNetmapModalOpen(false)}
-            >
-              <motion.div
-                initial={{ scale: 0.95, y: 15 }}
-                animate={{ scale: 1, y: 0 }}
-                exit={{ scale: 0.95, y: 15 }}
-                className="w-full max-w-4xl bg-terminal-card border border-terminal-cyan/30 rounded-lg p-5 cursor-default font-mono glow-border-cyan"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {/* Header */}
-                <div className="flex justify-between items-center border-b border-terminal-cyan/20 pb-3 mb-4 select-none">
-                  <div className="flex items-center gap-2">
-                    <Activity className="text-terminal-cyan animate-pulse" size={16} />
-                    <div>
-                      <h3 className="text-xs font-bold text-white uppercase tracking-wider">VPC Infrastructure NetMap</h3>
-                      <span className="text-[8px] text-terminal-cyan font-bold">SECURE NETWORK TRACE ROUTE</span>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => setIsNetmapModalOpen(false)}
-                    className="p-1 text-terminal-muted hover:text-white border border-terminal-cyan/15 rounded focus:outline-none"
-                  >
-                    <X size={16} />
-                  </button>
-                </div>
-
-                {/* Diagram */}
-                <ArchitectureDiagram />
-
-                <div className="mt-4 text-[9px] text-terminal-muted text-center select-none font-bold">
-                  * Click or hover nodes inside the SVG trace block to view socket endpoints
-                </div>
-              </motion.div>
-            </motion.div>
           )}
         </AnimatePresence>
 
