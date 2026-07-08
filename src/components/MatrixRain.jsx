@@ -17,8 +17,8 @@ export default function MatrixRain() {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
-    // Matrix characters - mixing katakana and alphanumeric
-    const chars = "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレゲゼデベペオォコソトノホモヨョロゴゾドボポヴッン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    // Matrix characters - only 0s and 1s
+    const chars = "01";
     const charArray = chars.split("");
 
     const fontSize = 14;
