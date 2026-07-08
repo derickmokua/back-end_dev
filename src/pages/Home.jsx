@@ -168,9 +168,11 @@ export default function Home() {
             <Link
               to="/"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="text-lg font-bold tracking-tighter text-terminal-green hover:glow-green transition-all"
+              className="text-lg font-bold tracking-tighter hover:glow-green transition-all flex items-center gap-0.5"
             >
-              derickmokua<span className="text-terminal-cyan">.co.ke</span>
+              <span className="text-terminal-muted">root@</span>
+              <span className="text-white">mokua</span>
+              <span className="text-terminal-green animate-pulse font-black text-xl leading-none">_</span>
             </Link>
 
             {/* Desktop Links */}

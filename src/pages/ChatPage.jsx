@@ -63,7 +63,7 @@ export default function ChatPage() {
     }
 
     try {
-      const response = await fetch("/api/chat", {
+      const response = await fetch("https://derickmokua.co.ke/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMessageText }),
