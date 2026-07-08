@@ -27,6 +27,8 @@ import {
   blogPosts as staticBlogPosts,
   birthdayConfig
 } from "../data/portfolioData";
+import MatrixRain from "../components/MatrixRain";
+import TerminalSection from "../components/TerminalSection";
 import ArchitectureDiagram from "../components/ArchitectureDiagram";
 import DecryptGame from "../components/DecryptGame";
 import RubyChatbot from "../components/RubyChatbot";
@@ -85,16 +87,11 @@ export default function Home() {
 
   // Scroll listener
   useEffect(() => {
-    const handleScroll = (e) => {
-      setShowBackToTop(e.target.scrollTop > 300);
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 300);
     };
-    const scrollContainer = document.getElementById('terminal-scroll-container');
-    if (scrollContainer) {
-      scrollContainer.addEventListener("scroll", handleScroll);
-    }
-    return () => {
-      if (scrollContainer) scrollContainer.removeEventListener("scroll", handleScroll);
-    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Form handler
@@ -146,13 +143,11 @@ export default function Home() {
     e.preventDefault();
     setIsMenuOpen(false);
     const element = document.querySelector(href);
-    const scrollContainer = document.getElementById('terminal-scroll-container');
-    if (element && scrollContainer) {
+    if (element) {
       const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
-      const containerTop = scrollContainer.getBoundingClientRect().top;
-      const offsetPosition = scrollContainer.scrollTop + elementPosition - containerTop - headerOffset;
-      scrollContainer.scrollTo({
+      const offsetPosition = window.pageYOffset + elementPosition - headerOffset;
+      window.scrollTo({
         top: offsetPosition,
         behavior: "smooth"
       });
@@ -160,20 +155,20 @@ export default function Home() {
   };
 
   const scrollToTop = () => {
-    const scrollContainer = document.getElementById('terminal-scroll-container');
-    if (scrollContainer) {
-      scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <div className="min-h-full bg-terminal-bg text-terminal-text font-mono selection:bg-terminal-green selection:text-black relative">
+    <div className="min-h-screen bg-terminal-bg text-terminal-text font-mono selection:bg-terminal-green selection:text-black overflow-x-hidden relative">
       
+      {/* Subtle digital rain background layer */}
+      <MatrixRain />
+
       {/* Main content layers */}
       <div className="relative z-10">
         
         {/* Navbar */}
-        <nav className="sticky top-0 w-full z-40 bg-terminal-bg/90 backdrop-blur-md border-b border-terminal-green/10 shadow-lg shadow-black/50">
+        <nav className="fixed top-0 w-full z-40 bg-terminal-bg/90 backdrop-blur-md border-b border-terminal-green/10 shadow-lg shadow-black/50">
           <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <Link
               to="/"
@@ -264,7 +259,7 @@ export default function Home() {
         <main className="max-w-4xl mx-auto px-6 pt-28 pb-20 space-y-20">
           
           {/* HERO SECTION */}
-          <section className="min-h-[55vh] flex flex-col justify-center relative">
+          <TerminalSection command="visitor@mokua-host: ~/sys/boot">
             <div className="absolute top-0 -left-10 w-72 h-72 bg-terminal-green/5 rounded-full blur-3xl pointer-events-none" />
 
             <div className="space-y-6">
@@ -310,10 +305,10 @@ export default function Home() {
                 </a>
               </div>
             </div>
-          </section>
+          </TerminalSection>
 
           {/* ABOUT SECTION (Formatted as terminal cat readout) */}
-          <section id="about" className="space-y-4">
+          <TerminalSection id="about" command="visitor@mokua-host: ~/profile">
             <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
               // 01. ABOUT_ME_POSTURE
             </h2>
@@ -351,10 +346,10 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </section>
+          </TerminalSection>
 
           {/* SKILLS SECTION */}
-          <section id="skills" className="space-y-4">
+          <TerminalSection id="skills" command="visitor@mokua-host: ~/arsenal">
             <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
               // 02. TECHNICAL_ARSENAL
             </h2>
@@ -388,10 +383,10 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </section>
+          </TerminalSection>
 
           {/* SERVICES SECTION */}
-          <section id="services" className="space-y-4">
+          <TerminalSection id="services" command="visitor@mokua-host: ~/daemons">
             <div className="flex items-center justify-between border-b border-terminal-green/20 pb-1.5">
               <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
                 // 03. CORE_COMPETENCIES
@@ -431,10 +426,10 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </section>
+          </TerminalSection>
 
           {/* PROJECTS SECTION */}
-          <section id="projects" className="space-y-4">
+          <TerminalSection id="projects" command="visitor@mokua-host: ~/archives">
             <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
               // 04. SELECTED_WORKS
             </h2>
@@ -500,10 +495,10 @@ export default function Home() {
               </div>
 
             </div>
-          </section>
+          </TerminalSection>
 
           {/* ARTICLES SECTION */}
-          <section id="blog" className="space-y-4">
+          <TerminalSection id="blog" command="visitor@mokua-host: ~/logs">
             <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
               // 05. TECHNICAL_ARTICLES
             </h2>
@@ -534,10 +529,10 @@ export default function Home() {
                 ))
               )}
             </div>
-          </section>
+          </TerminalSection>
 
           {/* TESTIMONIALS SECTION */}
-          <section id="testimonials" className="space-y-4">
+          <TerminalSection id="testimonials" command="visitor@mokua-host: ~/signals">
             <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
               // 06. TESTIMONIALS
             </h2>
@@ -562,10 +557,10 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </section>
+          </TerminalSection>
 
           {/* CONTACT SECTION WITH FORM & DECRYPT GAME */}
-          <section id="contact" className="space-y-4">
+          <TerminalSection id="contact" command="visitor@mokua-host: ~/handshake">
             <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
               // 07. HANDSHAKE_PROTOCOL
             </h2>
@@ -661,7 +656,7 @@ export default function Home() {
                 </form>
               </div>
             </div>
-          </section>
+          </TerminalSection>
 
           {/* Footer */}
           <footer className="border-t border-terminal-green/10 pt-6 text-[10px] text-terminal-muted font-mono flex flex-col sm:flex-row items-center justify-between gap-4 select-none pb-10">

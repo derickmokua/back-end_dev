@@ -6,6 +6,9 @@ import { marked } from "marked";
 import DOMPurify from "dompurify";
 import BirthdayAnimation from "../components/effects/BirthdayAnimation";
 
+import MatrixRain from "../components/MatrixRain";
+import TerminalSection from "../components/TerminalSection";
+
 export default function ChatPage() {
   const [messages, setMessages] = useState([
     {
@@ -105,9 +108,13 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="h-full bg-terminal-bg text-terminal-text font-mono flex flex-col selection:bg-terminal-green selection:text-black">
-      {/* Header */}
-      <header className="bg-terminal-bg/85 backdrop-blur-md border-b border-terminal-green/10 p-4 sticky top-0 z-10 select-none shadow-lg">
+    <div className="min-h-screen bg-terminal-bg text-terminal-text font-mono flex flex-col selection:bg-terminal-green selection:text-black relative">
+      <MatrixRain />
+      <div className="relative z-10 flex-1 flex flex-col p-4 md:p-8 max-w-5xl mx-auto w-full">
+        <TerminalSection id="chat" command="visitor@mokua-host: ~/secure-comms">
+          <div className="flex flex-col h-[85vh] -mx-6 md:-mx-8 -my-6 md:-my-8">
+            {/* Header */}
+            <header className="bg-terminal-bg/85 backdrop-blur-md border-b border-terminal-green/10 p-4 sticky top-0 z-10 select-none shadow-lg rounded-t-lg">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <Link
             to="/"
@@ -208,9 +215,12 @@ export default function ChatPage() {
         </form>
       </main>
 
-      {showChatConfetti && (
-        <BirthdayAnimation onComplete={() => setShowChatConfetti(false)} HUDEnabled={false} />
-      )}
+            {showChatConfetti && (
+              <BirthdayAnimation onComplete={() => setShowChatConfetti(false)} HUDEnabled={false} />
+            )}
+          </div>
+        </TerminalSection>
+      </div>
     </div>
   );
 }
