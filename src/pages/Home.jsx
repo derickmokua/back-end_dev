@@ -27,8 +27,7 @@ import {
   blogPosts as staticBlogPosts,
   birthdayConfig
 } from "../data/portfolioData";
-import CyberGrid from "../components/CyberGrid";
-import TelemetryStream from "../components/TelemetryStream";
+import MatrixRain from "../components/MatrixRain";
 import ArchitectureDiagram from "../components/ArchitectureDiagram";
 import DecryptGame from "../components/DecryptGame";
 import RubyChatbot from "../components/RubyChatbot";
@@ -43,10 +42,8 @@ export default function Home() {
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [selectedBlogPost, setSelectedBlogPost] = useState(null);
 
-  // Secure Ops States
   const [isContactUnlocked, setIsContactUnlocked] = useState(false);
   const [isNetmapModalOpen, setIsNetmapModalOpen] = useState(false);
-  const [isLogDrawerOpen, setIsLogDrawerOpen] = useState(false);
 
   // Form state
   const [formState, setFormState] = useState({ name: "", email: "", message: "" });
@@ -160,7 +157,7 @@ export default function Home() {
     <div className="min-h-screen bg-terminal-bg text-terminal-text font-mono selection:bg-terminal-green selection:text-black overflow-x-hidden relative">
       
       {/* Subtle digital rain background layer */}
-      <CyberGrid />
+      <MatrixRain />
 
       {/* Main content layers */}
       <div className="relative z-10">
@@ -188,7 +185,7 @@ export default function Home() {
               
               <Link
                 to="/chat"
-                className="px-2.5 py-1 border border-terminal-cyan/30 text-terminal-cyan hover:bg-terminal-cyan/5 rounded flex items-center gap-1 transition-all"
+                className="px-2.5 py-1 text-terminal-cyan hover:bg-terminal-cyan/5 rounded flex items-center gap-1 transition-all"
               >
                 <Terminal size={12} /> Chat
               </Link>
@@ -197,20 +194,19 @@ export default function Home() {
                 href="https://github.com/derickmokua"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-1 border border-terminal-green/30 text-terminal-green hover:bg-terminal-green/5 rounded transition-all focus:outline-none"
+                className="p-1 text-terminal-green hover:bg-terminal-green/5 rounded transition-all focus:outline-none"
                 title="View GitHub Profile"
               >
                 <Github size={16} />
               </a>
             </div>
 
-            {/* Mobile Toggle */}
             <div className="flex md:hidden items-center gap-3">
               <a
                 href="https://github.com/derickmokua"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-1 border border-terminal-green/20 text-terminal-green rounded"
+                className="p-1 text-terminal-green rounded"
               >
                 <Github size={16} />
               </a>
@@ -691,35 +687,6 @@ export default function Home() {
           )}
         </AnimatePresence>
 
-        {/* Collapsible bottom logs stream drawer */}
-        <div className="fixed bottom-0 right-20 z-40 font-mono text-xs w-[320px] sm:w-[420px] shadow-2xl">
-          {/* Toggle Bar */}
-          <button
-            onClick={() => setIsLogDrawerOpen(!isLogDrawerOpen)}
-            className="w-full bg-black/90 border-t border-x border-terminal-cyan/35 hover:border-terminal-cyan text-terminal-cyan rounded-t px-3 py-1.5 flex items-center justify-between font-bold text-[10px] tracking-wider focus:outline-none select-none"
-          >
-            <div className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 bg-terminal-cyan rounded-full animate-ping" />
-              <span>[ SYSTEM LOG STREAM: {isLogDrawerOpen ? "ACTIVE" : "COLLAPSED"} ]</span>
-            </div>
-            <span>{isLogDrawerOpen ? "[-] Close" : "[+] Open"}</span>
-          </button>
-          {/* Logs Drawer body */}
-          <AnimatePresence>
-            {isLogDrawerOpen && (
-              <motion.div
-                initial={{ height: 0 }}
-                animate={{ height: 235 }}
-                exit={{ height: 0 }}
-                className="overflow-hidden"
-              >
-                <TelemetryStream />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* VPC NetMap Modal Overlay */}
         <AnimatePresence>
           {isNetmapModalOpen && (
             <motion.div
