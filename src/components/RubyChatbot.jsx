@@ -47,7 +47,11 @@ export default function RubyChatbot() {
     setIsTyping(true);
 
     try {
-      const response = await fetch("https://derickmokua.co.ke/api/chat", {
+      const apiUrl = import.meta.env.DEV 
+        ? "https://derickmokua.co.ke/api/chat" 
+        : "/api/chat";
+
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMessageText }),
