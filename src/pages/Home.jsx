@@ -266,7 +266,7 @@ export default function Home() {
               
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-terminal-green bg-terminal-green/5 rounded border border-terminal-green/20">
                 <span className="w-1.5 h-1.5 bg-terminal-green rounded-full animate-ping" />
-                SYSTEM_STATUS: ZERO_TRUST_ENCLAVE_ACTIVE
+                Available for new projects
               </div>
 
               <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-white leading-tight">
@@ -285,76 +285,46 @@ export default function Home() {
               </div>
 
               <p className="max-w-2xl text-sm md:text-base text-terminal-text/80 leading-relaxed pl-4 border-l border-terminal-green/25 font-sans">
-                Architecting secure, frontier-model integrations for high-stakes, resource-constrained environments in the Global South.
+                I build secure, AI-powered backend systems for teams across Africa and beyond — turning complex ideas into reliable products that scale.
               </p>
 
-              <div className="flex gap-4 pt-4">
+              <div className="flex flex-wrap gap-3 pt-4">
                 <a
                   href="#contact"
                   onClick={(e) => scrollToSection(e, "#contact")}
-                  className="group px-5 py-2.5 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold rounded text-xs uppercase tracking-wider transition-all hover:shadow-[0_0_15px_rgba(0,255,159,0.3)] flex flex-col items-center justify-center text-center"
+                  className="px-5 py-3 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold rounded text-xs uppercase tracking-wider transition-all hover:shadow-[0_0_15px_rgba(0,255,159,0.3)] flex items-center gap-2"
                 >
-                  <span>Secure Handshake</span>
-                  <span className="block text-[9px] opacity-70 mt-0.5 font-semibold group-hover:opacity-100 transition-opacity">Contact Me</span>
+                  Get In Touch
                 </a>
                 <a
                   href="#projects"
                   onClick={(e) => scrollToSection(e, "#projects")}
-                  className="group px-5 py-2.5 border border-terminal-green/30 hover:border-terminal-green hover:bg-terminal-green/5 text-terminal-green rounded text-xs uppercase tracking-wider transition-all flex flex-col items-center justify-center text-center"
+                  className="px-5 py-3 border border-terminal-green/30 hover:border-terminal-green hover:bg-terminal-green/5 text-terminal-green rounded text-xs uppercase tracking-wider transition-all flex items-center gap-2"
                 >
-                  <span>Access Archives</span>
-                  <span className="block text-[9px] opacity-70 mt-0.5 font-semibold group-hover:opacity-100 transition-opacity">View Projects</span>
+                  View My Work
                 </a>
               </div>
             </div>
           </TerminalSection>
 
-          {/* ABOUT SECTION (Formatted as terminal cat readout) */}
-          <TerminalSection id="about" command="visitor@mokua-host: ~/profile">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
-              // 01. ABOUT_ME_POSTURE
+          {/* ABOUT SECTION */}
+          <section id="about" className="space-y-6">
+            <h2 className="text-[10px] font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+              <span className="w-1 h-4 bg-terminal-green/60 rounded-full inline-block" />
+              About
             </h2>
-            <div className="bg-terminal-card border border-terminal-green/20 rounded-lg overflow-hidden glow-border-green">
-              
-              {/* Fake Terminal Header */}
-              <div className="bg-black/90 px-4 py-2 border-b border-terminal-green/10 flex items-center justify-between text-[10px] text-terminal-muted select-none">
-                <div className="flex items-center gap-2">
-                  <Terminal size={12} className="text-terminal-green" />
-                  <span>visitor@mokua-host:~$ cat about_me.md</span>
-                </div>
-                <span>1024 Bytes</span>
-              </div>
-
-              {/* Terminal Code Readout body */}
-              <div className="p-4 md:p-6 space-y-4 text-xs md:text-sm font-mono leading-relaxed flex">
-                {/* Line numbers column */}
-                <div className="text-terminal-green/20 text-right pr-4 select-none border-r border-terminal-green/10 flex flex-col font-bold">
-                  <span>01</span>
-                  <span>02</span>
-                  <span>03</span>
-                  <span>04</span>
-                  <span>05</span>
-                  <span>06</span>
-                  <span>07</span>
-                </div>
-                {/* Main text */}
-                <div className="pl-4 space-y-5 text-terminal-text/90 flex-1 leading-loose">
-                  <p>
-                    My mission is securing critical digital infrastructure in the Global South. I utilize a unique blend of technical expertise and strategic foresight. 
-                  </p>
-                  <p>
-                    This allows me to <strong className="text-terminal-green font-bold font-mono">bridge engineering depth with venture-scale safety governance</strong>.
-                  </p>
-                  <p>
-                    I specialize in backend architecture and security moats. I don't just build apps; I engineer resilient systems that withstand adversarial conditions.
-                  </p>
-                  <p>
-                    My current research focuses on developing safe, vector-supported prompt translation layers and zero-trust data brokers for high-stakes implementations.
-                  </p>
-                </div>
-              </div>
+            <div className="space-y-4 text-sm md:text-base text-terminal-text/85 leading-loose font-sans pl-4 border-l-2 border-terminal-green/20">
+              <p>
+                I'm Derick Mokua — a backend developer and AI engineer based in Nairobi, Kenya.
+              </p>
+              <p>
+                I build <strong className="text-terminal-green font-bold">secure, scalable backend systems</strong> and integrate AI into real-world products. My focus is on making powerful technology work reliably in environments where reliability matters most.
+              </p>
+              <p>
+                Currently researching how to make AI models safer and more trustworthy for high-stakes use cases across Africa.
+              </p>
             </div>
-          </TerminalSection>
+          </section>
 
           {/* PROJECTS SECTION */}
           <section id="projects" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
@@ -696,8 +666,8 @@ export default function Home() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               onClick={scrollToTop}
-              className="fixed bottom-6 left-6 z-35 p-2 bg-terminal-bg border border-terminal-green/20 text-terminal-green rounded hover:scale-105 transition-all focus:outline-none"
-              title="Return to Core OS"
+              className="fixed bottom-6 left-6 z-35 w-9 h-9 bg-terminal-green/10 hover:bg-terminal-green/20 text-terminal-green rounded-full flex items-center justify-center transition-all focus:outline-none shadow-lg shadow-black/40"
+              title="Back to top"
             >
               <ArrowUp size={16} />
             </motion.button>

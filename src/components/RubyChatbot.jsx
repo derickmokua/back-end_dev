@@ -112,8 +112,8 @@ export default function RubyChatbot() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             onClick={() => setIsOpen(true)}
-            className="w-12 h-12 bg-terminal-bg border border-terminal-green/30 hover:border-terminal-green text-terminal-green rounded-full flex items-center justify-center shadow-lg hover:shadow-[0_0_15px_rgba(0,255,159,0.3)] transition-all hover:scale-105 focus:outline-none"
-            title="Secure AI Channel"
+            className="w-12 h-12 bg-terminal-green/10 hover:bg-terminal-green/20 text-terminal-green rounded-full flex items-center justify-center shadow-lg shadow-black/50 hover:shadow-[0_0_20px_rgba(0,255,159,0.2)] transition-all hover:scale-105 focus:outline-none"
+            title="Chat with Ruby"
           >
             <MessageSquare size={20} className="animate-pulse" />
           </motion.button>
@@ -127,7 +127,7 @@ export default function RubyChatbot() {
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.95 }}
-            className="w-[320px] sm:w-[360px] h-[450px] bg-terminal-card border border-terminal-green/30 rounded-lg shadow-2xl flex flex-col justify-between overflow-hidden glow-border-green"
+            className="w-[320px] sm:w-[360px] h-[450px] bg-terminal-card border border-terminal-green/15 rounded-xl shadow-2xl shadow-black/60 flex flex-col justify-between overflow-hidden"
           >
             {/* Header bar */}
             <div className="bg-black/90 p-3 border-b border-terminal-green/10 flex items-center justify-between select-none">
