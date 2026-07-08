@@ -261,7 +261,7 @@ export default function Home() {
               
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-terminal-green bg-terminal-green/5 rounded border border-terminal-green/20">
                 <span className="w-1.5 h-1.5 bg-terminal-green rounded-full animate-ping" />
-                STATUS: SECURE_TUNNEL_CONNECTED
+                SYSTEM_STATUS: ZERO_TRUST_ENCLAVE_ACTIVE
               </div>
 
               <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-white leading-tight">
