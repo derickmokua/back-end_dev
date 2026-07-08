@@ -30,6 +30,8 @@ export default function MatrixRain() {
       drops[x] = Math.random() * -100; // Start at random negative y to stagger
     }
 
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     const draw = () => {
       // Draw semi-transparent black background to create trail effect
       ctx.fillStyle = "rgba(10, 10, 15, 0.05)"; // matches --terminal-bg slightly
@@ -56,13 +58,24 @@ export default function MatrixRain() {
         drops[i]++;
       }
       
-      requestAnimationFrame(draw);
+      // Stop animating if user prefers reduced motion, draw once as a texture
+      if (!prefersReducedMotion) {
+        requestAnimationFrame(draw);
+      }
     };
 
-    const animationId = requestAnimationFrame(draw);
+    if (prefersReducedMotion) {
+      // If reduced motion, just fill a static frame instantly
+      for (let i = 0; i < 50; i++) draw();
+    } else {
+      const animationId = requestAnimationFrame(draw);
+      return () => {
+        cancelAnimationFrame(animationId);
+        window.removeEventListener("resize", resizeCanvas);
+      };
+    }
 
     return () => {
-      cancelAnimationFrame(animationId);
       window.removeEventListener("resize", resizeCanvas);
     };
   }, []);
@@ -70,7 +83,7 @@ export default function MatrixRain() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 w-screen h-screen pointer-events-none z-0 bg-terminal-bg opacity-30"
+      className="fixed inset-0 w-screen h-screen pointer-events-none z-0 bg-terminal-bg opacity-10 md:opacity-15 transition-opacity duration-1000"
     />
   );
 }

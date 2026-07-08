@@ -256,7 +256,7 @@ export default function Home() {
         </nav>
 
         {/* Main stacked sections */}
-        <main className="max-w-4xl mx-auto px-6 pt-28 pb-20 space-y-20">
+        <main className="max-w-4xl mx-auto px-6 pt-28 pb-20 space-y-24 md:space-y-32">
           
           {/* HERO SECTION */}
           <TerminalSection command="visitor@mokua-host: ~/sys/boot">
@@ -288,20 +288,22 @@ export default function Home() {
                 Architecting secure, frontier-model integrations for high-stakes, resource-constrained environments in the Global South.
               </p>
 
-              <div className="flex gap-4 pt-2">
+              <div className="flex gap-4 pt-4">
                 <a
                   href="#contact"
                   onClick={(e) => scrollToSection(e, "#contact")}
-                  className="px-5 py-2.5 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold rounded text-xs uppercase tracking-wider transition-all hover:shadow-[0_0_15px_rgba(0,255,159,0.3)]"
+                  className="group px-5 py-2.5 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold rounded text-xs uppercase tracking-wider transition-all hover:shadow-[0_0_15px_rgba(0,255,159,0.3)] flex flex-col items-center justify-center text-center"
                 >
-                  Secure Handshake
+                  <span>Secure Handshake</span>
+                  <span className="block text-[9px] opacity-70 mt-0.5 font-semibold group-hover:opacity-100 transition-opacity">Contact Me</span>
                 </a>
                 <a
                   href="#projects"
                   onClick={(e) => scrollToSection(e, "#projects")}
-                  className="px-5 py-2.5 border border-terminal-green/30 hover:border-terminal-green hover:bg-terminal-green/5 text-terminal-green rounded text-xs uppercase tracking-wider transition-all"
+                  className="group px-5 py-2.5 border border-terminal-green/30 hover:border-terminal-green hover:bg-terminal-green/5 text-terminal-green rounded text-xs uppercase tracking-wider transition-all flex flex-col items-center justify-center text-center"
                 >
-                  Access Archives
+                  <span>Access Archives</span>
+                  <span className="block text-[9px] opacity-70 mt-0.5 font-semibold group-hover:opacity-100 transition-opacity">View Projects</span>
                 </a>
               </div>
             </div>
@@ -336,100 +338,26 @@ export default function Home() {
                   <span>07</span>
                 </div>
                 {/* Main text */}
-                <div className="pl-4 space-y-4 text-terminal-text/90 flex-1">
+                <div className="pl-4 space-y-5 text-terminal-text/90 flex-1 leading-loose">
                   <p>
-                    My mission is securing critical digital infrastructure in the Global South. I utilize a unique blend of technical expertise and strategic foresight to <strong className="text-terminal-green font-bold font-mono">bridge engineering depth with venture-scale safety governance</strong>.
+                    My mission is securing critical digital infrastructure in the Global South. I utilize a unique blend of technical expertise and strategic foresight. 
                   </p>
                   <p>
-                    I specialize in backend architecture and security moats. I don't just build apps; I engineer resilient systems that withstand adversarial conditions. My research focuses on developing safe, vector-supported prompt translation layers and zero-trust data brokers for high-stakes implementations.
+                    This allows me to <strong className="text-terminal-green font-bold font-mono">bridge engineering depth with venture-scale safety governance</strong>.
+                  </p>
+                  <p>
+                    I specialize in backend architecture and security moats. I don't just build apps; I engineer resilient systems that withstand adversarial conditions.
+                  </p>
+                  <p>
+                    My current research focuses on developing safe, vector-supported prompt translation layers and zero-trust data brokers for high-stakes implementations.
                   </p>
                 </div>
               </div>
             </div>
           </TerminalSection>
 
-          {/* SKILLS SECTION */}
-          <TerminalSection id="skills" command="visitor@mokua-host: ~/arsenal">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
-              // 02. TECHNICAL_ARSENAL
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {skills.map((category) => (
-                <div key={category.category} className="space-y-3">
-                  <h3 className="text-xs font-bold text-terminal-cyan border-b border-terminal-cyan/20 pb-1.5 uppercase tracking-widest">
-                    {category.category}
-                  </h3>
-                  <div className="space-y-2.5">
-                    {category.items.map((skill) => (
-                      <div
-                        key={skill.name}
-                        className="bg-terminal-card border border-terminal-green/10 hover:border-terminal-green/30 p-3 rounded transition-all group"
-                      >
-                        <div className="flex justify-between items-center text-[10px] mb-1">
-                          <span className="font-medium text-terminal-text group-hover:text-terminal-green transition-colors font-bold">
-                            {skill.icon} {skill.name}
-                          </span>
-                          <span className="text-terminal-green font-bold">{skill.level}%</span>
-                        </div>
-                        <div className="w-full bg-black h-1 rounded overflow-hidden">
-                          <div
-                            className="bg-terminal-green h-full rounded transition-all duration-1000"
-                            style={{ width: `${skill.level}%` }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </TerminalSection>
-
-          {/* SERVICES SECTION */}
-          <TerminalSection id="services" command="visitor@mokua-host: ~/daemons">
-            <div className="flex items-center justify-between border-b border-terminal-green/20 pb-1.5">
-              <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
-                // 03. CORE_COMPETENCIES
-              </h2>
-              {/* Modal trigger */}
-              <button
-                onClick={() => setIsNetmapModalOpen(true)}
-                className="text-[9px] font-bold text-terminal-cyan border border-terminal-cyan/30 hover:border-terminal-cyan bg-terminal-cyan/5 hover:bg-terminal-cyan/15 px-2 py-0.5 rounded transition-all flex items-center gap-1 focus:outline-none"
-              >
-                <Network size={10} />
-                Trace VPC Infrastructure Map
-              </button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {services.map((service) => (
-                <div
-                  key={service.title}
-                  className="bg-terminal-card border border-terminal-green/15 p-5 rounded hover:border-terminal-cyan/45 transition-all flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="text-2xl mb-2">{service.icon}</div>
-                    <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2">
-                      {service.title}
-                    </h3>
-                    <p className="text-[10px] text-terminal-muted leading-relaxed mb-4">
-                      {service.desc}
-                    </p>
-                  </div>
-                  <ul className="space-y-1.5 border-t border-terminal-green/5 pt-3">
-                    {service.features.map((feature) => (
-                      <li key={feature} className="text-[9px] text-terminal-cyan flex items-center gap-1.5">
-                        <span className="w-1 h-1 bg-terminal-cyan rounded-full" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </TerminalSection>
-
           {/* PROJECTS SECTION */}
-          <TerminalSection id="projects" command="visitor@mokua-host: ~/archives">
+          <section id="projects" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
             <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
               // 04. SELECTED_WORKS
             </h2>
@@ -495,10 +423,92 @@ export default function Home() {
               </div>
 
             </div>
-          </TerminalSection>
+          </section>
+
+          
+
+          {/* SKILLS SECTION */}
+          <section id="skills" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
+              // 02. TECHNICAL_ARSENAL
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {skills.map((category) => (
+                <div key={category.category} className="space-y-3">
+                  <h3 className="text-xs font-bold text-terminal-cyan border-b border-terminal-cyan/20 pb-1.5 uppercase tracking-widest">
+                    {category.category}
+                  </h3>
+                  <div className="space-y-2.5">
+                    {category.items.map((skill) => (
+                      <div
+                        key={skill.name}
+                        className="bg-terminal-card border border-terminal-green/10 hover:border-terminal-green/30 p-3 rounded transition-all group"
+                      >
+                        <div className="flex justify-between items-center text-[10px] mb-1">
+                          <span className="font-medium text-terminal-text group-hover:text-terminal-green transition-colors font-bold">
+                            {skill.icon} {skill.name}
+                          </span>
+                          <span className="text-terminal-green font-bold">{skill.level}%</span>
+                        </div>
+                        <div className="w-full bg-black h-1 rounded overflow-hidden">
+                          <div
+                            className="bg-terminal-green h-full rounded transition-all duration-1000"
+                            style={{ width: `${skill.level}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* SERVICES SECTION */}
+          <section id="services" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
+            <div className="flex items-center justify-between border-b border-terminal-green/20 pb-1.5">
+              <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
+                // 03. CORE_COMPETENCIES
+              </h2>
+              {/* Modal trigger */}
+              <button
+                onClick={() => setIsNetmapModalOpen(true)}
+                className="text-[9px] font-bold text-terminal-cyan border border-terminal-cyan/30 hover:border-terminal-cyan bg-terminal-cyan/5 hover:bg-terminal-cyan/15 px-2 py-0.5 rounded transition-all flex items-center gap-1 focus:outline-none"
+              >
+                <Network size={10} />
+                Trace VPC Infrastructure Map
+              </button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {services.map((service) => (
+                <div
+                  key={service.title}
+                  className="bg-terminal-card border border-terminal-green/15 p-5 rounded hover:border-terminal-cyan/45 transition-all flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="text-2xl mb-2">{service.icon}</div>
+                    <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2">
+                      {service.title}
+                    </h3>
+                    <p className="text-[10px] text-terminal-muted leading-relaxed mb-4">
+                      {service.desc}
+                    </p>
+                  </div>
+                  <ul className="space-y-1.5 border-t border-terminal-green/5 pt-3">
+                    {service.features.map((feature) => (
+                      <li key={feature} className="text-[9px] text-terminal-cyan flex items-center gap-1.5">
+                        <span className="w-1 h-1 bg-terminal-cyan rounded-full" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </section>
 
           {/* ARTICLES SECTION */}
-          <TerminalSection id="blog" command="visitor@mokua-host: ~/logs">
+          <section id="blog" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
             <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
               // 05. TECHNICAL_ARTICLES
             </h2>
@@ -529,10 +539,10 @@ export default function Home() {
                 ))
               )}
             </div>
-          </TerminalSection>
+          </section>
 
           {/* TESTIMONIALS SECTION */}
-          <TerminalSection id="testimonials" command="visitor@mokua-host: ~/signals">
+          <section id="testimonials" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
             <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
               // 06. TESTIMONIALS
             </h2>
@@ -557,10 +567,10 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </TerminalSection>
+          </section>
 
           {/* CONTACT SECTION WITH FORM & DECRYPT GAME */}
-          <TerminalSection id="contact" command="visitor@mokua-host: ~/handshake">
+          <section id="contact" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
             <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
               // 07. HANDSHAKE_PROTOCOL
             </h2>
@@ -656,7 +666,7 @@ export default function Home() {
                 </form>
               </div>
             </div>
-          </TerminalSection>
+          </section>
 
           {/* Footer */}
           <footer className="border-t border-terminal-green/10 pt-6 text-[10px] text-terminal-muted font-mono flex flex-col sm:flex-row items-center justify-between gap-4 select-none pb-10">
