@@ -273,11 +273,10 @@ export default function Home() {
                 </span>
               </h1>
 
-              <div className="flex items-center gap-2 text-terminal-muted text-sm md:text-base font-bold min-h-[24px]">
-                <Terminal size={18} className="text-terminal-green" />
-                <span>
-                  {typedHero}
-                  <span className="terminal-cursor" />
+              <div className="flex items-center gap-2 text-terminal-muted text-xs sm:text-sm font-bold min-h-[22px] overflow-hidden">
+                <Terminal size={14} className="text-terminal-green flex-shrink-0" />
+                <span className="truncate">
+                  {typedHero}<span className="terminal-cursor" />
                 </span>
               </div>
 
@@ -306,9 +305,8 @@ export default function Home() {
 
           {/* ABOUT SECTION */}
           <section id="about" className="space-y-6">
-            <h2 className="text-[10px] font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
-              <span className="w-1 h-4 bg-terminal-green/60 rounded-full inline-block" />
-              About
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
+              // 01. ABOUT
             </h2>
             <div className="space-y-4 text-sm md:text-base text-terminal-text/85 leading-loose font-sans pl-4 border-l-2 border-terminal-green/20">
               <p>
@@ -323,10 +321,47 @@ export default function Home() {
             </div>
           </section>
 
+          {/* SKILLS SECTION */}
+          <section id="skills" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
+              // 02. TECHNICAL_ARSENAL
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {skills.map((category) => (
+                <div key={category.category} className="space-y-3">
+                  <h3 className="text-xs font-bold text-terminal-cyan border-b border-terminal-cyan/20 pb-1.5 uppercase tracking-widest">
+                    {category.category}
+                  </h3>
+                  <div className="space-y-2.5">
+                    {category.items.map((skill) => (
+                      <div
+                        key={skill.name}
+                        className="bg-terminal-card border border-terminal-green/10 hover:border-terminal-green/30 p-3 rounded transition-all group"
+                      >
+                        <div className="flex justify-between items-center text-[10px] mb-1">
+                          <span className="font-medium text-terminal-text group-hover:text-terminal-green transition-colors font-bold">
+                            {skill.icon} {skill.name}
+                          </span>
+                          <span className="text-terminal-green font-bold">{skill.level}%</span>
+                        </div>
+                        <div className="w-full bg-black h-1 rounded overflow-hidden">
+                          <div
+                            className="bg-terminal-green h-full rounded transition-all duration-1000"
+                            style={{ width: `${skill.level}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
           {/* PROJECTS SECTION */}
           <section id="projects" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
             <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
-              // 04. SELECTED_WORKS
+              // 03. SELECTED_WORKS
             </h2>
             <div className="space-y-4">
               
@@ -392,50 +427,10 @@ export default function Home() {
             </div>
           </section>
 
-          
-
-          {/* SKILLS SECTION */}
-          <section id="skills" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
-              // 02. TECHNICAL_ARSENAL
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {skills.map((category) => (
-                <div key={category.category} className="space-y-3">
-                  <h3 className="text-xs font-bold text-terminal-cyan border-b border-terminal-cyan/20 pb-1.5 uppercase tracking-widest">
-                    {category.category}
-                  </h3>
-                  <div className="space-y-2.5">
-                    {category.items.map((skill) => (
-                      <div
-                        key={skill.name}
-                        className="bg-terminal-card border border-terminal-green/10 hover:border-terminal-green/30 p-3 rounded transition-all group"
-                      >
-                        <div className="flex justify-between items-center text-[10px] mb-1">
-                          <span className="font-medium text-terminal-text group-hover:text-terminal-green transition-colors font-bold">
-                            {skill.icon} {skill.name}
-                          </span>
-                          <span className="text-terminal-green font-bold">{skill.level}%</span>
-                        </div>
-                        <div className="w-full bg-black h-1 rounded overflow-hidden">
-                          <div
-                            className="bg-terminal-green h-full rounded transition-all duration-1000"
-                            style={{ width: `${skill.level}%` }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
           {/* SERVICES SECTION */}
           <section id="services" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
-              <h2 className="text-[10px] font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
-                <span className="w-1 h-4 bg-terminal-green/60 rounded-full inline-block" />
-                Services
+              <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
+                // 04. SERVICES
               </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {services.map((service) => (
@@ -468,7 +463,7 @@ export default function Home() {
           {/* ARTICLES SECTION */}
           <section id="blog" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
             <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
-              // 05. TECHNICAL_ARTICLES
+              // 05. ARTICLES
             </h2>
             <div className="space-y-4">
               {blogLoading ? (
@@ -530,7 +525,7 @@ export default function Home() {
           {/* CONTACT SECTION WITH FORM & DECRYPT GAME */}
           <section id="contact" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
             <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
-              // 07. HANDSHAKE_PROTOCOL
+              // 07. CONTACT
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-terminal-card border border-terminal-green/15 p-6 md:p-8 rounded-lg glow-border-cyan relative overflow-hidden">
               <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-terminal-green/5 to-transparent pointer-events-none" />

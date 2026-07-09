@@ -62,11 +62,20 @@
 /* Terminal Blinking Cursor */
 .terminal-cursor {
   display: inline-block;
-  width: 8px;
-  height: 15px;
+  width: 2px;
+  height: 14px;
   background-color: var(--terminal-green);
-  animation: blink-cursor 0.8s infinite;
+  animation: blink-cursor 1s infinite;
   vertical-align: middle;
+  margin-left: 1px;
+  border-radius: 1px;
+}
+
+/* Hide cursor on very small screens where the typing line may overflow */
+@media (max-width: 380px) {
+  .terminal-cursor {
+    display: none;
+  }
 }
 
 @keyframes blink-cursor {
