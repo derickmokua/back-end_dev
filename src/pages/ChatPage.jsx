@@ -199,22 +199,23 @@ export default function ChatPage() {
         </div>
 
         {/* Input box */}
-        <form onSubmit={handleSendMessage} className="bg-terminal-card border border-terminal-green/20 rounded-lg p-3 flex gap-3 glow-border-green">
+        <form onSubmit={handleSendMessage} className="bg-terminal-card border border-terminal-green/20 rounded-lg p-3 md:p-3.5 flex items-center gap-3 glow-border-green">
+          <span className="text-terminal-green font-bold text-sm md:text-base select-none pl-1">&gt;_</span>
           <input
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
-            placeholder="Submit secure prompt..."
-            className="flex-1 bg-black border border-terminal-green/15 rounded px-4 py-2.5 text-white placeholder-terminal-muted/40 focus:outline-none focus:border-terminal-green transition-all text-xs md:text-sm font-mono"
+            placeholder="Query terminal database..."
+            className="flex-1 bg-transparent border-none outline-none focus:ring-0 p-0 text-white placeholder-terminal-muted/30 text-xs md:text-sm font-mono"
             maxLength={250}
           />
           <button
             type="submit"
             disabled={isTyping || !inputValue.trim()}
-            className="px-4 py-2 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold uppercase rounded text-xs transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1.5 focus:outline-none"
+            className="px-4 py-2 bg-terminal-green/10 border border-terminal-green/30 hover:bg-terminal-green/20 text-terminal-green font-bold uppercase rounded text-xs transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1.5 focus:outline-none"
           >
             <Send size={12} />
-            <span>Send</span>
+            <span>EXECUTE</span>
           </button>
         </form>
       </main>

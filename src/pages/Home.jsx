@@ -161,6 +161,13 @@ export default function Home() {
       {/* Subtle digital rain background layer */}
       <MatrixRain />
 
+      {/* Cyber grid overlay */}
+      <div className="fixed inset-0 w-full h-full pointer-events-none z-0 cyber-grid-overlay animate-pulse" style={{ animationDuration: '8s' }} />
+
+      {/* Ambient background glows */}
+      <div className="fixed top-[20%] left-[-10%] w-[500px] h-[500px] bg-terminal-green/3 rounded-full blur-[130px] pointer-events-none z-0 select-none" />
+      <div className="fixed bottom-[15%] right-[-10%] w-[600px] h-[600px] bg-terminal-cyan/2.5 rounded-full blur-[150px] pointer-events-none z-0 select-none" />
+
       {/* Main content layers */}
       <div className="relative z-10">
         

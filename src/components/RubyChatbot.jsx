@@ -127,27 +127,27 @@ export default function RubyChatbot() {
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.95 }}
-            className="w-[320px] sm:w-[360px] h-[450px] bg-terminal-card border border-terminal-green/15 rounded-xl shadow-2xl shadow-black/60 flex flex-col justify-between overflow-hidden"
+            className="w-[320px] sm:w-[360px] h-[450px] bg-terminal-card border border-terminal-green/30 rounded-xl shadow-[0_0_30px_rgba(0,255,159,0.15)] flex flex-col justify-between overflow-hidden relative glow-border-green"
           >
-            {/* Header bar */}
-            <div className="bg-black/90 p-3 border-b border-terminal-green/10 flex items-center justify-between select-none">
-              <div className="flex items-center gap-2">
-                <div className="relative">
-                  <div className="w-6 h-6 rounded-full bg-terminal-green/10 border border-terminal-green/20 flex items-center justify-center text-terminal-green">
-                    <Bot size={13} />
-                  </div>
-                  <span className="absolute bottom-0 right-0 w-1.5 h-1.5 bg-green-500 rounded-full border border-terminal-bg" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-white text-[11px] leading-none">RUBY_AI v1.4</h3>
-                  <span className="text-[8px] text-terminal-green font-bold block mt-0.5">SECURE_LINK_CONNECTED</span>
-                </div>
+            {/* Linux Terminal Header bar */}
+            <div className="bg-black/95 p-3 border-b border-terminal-green/15 flex items-center justify-between select-none relative z-10 flex-shrink-0">
+              {/* Traffic Lights */}
+              <div className="flex gap-1.5 items-center opacity-70">
+                <div className="w-2.5 h-2.5 rounded-full bg-red-500/80 border border-red-500/30"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80 border border-yellow-500/30"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-green-500/80 border border-green-500/30"></div>
               </div>
+              
+              {/* Window Title */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <span className="text-[9px] text-white font-bold tracking-widest uppercase">RUBY_AI_PROXY v1.4</span>
+              </div>
+              
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1 text-terminal-muted hover:text-white transition-colors focus:outline-none"
+                className="p-1 text-terminal-muted hover:text-white transition-colors focus:outline-none z-10"
               >
-                <X size={16} />
+                <X size={14} />
               </button>
             </div>
 
@@ -202,35 +202,36 @@ export default function RubyChatbot() {
             </div>
 
             {/* Quick Suggestion Chips */}
-            <div className="px-3 pb-2 pt-1 border-t border-terminal-green/5 bg-black/20 flex flex-wrap gap-1.5 select-none">
+            <div className="px-3 pb-2 pt-1.5 border-t border-terminal-green/5 bg-black/40 flex flex-wrap gap-1.5 select-none">
               {suggestions.map((suggestion) => (
                 <button
                   key={suggestion}
                   onClick={() => handleSuggestionClick(suggestion)}
-                  className="px-2 py-0.5 border border-terminal-cyan/15 hover:border-terminal-cyan/35 text-terminal-cyan bg-black/40 rounded-[3px] text-[9px] transition-all focus:outline-none"
+                  className="px-2 py-0.5 border border-terminal-cyan/15 hover:border-terminal-cyan/40 hover:bg-terminal-cyan/5 text-terminal-cyan bg-black/60 rounded-[3px] text-[9px] transition-all focus:outline-none font-mono"
                 >
-                  {suggestion}
+                  [{suggestion.replace(/[?.]/g, "")}]
                 </button>
               ))}
             </div>
 
             {/* Input Row */}
-            <form onSubmit={handleSendMessage} className="p-2.5 bg-black/80 border-t border-terminal-green/10 flex gap-2">
+            <form onSubmit={handleSendMessage} className="p-2.5 bg-black/90 border-t border-terminal-green/15 flex items-center gap-2">
+              <span className="text-terminal-green font-bold text-xs select-none pl-1">&gt;</span>
               <input
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Enter prompt..."
-                className="flex-1 bg-black border border-terminal-green/15 rounded px-3 py-1.5 text-white placeholder-terminal-muted/45 focus:outline-none focus:border-terminal-green transition-all text-xs"
+                placeholder="Secure query..."
+                className="flex-1 bg-transparent border-none outline-none focus:ring-0 p-0 text-white placeholder-terminal-muted/30 text-xs font-mono"
                 maxLength={200}
               />
               <button
                 type="submit"
                 disabled={isTyping || !inputValue.trim()}
-                className="px-3 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold uppercase rounded text-[10px] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1 focus:outline-none"
+                className="px-2.5 py-1 bg-terminal-green/10 border border-terminal-green/30 hover:bg-terminal-green/20 text-terminal-green font-bold uppercase rounded-[3px] text-[9px] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1 focus:outline-none"
               >
                 <Send size={10} />
-                <span>Send</span>
+                <span>EXECUTE</span>
               </button>
             </form>
           </motion.div>
