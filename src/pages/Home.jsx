@@ -513,10 +513,10 @@ export default function Home() {
                     <div className="w-8 h-8 rounded bg-terminal-green/10 border border-terminal-green/25 text-terminal-green font-bold text-xs flex items-center justify-center flex-shrink-0">
                       {test.initials}
                     </div>
-                    <div className="min-w-0">
-                      <h4 className="font-bold text-white text-[11px] truncate">{test.name}</h4>
-                      <p className="text-[9px] text-terminal-cyan truncate">{test.role} @ {test.company}</p>
-                    </div>
+                     <div className="min-w-0">
+                       <h3 className="font-bold text-white text-[11px] truncate">{test.name}</h3>
+                       <p className="text-[9px] text-terminal-cyan truncate">{test.role} @ {test.company}</p>
+                     </div>
                   </div>
                 </div>
               ))}
