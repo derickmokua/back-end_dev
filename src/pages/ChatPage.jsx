@@ -199,7 +199,7 @@ export default function ChatPage() {
         </div>
 
         {/* Input box */}
-        <form onSubmit={handleSendMessage} className="bg-terminal-card border border-terminal-green/20 rounded-lg p-3 md:p-3.5 flex items-center gap-3 glow-border-green">
+        <form onSubmit={handleSendMessage} className="bg-terminal-card border border-terminal-green/20 focus-within:border-terminal-green/45 rounded-lg p-3 md:p-3.5 flex items-center gap-3 transition-all duration-200 glow-border-green">
           <span className="text-terminal-green font-bold text-sm md:text-base select-none pl-1">&gt;_</span>
           <input
             type="text"
@@ -212,10 +212,10 @@ export default function ChatPage() {
           <button
             type="submit"
             disabled={isTyping || !inputValue.trim()}
-            className="px-4 py-2 bg-terminal-green/10 border border-terminal-green/30 hover:bg-terminal-green/20 text-terminal-green font-bold uppercase rounded text-xs transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1.5 focus:outline-none"
+            className="px-4 py-2 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold uppercase rounded text-xs transition-all disabled:bg-terminal-green/5 disabled:text-terminal-green/30 disabled:border disabled:border-terminal-green/10 disabled:cursor-not-allowed flex items-center gap-1.5 focus:outline-none"
           >
             <Send size={12} />
-            <span>EXECUTE</span>
+            <span>Send</span>
           </button>
         </form>
       </main>

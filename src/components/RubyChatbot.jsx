@@ -112,10 +112,15 @@ export default function RubyChatbot() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             onClick={() => setIsOpen(true)}
-            className="w-12 h-12 bg-terminal-green/10 hover:bg-terminal-green/20 text-terminal-green rounded-full flex items-center justify-center shadow-lg shadow-black/50 hover:shadow-[0_0_20px_rgba(0,255,159,0.2)] transition-all hover:scale-105 focus:outline-none"
-            title="Chat with Ruby"
+            className="px-4 h-11 bg-terminal-card border border-terminal-green/30 hover:border-terminal-green text-terminal-green rounded-full flex items-center gap-2.5 shadow-[0_0_15px_rgba(0,255,159,0.1)] hover:shadow-[0_0_25px_rgba(0,255,159,0.2)] transition-all hover:scale-105 focus:outline-none select-none font-bold uppercase tracking-wider text-[10px] relative"
+            title="Chat with Ruby AI"
           >
-            <MessageSquare size={20} className="animate-pulse" />
+            <div className="relative flex items-center justify-center w-2 h-2 flex-shrink-0">
+              <span className="w-1.5 h-1.5 bg-terminal-green rounded-full animate-ping absolute" />
+              <span className="w-1.5 h-1.5 bg-terminal-green rounded-full absolute" />
+            </div>
+            <Bot size={13} className="text-terminal-cyan" />
+            <span>Ask Ruby AI</span>
           </motion.button>
         )}
       </AnimatePresence>
@@ -169,10 +174,10 @@ export default function RubyChatbot() {
 
                   <div className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"} max-w-[80%]`}>
                     <div
-                      className={`px-3 py-2 rounded text-[11px] leading-relaxed shadow ${
+                      className={`px-3.5 py-2.5 rounded-lg text-[11px] leading-relaxed shadow-md ${
                         msg.sender === "user"
-                          ? "bg-terminal-green/10 border border-terminal-green/30 text-terminal-green"
-                          : "bg-terminal-bg border border-terminal-cyan/20 text-terminal-text"
+                          ? "bg-terminal-green/10 border border-terminal-green/20 text-terminal-green"
+                          : "bg-terminal-bg border border-terminal-cyan/15 text-terminal-text"
                       }`}
                     >
                       {renderMessageContent(msg.text)}
@@ -202,38 +207,43 @@ export default function RubyChatbot() {
             </div>
 
             {/* Quick Suggestion Chips */}
-            <div className="px-3 pb-2 pt-1.5 border-t border-terminal-green/5 bg-black/40 flex flex-wrap gap-1.5 select-none">
+            <div className="px-3 pb-2.5 pt-2 border-t border-terminal-green/5 bg-black/30 flex flex-wrap gap-1.5 select-none">
               {suggestions.map((suggestion) => (
                 <button
                   key={suggestion}
                   onClick={() => handleSuggestionClick(suggestion)}
-                  className="px-2 py-0.5 border border-terminal-cyan/15 hover:border-terminal-cyan/40 hover:bg-terminal-cyan/5 text-terminal-cyan bg-black/60 rounded-[3px] text-[9px] transition-all focus:outline-none font-mono"
+                  className="px-2.5 py-1 border border-terminal-cyan/20 hover:border-terminal-cyan hover:bg-terminal-cyan/5 text-terminal-cyan bg-terminal-bg rounded-full text-[9px] transition-all duration-200 focus:outline-none font-mono"
                 >
-                  [{suggestion.replace(/[?.]/g, "")}]
+                  {suggestion}
                 </button>
               ))}
             </div>
 
             {/* Input Row */}
-            <form onSubmit={handleSendMessage} className="p-2.5 bg-black/90 border-t border-terminal-green/15 flex items-center gap-2">
-              <span className="text-terminal-green font-bold text-xs select-none pl-1">&gt;</span>
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Secure query..."
-                className="flex-1 bg-transparent border-none outline-none focus:ring-0 p-0 text-white placeholder-terminal-muted/30 text-xs font-mono"
-                maxLength={200}
-              />
-              <button
-                type="submit"
-                disabled={isTyping || !inputValue.trim()}
-                className="px-2.5 py-1 bg-terminal-green/10 border border-terminal-green/30 hover:bg-terminal-green/20 text-terminal-green font-bold uppercase rounded-[3px] text-[9px] transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1 focus:outline-none"
+            <div className="p-2.5 bg-black/80 border-t border-terminal-green/10">
+              <form 
+                onSubmit={handleSendMessage} 
+                className="bg-black/90 border border-terminal-green/20 focus-within:border-terminal-green/40 rounded-lg px-2.5 py-1.5 flex items-center gap-2 transition-all duration-200"
               >
-                <Send size={10} />
-                <span>EXECUTE</span>
-              </button>
-            </form>
+                <span className="text-terminal-green font-bold text-xs select-none">&gt;</span>
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  placeholder="Ask a question..."
+                  className="flex-1 bg-transparent border-none outline-none focus:ring-0 p-0 text-white placeholder-terminal-muted/30 text-xs font-mono"
+                  maxLength={200}
+                />
+                <button
+                  type="submit"
+                  disabled={isTyping || !inputValue.trim()}
+                  className="px-2.5 py-1 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold uppercase rounded text-[10px] transition-all disabled:bg-terminal-green/5 disabled:text-terminal-green/30 disabled:border disabled:border-terminal-green/10 disabled:cursor-not-allowed flex items-center gap-1 focus:outline-none"
+                >
+                  <Send size={10} />
+                  <span>Send</span>
+                </button>
+              </form>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
