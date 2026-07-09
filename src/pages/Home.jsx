@@ -173,8 +173,8 @@ export default function Home() {
               onClick={scrollToTop}
               className="text-lg font-bold tracking-tighter hover:glow-green transition-all flex items-center gap-0.5"
             >
-              <span className="text-terminal-muted">root@</span>
-              <span className="text-white">mokua</span>
+              <span className="text-terminal-cyan/70 font-mono">root@</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-terminal-green to-terminal-cyan font-black">mokua</span>
               <span className="text-terminal-green animate-pulse font-black text-xl leading-none">_</span>
             </Link>
 
