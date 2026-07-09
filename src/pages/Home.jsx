@@ -200,7 +200,6 @@ export default function Home() {
             </div>
 
             <div className="flex md:hidden items-center gap-2">
-              {/* GitHub icon — always visible on mobile */}
               <a
                 href="https://github.com/derickmokua"
                 target="_blank"
@@ -210,8 +209,6 @@ export default function Home() {
               >
                 <Github size={16} />
               </a>
-              {/* Transparent brand icon */}
-              <Terminal size={16} className="text-terminal-green/25" />
               <button
                 className="p-1.5 text-terminal-green hover:bg-terminal-green/5 rounded transition-colors"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
