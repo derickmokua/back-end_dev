@@ -13,14 +13,15 @@ export default function TerminalSection({ id, command = "visitor@mokua-host: ~",
           <div className="w-3 h-3 rounded-full bg-green-500/80 border border-green-500 hover:bg-green-500 transition-colors cursor-pointer shadow-[0_0_8px_rgba(34,197,94,0.5)]"></div>
         </div>
         
-        {/* Window Title */}
-        <div className="text-[10px] md:text-xs text-terminal-muted font-bold tracking-widest flex items-center gap-2">
-          <span className="w-2 h-2 rounded-sm bg-terminal-green animate-pulse"></span>
-          {command}
+        {/* Window Title — truncates on small screens to avoid crashing into traffic lights */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none px-16">
+          <span className="text-[9px] md:text-[10px] text-terminal-muted font-bold tracking-widest truncate max-w-full">
+            {command}
+          </span>
         </div>
         
-        {/* Spacer for symmetry */}
-        <div className="w-[44px]"></div>
+        {/* Spacer for symmetry (keeps traffic lights left-aligned) */}
+        <div className="w-[44px] invisible" />
       </div>
       
       {/* Scrollable Main Content */}
