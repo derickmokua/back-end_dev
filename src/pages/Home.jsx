@@ -188,13 +188,6 @@ export default function Home() {
               <a href="#testimonials" onClick={(e) => scrollToSection(e, "#testimonials")} className="hover:text-terminal-green transition-colors">Signals</a>
               <a href="#contact" onClick={(e) => scrollToSection(e, "#contact")} className="hover:text-terminal-green transition-colors">Contact</a>
               
-              <Link
-                to="/chat"
-                className="px-2.5 py-1 text-terminal-cyan hover:bg-terminal-cyan/5 rounded flex items-center gap-1 transition-all"
-              >
-                <Terminal size={12} /> Chat
-              </Link>
-
               <a
                 href="https://github.com/derickmokua"
                 target="_blank"
@@ -250,7 +243,7 @@ export default function Home() {
                   onClick={() => setIsMenuOpen(false)}
                   className="py-2 border-t border-terminal-green/10 mt-1 text-terminal-cyan flex items-center gap-2 font-bold"
                 >
-                  <Terminal size={14} /> Ruby AI Chat
+                  <Terminal size={14} /> Ruby AI Assistant
                 </Link>
               </motion.div>
             )}
