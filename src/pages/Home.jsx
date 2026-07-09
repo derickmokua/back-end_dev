@@ -207,8 +207,18 @@ export default function Home() {
             </div>
 
             <div className="flex md:hidden items-center gap-2">
-              {/* Transparent brand icon — visible on mobile only */}
-              <Terminal size={18} className="text-terminal-green/30" />
+              {/* GitHub icon — always visible on mobile */}
+              <a
+                href="https://github.com/derickmokua"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-1.5 text-terminal-green hover:bg-terminal-green/5 rounded transition-colors focus:outline-none"
+                title="GitHub"
+              >
+                <Github size={16} />
+              </a>
+              {/* Transparent brand icon */}
+              <Terminal size={16} className="text-terminal-green/25" />
               <button
                 className="p-1.5 text-terminal-green hover:bg-terminal-green/5 rounded transition-colors"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -238,9 +248,9 @@ export default function Home() {
                 <Link
                   to="/chat"
                   onClick={() => setIsMenuOpen(false)}
-                  className="py-2 text-terminal-cyan flex items-center gap-1.5 font-bold"
+                  className="py-2 border-t border-terminal-green/10 mt-1 text-terminal-cyan flex items-center gap-2 font-bold"
                 >
-                  <Terminal size={14} /> Ruby secure chat channel
+                  <Terminal size={14} /> Ruby AI Chat
                 </Link>
               </motion.div>
             )}
