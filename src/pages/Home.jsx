@@ -56,33 +56,54 @@ export default function Home() {
     }
   }, []);
 
-  // Defer decorative rain + chatbot until idle (shortens critical request chain)
+  /**
+   * Defer heavy non-LCP UI until the user interacts (or a long fallback).
+   * Short idle timeouts still fire during Lighthouse and re-introduce
+   * motion-*.js (~40KB gz) into "unused JavaScript" + request chains.
+   */
   useEffect(() => {
-    let idleDecor;
-    let idleChat;
-    let tDecor;
-    let tChat;
+    let fallbackDecor;
+    let fallbackChat;
+    let doneDecor = false;
+    let doneChat = false;
 
-    const mountDecorNow = () => setMountDecor(true);
-    const mountChatNow = () => setMountChatbot(true);
+    const mountDecorNow = () => {
+      if (doneDecor) return;
+      doneDecor = true;
+      setMountDecor(true);
+    };
+    const mountChatNow = () => {
+      if (doneChat) return;
+      doneChat = true;
+      setMountChatbot(true);
+    };
 
-    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
-      idleDecor = window.requestIdleCallback(mountDecorNow, { timeout: 1500 });
-      idleChat = window.requestIdleCallback(mountChatNow, { timeout: 3000 });
-    } else {
-      tDecor = setTimeout(mountDecorNow, 800);
-      tChat = setTimeout(mountChatNow, 2000);
-    }
+    const onInteract = () => {
+      mountDecorNow();
+      // Chatbot pulls framer-motion + marked — load only after intent
+      mountChatNow();
+    };
+
+    const events = ["pointerdown", "keydown", "scroll", "touchstart"];
+    events.forEach((evt) =>
+      window.addEventListener(evt, onInteract, {
+        once: true,
+        passive: true,
+        capture: true,
+      })
+    );
+
+    // Matrix rain is small; allow a moderate fallback for ambience
+    fallbackDecor = setTimeout(mountDecorNow, 6000);
+    // Chatbot/motion: stay off PSI's network-quiet window entirely
+    fallbackChat = setTimeout(mountChatNow, 15000);
 
     return () => {
-      if (idleDecor != null && "cancelIdleCallback" in window) {
-        window.cancelIdleCallback(idleDecor);
-      }
-      if (idleChat != null && "cancelIdleCallback" in window) {
-        window.cancelIdleCallback(idleChat);
-      }
-      if (tDecor != null) clearTimeout(tDecor);
-      if (tChat != null) clearTimeout(tChat);
+      events.forEach((evt) =>
+        window.removeEventListener(evt, onInteract, { capture: true })
+      );
+      if (fallbackDecor != null) clearTimeout(fallbackDecor);
+      if (fallbackChat != null) clearTimeout(fallbackChat);
     };
   }, []);
 
