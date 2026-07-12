@@ -75,13 +75,6 @@ export default function DecryptGame({ isUnlockedInitially, onUnlocked }) {
           Email
         </a>
       </div>
-
-      <a
-        href={`mailto:${EMAIL}`}
-        className="text-center md:text-left text-sm text-terminal-muted hover:text-terminal-green transition-colors font-sans"
-      >
-        {EMAIL}
-      </a>
     </div>
   );
 }
