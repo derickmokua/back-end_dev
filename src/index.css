@@ -16,7 +16,8 @@
     background-color: var(--terminal-bg);
     color: var(--terminal-text);
     overflow-x: hidden;
-    font-family: 'JetBrains Mono', monospace;
+    /* System mono first while webfont loads (font-display: swap from @fontsource) */
+    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   }
 
   /* Custom Scrollbar */

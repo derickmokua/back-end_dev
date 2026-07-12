@@ -1,21 +1,12 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
-import emailjs from "@emailjs/browser";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Terminal,
-  Cpu,
   ExternalLink,
   Github,
-  Mail,
-  Smartphone,
-  Database,
   Menu,
   X,
-  Star,
   ArrowUp,
-  Send,
-  Loader2,
-  Activity,
   Linkedin
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -42,11 +33,8 @@ export default function Home() {
   const [selectedBlogPost, setSelectedBlogPost] = useState(null);
 
   const [isContactUnlocked, setIsContactUnlocked] = useState(false);
-
-  // Form state
-  const [formState, setFormState] = useState({ name: "", email: "", message: "" });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+  // Mount chatbot only after idle so marked/dompurify stay off the critical path
+  const [mountChatbot, setMountChatbot] = useState(false);
 
   // Birthday HUD State
   const [showBirthdayHUD, setShowBirthdayHUD] = useState(false);
@@ -62,6 +50,26 @@ export default function Home() {
     if (birthdayConfig && currentMonth === birthdayConfig.month && currentDate === birthdayConfig.day) {
       setIsBirthday(true);
     }
+  }, []);
+
+  // Defer chatbot JS until the browser is idle (or after a short timeout)
+  useEffect(() => {
+    let idleId;
+    let timeoutId;
+    const mount = () => setMountChatbot(true);
+
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      idleId = window.requestIdleCallback(mount, { timeout: 2500 });
+    } else {
+      timeoutId = setTimeout(mount, 2000);
+    }
+
+    return () => {
+      if (idleId != null && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId != null) clearTimeout(timeoutId);
+    };
   }, []);
 
   // Typing effect
@@ -90,51 +98,6 @@ export default function Home() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Form handler
-  const handleFormChange = (e) => {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
-  };
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_default";
-    const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_default";
-    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "";
-
-    if (!publicKey) {
-      console.error("EmailJS public key configuration missing");
-      setSubmitStatus("missing_config");
-      setTimeout(() => setSubmitStatus(null), 5000);
-      setIsSubmitting(false);
-      return;
-    }
-
-    const templateParams = {
-      from_name: formState.name,
-      from_email: formState.email,
-      message: formState.message,
-      to_name: "Derick Mokua",
-    };
-
-    emailjs
-      .send(serviceID, templateID, templateParams, publicKey)
-      .then(() => {
-        setSubmitStatus("success");
-        setFormState({ name: "", email: "", message: "" });
-        setTimeout(() => setSubmitStatus(null), 5000);
-      })
-      .catch((err) => {
-        console.error("EmailJS Error:", err);
-        setSubmitStatus("api_error");
-        setTimeout(() => setSubmitStatus(null), 5000);
-      })
-      .finally(() => {
-        setIsSubmitting(false);
-      });
-  };
 
   const scrollToSection = (e, href) => {
     e.preventDefault();
@@ -523,101 +486,27 @@ export default function Home() {
             </div>
           </section>
 
-          {/* CONTACT SECTION WITH FORM & DECRYPT GAME */}
+          {/* CONTACT */}
           <section id="contact" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
             <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
               // 07. CONTACT
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-terminal-card border border-terminal-green/15 p-6 md:p-8 rounded-lg glow-border-cyan relative overflow-hidden">
+            <div className="w-full bg-terminal-card border border-terminal-green/15 p-8 md:p-12 rounded-lg glow-border-cyan relative overflow-hidden">
               <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-terminal-green/5 to-transparent pointer-events-none" />
-
-              {/* Coordinates left column: locked by decryption game */}
-              <div className="flex flex-col justify-center relative z-10 h-full">
+              <div className="relative z-10 max-w-xl mx-auto space-y-6 text-center md:text-left">
+                <div className="space-y-2">
+                  <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">
+                    Let&apos;s work together
+                  </h3>
+                  <p className="text-sm md:text-base text-terminal-text/80 leading-relaxed font-sans">
+                    Open to new projects, collaborations, and interesting problems.
+                    Send a message — I usually reply within a day.
+                  </p>
+                </div>
                 <DecryptGame
                   isUnlockedInitially={isContactUnlocked}
                   onUnlocked={() => setIsContactUnlocked(true)}
                 />
-              </div>
-
-              {/* Contact Form right column */}
-              <div className="bg-black/50 p-4 md:p-5 rounded border border-terminal-green/10">
-                <form onSubmit={handleFormSubmit} className="space-y-3.5 text-xs font-mono">
-                  <div>
-                    <label className="block text-[10px] text-terminal-green uppercase font-bold mb-1">
-                      Sender Alias
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      value={formState.name}
-                      onChange={handleFormChange}
-                      placeholder="e.g. Commander"
-                      className="w-full bg-black border border-terminal-green/20 rounded px-3 py-2 text-white placeholder-terminal-muted/30 focus:outline-none focus:border-terminal-green transition-all"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="block text-[10px] text-terminal-green uppercase font-bold mb-1">
-                      Sender Secure Mail
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      required
-                      value={formState.email}
-                      onChange={handleFormChange}
-                      placeholder="e.g. agent@domain.local"
-                      className="w-full bg-black border border-terminal-green/20 rounded px-3 py-2 text-white placeholder-terminal-muted/30 focus:outline-none focus:border-terminal-green transition-all"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[10px] text-terminal-green uppercase font-bold mb-1">
-                      Payload Message
-                    </label>
-                    <textarea
-                      name="message"
-                      required
-                      rows={4}
-                      value={formState.message}
-                      onChange={handleFormChange}
-                      placeholder="Enter payload string..."
-                      className="w-full bg-black border border-terminal-green/20 rounded px-3 py-2 text-white placeholder-terminal-muted/30 focus:outline-none focus:border-terminal-green transition-all"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full py-2 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold uppercase rounded flex items-center justify-center gap-1.5 transition-all hover:shadow-[0_0_12px_rgba(0,255,159,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {isSubmitting ? (
-                      <Loader2 size={13} className="animate-spin" />
-                    ) : (
-                      <>
-                        <Send size={11} />
-                        Transmit Payload
-                      </>
-                    )}
-                  </button>
-
-                  {submitStatus === "success" && (
-                    <p className="text-terminal-green text-center font-bold text-[9px] animate-pulse mt-2">
-                      [+] TRANSMISSION COMPLETE: Package safely compiled.
-                    </p>
-                  )}
-                  {submitStatus === "api_error" && (
-                    <p className="text-red-400 text-center font-bold text-[9px] mt-2">
-                      [-] ERROR: Secure transmission node fail.
-                    </p>
-                  )}
-                  {submitStatus === "missing_config" && (
-                    <p className="text-red-400 text-center font-bold text-[9px] mt-2">
-                      [-] CONFIGURATION ERROR: Public key environment lock.
-                    </p>
-                  )}
-                </form>
               </div>
             </div>
           </section>
@@ -680,10 +569,12 @@ export default function Home() {
 
         </main>
 
-        {/* Floating secure chatbot widget */}
-        <Suspense fallback={null}>
-          <RubyChatbot />
-        </Suspense>
+        {/* Chatbot loads after first paint — keeps heavy deps off the critical path */}
+        {mountChatbot && (
+          <Suspense fallback={null}>
+            <RubyChatbot />
+          </Suspense>
+        )}
 
         {/* Floating Back to top helper */}
         <AnimatePresence>
