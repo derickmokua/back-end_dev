@@ -28,10 +28,16 @@ function inlineCssIntoHtml() {
       const cssFiles = readdirSync(assetsDir).filter((f) => f.endsWith('.css'))
 
       for (const cssFile of cssFiles) {
-        const css = readFileSync(join(assetsDir, cssFile), 'utf-8')
-        // Match any stylesheet link whose href ends with this css filename
+        // Never inline font stylesheets — keep them off the critical path
+        if (/jetbrains|fontsource|woff/i.test(cssFile)) continue
+
+        let css = readFileSync(join(assetsDir, cssFile), 'utf-8')
+        // Strip @font-face so browsers don't fetch woff2 during first paint
+        css = css.replace(/@font-face\s*\{[^}]*\}/g, '')
+
+        const escaped = cssFile.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
         const linkRe = new RegExp(
-          `<link\\b[^>]*rel=["']stylesheet["'][^>]*href=["'][^"']*${cssFile.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["'][^>]*/?>|<link\\b[^>]*href=["'][^"']*${cssFile.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["'][^>]*rel=["']stylesheet["'][^>]*/?>`,
+          `<link\\b[^>]*rel=["']stylesheet["'][^>]*href=["'][^"']*${escaped}["'][^>]*/?>|<link\\b[^>]*href=["'][^"']*${escaped}["'][^>]*rel=["']stylesheet["'][^>]*/?>`,
           'gi'
         )
         const next = html.replace(linkRe, `<style>${css}</style>`)
@@ -103,15 +109,18 @@ export default defineConfig(({ mode }) => {
     build: {
       // No source maps in production — smaller download, cleaner PSI
       sourcemap: false,
-      cssCodeSplit: false,
+      // Split CSS so async font imports are separate files (not in first HTML)
+      cssCodeSplit: true,
       // Keep fonts as separate files (not base64 in HTML) for better caching & smaller HTML
       assetsInlineLimit: 0,
       modulePreload: {
-        // Avoid modulepreload of lazy chat/blog chunks on first paint
+        // Never preload heavy lazy-only vendor chunks on first paint
         resolveDependencies: (filename, deps) => {
           return deps.filter(
             (dep) =>
-              !/RubyChatbot|BlogModal|ChatPage|purify|marked/i.test(dep)
+              !/RubyChatbot|BlogModal|ChatPage|Birthday|DecryptGame|MatrixRain|TerminalSection|purify|marked|markdown|motion|framer/i.test(
+                dep
+              )
           )
         },
       },
@@ -119,6 +128,7 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
+              // Keep motion/markdown in separate async chunks (chat/blog only)
               if (id.includes('framer-motion')) return 'motion'
               if (id.includes('lucide-react')) return 'icons'
               if (id.includes('dompurify') || id.includes('marked')) return 'markdown'

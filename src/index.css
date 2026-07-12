@@ -16,8 +16,12 @@
     background-color: var(--terminal-bg);
     color: var(--terminal-text);
     overflow-x: hidden;
-    /* System mono first while webfont loads (font-display: swap from @fontsource) */
-    font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    /*
+      System mono first = text paints immediately without waiting for JetBrains woff2.
+      Brand font swaps in after idle (see main.jsx).
+    */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+      "Courier New", monospace, "JetBrains Mono";
   }
 
   /* Custom Scrollbar */
@@ -82,6 +86,37 @@
 @keyframes blink-cursor {
   0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }
+}
+
+/* Lightweight UI motion (replaces framer-motion on the home critical path) */
+@keyframes fade-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-slide-in {
+  animation: fade-slide-in 0.2s ease-out both;
+}
+
+.animate-fade-scale-in {
+  animation: fade-scale-in 0.2s ease-out both;
 }
 
 /* Ruby Markdown Output styles */

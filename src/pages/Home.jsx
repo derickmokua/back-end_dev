@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+// framer-motion is NOT imported here — it is ~117KB and only used by
+// lazy chat/blog/birthday chunks. CSS handles mobile menu + back-to-top.
 import {
   Terminal,
   ExternalLink,
@@ -18,13 +19,15 @@ import {
   blogPosts as staticBlogPosts,
   birthdayConfig
 } from "../data/portfolioData";
-import MatrixRain from "../components/MatrixRain";
+// Hero shell is tiny and wraps LCP text — keep eager
 import TerminalSection from "../components/TerminalSection";
-import DecryptGame from "../components/DecryptGame";
+// Decorative / below-fold / interaction-only — lazy
+const MatrixRain = lazy(() => import("../components/MatrixRain"));
+const DecryptGame = lazy(() => import("../components/DecryptGame"));
 const RubyChatbot = lazy(() => import("../components/RubyChatbot"));
-import BirthdayAnimation from "../components/effects/BirthdayAnimation";
-import useHashnodePosts from "../hooks/useHashnode";
+const BirthdayAnimation = lazy(() => import("../components/effects/BirthdayAnimation"));
 const BlogModal = lazy(() => import("../components/BlogModal"));
+import useHashnodePosts from "../hooks/useHashnode";
 
 export default function Home() {
   const [typedHero, setTypedHero] = useState("");
@@ -33,8 +36,9 @@ export default function Home() {
   const [selectedBlogPost, setSelectedBlogPost] = useState(null);
 
   const [isContactUnlocked, setIsContactUnlocked] = useState(false);
-  // Mount chatbot only after idle so marked/dompurify stay off the critical path
+  // Mount non-critical UI after idle so first paint stays HTML → small JS only
   const [mountChatbot, setMountChatbot] = useState(false);
+  const [mountDecor, setMountDecor] = useState(false);
 
   // Birthday HUD State
   const [showBirthdayHUD, setShowBirthdayHUD] = useState(false);
@@ -52,23 +56,33 @@ export default function Home() {
     }
   }, []);
 
-  // Defer chatbot JS until the browser is idle (or after a short timeout)
+  // Defer decorative rain + chatbot until idle (shortens critical request chain)
   useEffect(() => {
-    let idleId;
-    let timeoutId;
-    const mount = () => setMountChatbot(true);
+    let idleDecor;
+    let idleChat;
+    let tDecor;
+    let tChat;
+
+    const mountDecorNow = () => setMountDecor(true);
+    const mountChatNow = () => setMountChatbot(true);
 
     if (typeof window !== "undefined" && "requestIdleCallback" in window) {
-      idleId = window.requestIdleCallback(mount, { timeout: 2500 });
+      idleDecor = window.requestIdleCallback(mountDecorNow, { timeout: 1500 });
+      idleChat = window.requestIdleCallback(mountChatNow, { timeout: 3000 });
     } else {
-      timeoutId = setTimeout(mount, 2000);
+      tDecor = setTimeout(mountDecorNow, 800);
+      tChat = setTimeout(mountChatNow, 2000);
     }
 
     return () => {
-      if (idleId != null && "cancelIdleCallback" in window) {
-        window.cancelIdleCallback(idleId);
+      if (idleDecor != null && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleDecor);
       }
-      if (timeoutId != null) clearTimeout(timeoutId);
+      if (idleChat != null && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleChat);
+      }
+      if (tDecor != null) clearTimeout(tDecor);
+      if (tChat != null) clearTimeout(tChat);
     };
   }, []);
 
@@ -121,8 +135,12 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-terminal-bg text-terminal-text font-mono selection:bg-terminal-green selection:text-black overflow-x-hidden relative">
       
-      {/* Subtle digital rain background layer */}
-      <MatrixRain />
+      {/* Subtle digital rain — after idle only (not on critical JS path) */}
+      {mountDecor && (
+        <Suspense fallback={null}>
+          <MatrixRain />
+        </Suspense>
+      )}
 
       {/* Cyber grid overlay */}
       <div className="fixed inset-0 w-full h-full pointer-events-none z-0 cyber-grid-overlay animate-pulse" style={{ animationDuration: '8s' }} />
@@ -188,43 +206,37 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Mobile Nav */}
-          <AnimatePresence>
-            {isMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="md:hidden w-full bg-terminal-card border-b border-terminal-green/25 p-6 flex flex-col gap-4 text-xs font-bold uppercase tracking-wider shadow-2xl"
+          {/* Mobile Nav — CSS fade only (no framer-motion on critical path) */}
+          {isMenuOpen && (
+            <div
+              className="md:hidden w-full bg-terminal-card border-b border-terminal-green/25 p-6 flex flex-col gap-4 text-xs font-bold uppercase tracking-wider shadow-2xl animate-fade-slide-in"
+            >
+              <a href="#about" onClick={(e) => scrollToSection(e, "#about")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-green">About</a>
+              <a href="#skills" onClick={(e) => scrollToSection(e, "#skills")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-green">Skills</a>
+              <a href="#services" onClick={(e) => scrollToSection(e, "#services")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-cyan">Services</a>
+              <a href="#projects" onClick={(e) => scrollToSection(e, "#projects")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-green">Projects</a>
+              <a href="#blog" onClick={(e) => scrollToSection(e, "#blog")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-cyan">Articles</a>
+              <a href="#testimonials" onClick={(e) => scrollToSection(e, "#testimonials")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-green">Signals</a>
+              <a href="#contact" onClick={(e) => scrollToSection(e, "#contact")} className="py-2 hover:text-terminal-green font-bold">Contact</a>
+              <Link
+                to="/chat"
+                onClick={() => setIsMenuOpen(false)}
+                className="py-2 border-t border-terminal-green/10 mt-1 text-terminal-cyan flex items-center gap-2 font-bold"
               >
-                <a href="#about" onClick={(e) => scrollToSection(e, "#about")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-green">About</a>
-                <a href="#skills" onClick={(e) => scrollToSection(e, "#skills")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-green">Skills</a>
-                <a href="#services" onClick={(e) => scrollToSection(e, "#services")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-cyan">Services</a>
-                <a href="#projects" onClick={(e) => scrollToSection(e, "#projects")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-green">Projects</a>
-                <a href="#blog" onClick={(e) => scrollToSection(e, "#blog")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-cyan">Articles</a>
-                <a href="#testimonials" onClick={(e) => scrollToSection(e, "#testimonials")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-green">Signals</a>
-                <a href="#contact" onClick={(e) => scrollToSection(e, "#contact")} className="py-2 hover:text-terminal-green font-bold">Contact</a>
-                <Link
-                  to="/chat"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="py-2 border-t border-terminal-green/10 mt-1 text-terminal-cyan flex items-center gap-2 font-bold"
-                >
-                  <Terminal size={14} /> Ruby AI Assistant
-                </Link>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                <Terminal size={14} /> Ruby AI Assistant
+              </Link>
+            </div>
+          )}
         </nav>
 
         {/* Main stacked sections */}
         <main className="max-w-4xl mx-auto px-6 pt-28 pb-20 space-y-24 md:space-y-32">
           
-          {/* HERO SECTION */}
+          {/* HERO SECTION — eager TerminalSection so LCP text is not behind a lazy chunk */}
           <TerminalSection command="visitor@mokua-host: ~/sys/boot">
             <div className="absolute top-0 -left-10 w-72 h-72 bg-terminal-green/5 rounded-full blur-3xl pointer-events-none" />
 
             <div className="space-y-6">
-              
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-terminal-green bg-terminal-green/5 rounded border border-terminal-green/20">
                 <span className="w-1.5 h-1.5 bg-terminal-green rounded-full animate-ping" />
                 Available for new projects
@@ -240,12 +252,14 @@ export default function Home() {
               <div className="flex items-center gap-2 text-terminal-muted text-xs sm:text-sm font-bold min-h-[22px] overflow-hidden">
                 <Terminal size={14} className="text-terminal-green flex-shrink-0" />
                 <span className="truncate">
-                  {typedHero}<span className="terminal-cursor" />
+                  {typedHero}
+                  <span className="terminal-cursor" />
                 </span>
               </div>
 
               <p className="max-w-2xl text-sm md:text-base text-terminal-text/80 leading-relaxed pl-4 border-l border-terminal-green/25 font-sans">
-                I build secure, AI-powered backend systems for teams across Africa and beyond — turning complex ideas into reliable products that scale.
+                I build secure, AI-powered backend systems for teams across Africa and beyond —
+                turning complex ideas into reliable products that scale.
               </p>
 
               <div className="flex flex-wrap gap-3 pt-4">
@@ -564,10 +578,12 @@ export default function Home() {
                     Send a message — I usually reply within a day.
                   </p>
                 </div>
-                <DecryptGame
-                  isUnlockedInitially={isContactUnlocked}
-                  onUnlocked={() => setIsContactUnlocked(true)}
-                />
+                <Suspense fallback={<p className="text-terminal-muted text-sm">Loading contact…</p>}>
+                  <DecryptGame
+                    isUnlockedInitially={isContactUnlocked}
+                    onUnlocked={() => setIsContactUnlocked(true)}
+                  />
+                </Suspense>
               </div>
             </div>
           </section>
@@ -637,42 +653,38 @@ export default function Home() {
           </Suspense>
         )}
 
-        {/* Floating Back to top helper */}
-        <AnimatePresence>
-          {showBackToTop && (
-            <motion.button
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              onClick={scrollToTop}
-              className="fixed bottom-6 left-6 z-35 w-9 h-9 bg-terminal-green/10 hover:bg-terminal-green/20 text-terminal-green rounded-full flex items-center justify-center transition-all focus:outline-none shadow-lg shadow-black/40"
-              title="Back to top"
-            >
-              <ArrowUp size={16} />
-            </motion.button>
-          )}
-        </AnimatePresence>
+        {/* Floating Back to top helper — CSS only */}
+        {showBackToTop && (
+          <button
+            type="button"
+            onClick={scrollToTop}
+            className="fixed bottom-6 left-6 z-35 w-9 h-9 bg-terminal-green/10 hover:bg-terminal-green/20 text-terminal-green rounded-full flex items-center justify-center transition-all focus:outline-none shadow-lg shadow-black/40 animate-fade-scale-in"
+            title="Back to top"
+          >
+            <ArrowUp size={16} />
+          </button>
+        )}
 
-        {/* Blog Overlay Modal */}
-        <AnimatePresence>
-          {selectedBlogPost && (
-            <Suspense fallback={null}>
-              <BlogModal
-                post={selectedBlogPost}
-                onClose={() => setSelectedBlogPost(null)}
-              />
-            </Suspense>
-          )}
-        </AnimatePresence>
+        {/* Blog Overlay Modal — motion ships inside the lazy BlogModal chunk only */}
+        {selectedBlogPost && (
+          <Suspense fallback={null}>
+            <BlogModal
+              post={selectedBlogPost}
+              onClose={() => setSelectedBlogPost(null)}
+            />
+          </Suspense>
+        )}
 
       </div>
 
       {/* Birthday HUD Animations if active */}
-      {showBirthdayHUD ? (
-        <BirthdayAnimation HUDEnabled={true} onComplete={() => setShowBirthdayHUD(false)} />
-      ) : (
-        isBirthday && <BirthdayAnimation HUDEnabled={false} persist={true} />
-      )}
+      <Suspense fallback={null}>
+        {showBirthdayHUD ? (
+          <BirthdayAnimation HUDEnabled={true} onComplete={() => setShowBirthdayHUD(false)} />
+        ) : (
+          isBirthday && <BirthdayAnimation HUDEnabled={false} persist={true} />
+        )}
+      </Suspense>
 
     </div>
   );
