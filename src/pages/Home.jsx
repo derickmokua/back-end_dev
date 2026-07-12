@@ -328,66 +328,127 @@ export default function Home() {
               // 03. SELECTED_WORKS
             </h2>
             <div className="space-y-4">
-              
-              {/* Flagship Case Study */}
-              <div className="w-full bg-terminal-card border border-terminal-green/20 p-6 rounded-lg glow-border-green relative overflow-hidden group">
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
-                  <div>
-                    <h3 className="text-base font-bold text-white group-hover:text-terminal-green transition-colors">
-                      KukuConnect (Flagship Case Study)
-                    </h3>
-                    <span className="text-[9px] text-terminal-muted">APPLIED AI SAFETY DEPLOYMENT</span>
-                  </div>
-                  <span className="bg-terminal-green/10 border border-terminal-green/25 text-terminal-green text-[9px] px-2.5 py-0.5 rounded uppercase font-bold tracking-wide">
-                    Research Active
-                  </span>
-                </div>
-                <p className="text-xs text-terminal-text/80 leading-relaxed mb-5 font-sans">
-                  Mitigating hallucinations in veterinary diagnostics using the Gemini API and Retrieval-Augmented Generation (RAG). Enforces a Zero-Trust data pipeline to screen prompts and isolate queries within resource-constrained environments.
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {["Gemini API", "RAG", "Zero-Trust", "FastAPI", "PostgreSQL"].map((tag) => (
-                    <span key={tag} className="bg-black/60 border border-terminal-cyan/15 text-terminal-cyan text-[9px] px-2 py-0.5 rounded">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Other Projects */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {projects.slice(1).map((project) => (
-                  <div
-                    key={project.title}
-                    className="bg-terminal-card border border-terminal-green/10 hover:border-terminal-green/30 p-4 rounded transition-all flex flex-col justify-between"
-                  >
+              {/* Flagship */}
+              {projects[0] && (
+                <div className="w-full bg-terminal-card border border-terminal-green/20 p-6 rounded-lg glow-border-green relative overflow-hidden group">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
                     <div>
-                      <div className="flex justify-between items-start gap-2 mb-2.5">
-                        <h4 className="text-xs font-bold text-white leading-tight">
-                          {project.title.split(":")[0]}
-                        </h4>
-                        <span className="text-[8px] bg-terminal-cyan/10 border border-terminal-cyan/20 text-terminal-cyan px-1.5 rounded uppercase font-bold tracking-tight">
-                          {project.status}
+                      <h3 className="text-base font-bold text-white group-hover:text-terminal-green transition-colors">
+                        {projects[0].title.split(":")[0]}
+                      </h3>
+                      {projects[0].subtitle && (
+                        <span className="text-[9px] text-terminal-muted uppercase tracking-wide">
+                          {projects[0].subtitle}
                         </span>
-                      </div>
-                      <p className="text-[10px] text-terminal-muted leading-relaxed mb-4 font-sans">
-                        {project.desc}
-                      </p>
+                      )}
                     </div>
-                    <div className="flex flex-wrap gap-1">
-                      {project.tags.slice(0, 3).map((tag) => (
+                    <span className="bg-terminal-green/10 border border-terminal-green/25 text-terminal-green text-[9px] px-2.5 py-0.5 rounded uppercase font-bold tracking-wide">
+                      {projects[0].status}
+                    </span>
+                  </div>
+                  <p className="text-xs text-terminal-text/80 leading-relaxed mb-5 font-sans">
+                    {projects[0].desc}
+                  </p>
+                  <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex flex-wrap gap-1.5">
+                      {projects[0].tags.map((tag) => (
                         <span
                           key={tag}
-                          className="bg-black/50 text-terminal-cyan border border-terminal-cyan/10 text-[8px] px-1.5 py-0.5 rounded"
+                          className="bg-black/60 border border-terminal-cyan/15 text-terminal-cyan text-[9px] px-2 py-0.5 rounded"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
+                    {projects[0].github && (
+                      <a
+                        href={projects[0].github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider border border-terminal-green/30 text-terminal-green hover:bg-terminal-green/10 rounded transition-all"
+                      >
+                        <Github size={12} />
+                        Code
+                      </a>
+                    )}
                   </div>
-                ))}
-              </div>
+                </div>
+              )}
 
+              {/* Other projects */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {projects.slice(1).map((project) => {
+                  const demoIsInternal = project.demo && project.demo.startsWith("/");
+                  return (
+                    <div
+                      key={project.title}
+                      className="bg-terminal-card border border-terminal-green/10 hover:border-terminal-green/30 p-4 rounded transition-all flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="flex justify-between items-start gap-2 mb-2.5">
+                          <h4 className="text-xs font-bold text-white leading-tight">
+                            {project.title.split(":")[0]}
+                          </h4>
+                          <span className="text-[8px] bg-terminal-cyan/10 border border-terminal-cyan/20 text-terminal-cyan px-1.5 rounded uppercase font-bold tracking-tight">
+                            {project.status}
+                          </span>
+                        </div>
+                        <p className="text-[10px] text-terminal-muted leading-relaxed mb-4 font-sans">
+                          {project.desc}
+                        </p>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex flex-wrap gap-1">
+                          {project.tags.slice(0, 3).map((tag) => (
+                            <span
+                              key={tag}
+                              className="bg-black/50 text-terminal-cyan border border-terminal-cyan/10 text-[8px] px-1.5 py-0.5 rounded"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        {(project.github || project.demo) && (
+                          <div className="flex items-center gap-3 pt-1 border-t border-terminal-green/10">
+                            {project.github && (
+                              <a
+                                href={project.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider text-terminal-green hover:text-white transition-colors"
+                              >
+                                <Github size={11} />
+                                Code
+                              </a>
+                            )}
+                            {project.demo && (
+                              demoIsInternal ? (
+                                <Link
+                                  to={project.demo}
+                                  className="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider text-terminal-cyan hover:text-white transition-colors"
+                                >
+                                  <ExternalLink size={11} />
+                                  Try demo
+                                </Link>
+                              ) : (
+                                <a
+                                  href={project.demo}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider text-terminal-cyan hover:text-white transition-colors"
+                                >
+                                  <ExternalLink size={11} />
+                                  Live
+                                </a>
+                              )
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </section>
 

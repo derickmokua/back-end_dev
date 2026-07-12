@@ -30,27 +30,37 @@ export const skills = [
 export const projects = [
   {
     title: 'KukuConnect (Flagship)',
+    subtitle: 'Applied AI safety deployment',
     desc: 'Case Study in Applied AI Safety. Mitigating hallucinations in veterinary diagnostics using Gemini API and RAG, secured by a Zero-Trust data pipeline.',
-    tags: ['Gemini API', 'RAG', 'Zero-Trust', 'FastAPI'],
-    status: 'Applied Research'
+    tags: ['Gemini API', 'RAG', 'Zero-Trust', 'FastAPI', 'PostgreSQL'],
+    status: 'Research Active',
+    github: 'https://github.com/derickmokua/Kukuconnect-FMS',
+    demo: null,
   },
   {
     title: 'Saibae: A Study in Autonomous Agent Alignment',
     desc: 'Technical exploration of constrained behavior and safe user-interaction design in autonomous agents.',
     tags: ['Python', 'Alignment Research', 'NLP'],
-    status: 'Active'
+    status: 'Active',
+    github: null,
+    // Live assistant on this site
+    demo: '/chat',
   },
   {
     title: 'ALX Travel App',
     desc: 'Robust booking and itinerary management system built for scalability.',
     tags: ['Python', 'Django', 'PostgreSQL'],
-    status: 'Production'
+    status: 'Production',
+    github: 'https://github.com/derickmokua/alx_travel_app',
+    demo: null,
   },
   {
-    title: 'Secure API Gateway',
-    desc: 'High-performance gateway handling auth, rate-limiting, and routing.',
-    tags: ['Node.js', 'Redis', 'Docker'],
-    status: 'Production'
+    title: 'Poultry Management System',
+    desc: 'Farm operations backend for flock tracking, health records, and day-to-day poultry management.',
+    tags: ['Python', 'Django', 'PostgreSQL'],
+    status: 'Production',
+    github: 'https://github.com/derickmokua/poultry_management_system',
+    demo: null,
   }
 ];
 
