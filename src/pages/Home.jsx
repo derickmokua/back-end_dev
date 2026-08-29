@@ -303,55 +303,51 @@ export default function Home() {
           </TerminalSection>
 
           {/* ABOUT SECTION */}
-          <section id="about" className="border-l-2 border-terminal-green pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green before:rounded-full before:shadow-[0_0_8px_rgba(230,57,70,0.8)]">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2.5">
-              <span className="w-8 h-0.5 bg-terminal-green inline-block shadow-[0_0_8px_rgba(230,57,70,0.8)]" />
+          <section id="about" className="space-y-6 scroll-mt-20">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
               <span>// 01. ABOUT</span>
             </h2>
-            <div className="space-y-4 text-sm md:text-base text-terminal-text/85 leading-loose font-sans">
+            <div className="space-y-4 text-sm md:text-base text-terminal-text/90 leading-relaxed font-sans max-w-3xl">
               <p>
                 I'm Derick Mokua a backend developer and AI engineer based in Nairobi, Kenya.
               </p>
               <p>
-                I build <strong className="text-terminal-green font-bold">secure, scalable backend systems</strong> and integrate AI into real world products. My focus is on making powerful technology work reliably in environments where reliability matters most.
+                I build <strong className="text-terminal-green font-semibold">secure, scalable backend systems</strong> and integrate AI into real world products. My focus is on making powerful technology work reliably in environments where reliability matters most.
               </p>
-              <p>
+              <p className="text-terminal-muted text-sm">
                 Currently researching how to make AI models safer and more trustworthy for high stakes use cases across Africa.
               </p>
             </div>
           </section>
 
           {/* SKILLS SECTION */}
-          <section id="skills" className="border-l-2 border-terminal-green pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green before:rounded-full before:shadow-[0_0_8px_rgba(230,57,70,0.8)]">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2.5">
-              <span className="w-8 h-0.5 bg-terminal-green inline-block shadow-[0_0_8px_rgba(230,57,70,0.8)]" />
+          <section id="skills" className="space-y-6 scroll-mt-20">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
               <span>// 02. TECHNICAL_ARSENAL</span>
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {skills.map((category) => (
-                <div key={category.category} className="space-y-3">
-                  <h3 className="text-xs font-bold text-terminal-cyan border-b border-terminal-cyan/20 pb-1.5 uppercase tracking-widest">
-                    {category.category}
-                  </h3>
-                  <div className="space-y-2.5">
+                <div 
+                  key={category.category} 
+                  className="bg-terminal-card border border-white/5 hover:border-terminal-green/20 p-5 rounded-xl space-y-4 transition-all"
+                >
+                  <div className="flex items-center justify-between border-b border-white/5 pb-2.5">
+                    <h3 className="text-xs font-bold text-terminal-cyan uppercase tracking-wider">
+                      {category.category}
+                    </h3>
+                    <span className="text-[10px] text-terminal-muted/60 font-mono">
+                      {category.items.length} tools
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
                     {category.items.map((skill) => (
-                      <div
+                      <span
                         key={skill.name}
-                        className="bg-terminal-card border border-terminal-green/10 hover:border-terminal-green/30 p-3 rounded transition-all group"
+                        className="bg-[#08090E] border border-white/10 hover:border-terminal-green/30 text-terminal-text hover:text-terminal-green text-xs px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 font-sans"
                       >
-                        <div className="flex justify-between items-center text-[10px] mb-1">
-                          <span className="font-medium text-terminal-text group-hover:text-terminal-green transition-colors font-bold">
-                            {skill.icon} {skill.name}
-                          </span>
-                          <span className="text-terminal-green font-bold">{skill.level}%</span>
-                        </div>
-                        <div className="w-full bg-black h-1 rounded overflow-hidden">
-                          <div
-                            className="bg-terminal-green h-full rounded transition-all duration-1000"
-                            style={{ width: `${skill.level}%` }}
-                          />
-                        </div>
-                      </div>
+                        <span className="text-xs">{skill.icon}</span>
+                        <span className="font-medium">{skill.name}</span>
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -360,39 +356,38 @@ export default function Home() {
           </section>
 
           {/* PROJECTS SECTION */}
-          <section id="projects" className="border-l-2 border-terminal-green pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green before:rounded-full before:shadow-[0_0_8px_rgba(230,57,70,0.8)]">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2.5">
-              <span className="w-8 h-0.5 bg-terminal-green inline-block shadow-[0_0_8px_rgba(230,57,70,0.8)]" />
+          <section id="projects" className="space-y-6 scroll-mt-20">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
               <span>// 03. SELECTED_WORKS</span>
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-5">
               {/* Flagship */}
               {projects[0] && (
-                <div className="w-full bg-terminal-card border border-terminal-green/20 p-6 rounded-lg glow-border-green relative overflow-hidden group">
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
+                <div className="w-full bg-terminal-card border border-white/10 hover:border-terminal-green/30 p-6 sm:p-7 rounded-xl transition-all group">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
                     <div>
-                      <h3 className="text-base font-bold text-white group-hover:text-terminal-green transition-colors">
+                      <h3 className="text-lg font-bold text-white group-hover:text-terminal-green transition-colors">
                         {projects[0].title.split(":")[0]}
                       </h3>
                       {projects[0].subtitle && (
-                        <span className="text-[9px] text-terminal-muted uppercase tracking-wide">
+                        <span className="text-[10px] text-terminal-muted uppercase tracking-wide">
                           {projects[0].subtitle}
                         </span>
                       )}
                     </div>
-                    <span className="bg-terminal-green/10 border border-terminal-green/25 text-terminal-green text-[9px] px-2.5 py-0.5 rounded uppercase font-bold tracking-wide">
+                    <span className="bg-terminal-green/10 border border-terminal-green/25 text-terminal-green text-[10px] px-3 py-0.5 rounded-full uppercase font-bold tracking-wide">
                       {projects[0].status}
                     </span>
                   </div>
-                  <p className="text-xs text-terminal-text/80 leading-relaxed mb-5 font-sans">
+                  <p className="text-sm text-terminal-text/85 leading-relaxed mb-5 font-sans">
                     {projects[0].desc}
                   </p>
-                  <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
                     <div className="flex flex-wrap gap-1.5">
                       {projects[0].tags.map((tag) => (
                         <span
                           key={tag}
-                          className="bg-black/60 border border-terminal-cyan/15 text-terminal-cyan text-[9px] px-2 py-0.5 rounded"
+                          className="bg-[#08090E] border border-white/10 text-terminal-cyan text-[10px] px-2.5 py-1 rounded-md"
                         >
                           {tag}
                         </span>
@@ -403,9 +398,9 @@ export default function Home() {
                         href={projects[0].github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider border border-terminal-green/30 text-terminal-green hover:bg-terminal-green/10 rounded transition-all"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider border border-terminal-green/30 text-terminal-green hover:bg-terminal-green/10 rounded-lg transition-all"
                       >
-                        <Github size={12} />
+                        <Github size={13} />
                         Code
                       </a>
                     )}
@@ -420,18 +415,18 @@ export default function Home() {
                   return (
                     <div
                       key={project.title}
-                      className="bg-terminal-card border border-terminal-green/10 hover:border-terminal-green/30 p-4 rounded transition-all flex flex-col justify-between"
+                      className="bg-terminal-card border border-white/5 hover:border-terminal-green/30 p-5 rounded-xl transition-all flex flex-col justify-between"
                     >
                       <div>
-                        <div className="flex justify-between items-start gap-2 mb-2.5">
-                          <h4 className="text-xs font-bold text-white leading-tight">
+                        <div className="flex justify-between items-start gap-2 mb-2">
+                          <h4 className="text-sm font-bold text-white leading-tight">
                             {project.title.split(":")[0]}
                           </h4>
-                          <span className="text-[8px] bg-terminal-cyan/10 border border-terminal-cyan/20 text-terminal-cyan px-1.5 rounded uppercase font-bold tracking-tight">
+                          <span className="text-[9px] bg-terminal-cyan/10 border border-terminal-cyan/20 text-terminal-cyan px-2 py-0.5 rounded uppercase font-bold tracking-tight">
                             {project.status}
                           </span>
                         </div>
-                        <p className="text-[10px] text-terminal-muted leading-relaxed mb-4 font-sans">
+                        <p className="text-xs text-terminal-muted leading-relaxed mb-4 font-sans">
                           {project.desc}
                         </p>
                       </div>
@@ -440,22 +435,22 @@ export default function Home() {
                           {project.tags.slice(0, 3).map((tag) => (
                             <span
                               key={tag}
-                              className="bg-black/50 text-terminal-cyan border border-terminal-cyan/10 text-[8px] px-1.5 py-0.5 rounded"
+                              className="bg-[#08090E] text-terminal-cyan border border-white/10 text-[9px] px-2 py-0.5 rounded"
                             >
                               {tag}
                             </span>
                           ))}
                         </div>
                         {(project.github || project.demo) && (
-                          <div className="flex items-center gap-3 pt-1 border-t border-terminal-green/10">
+                          <div className="flex items-center gap-3 pt-2 border-t border-white/5">
                             {project.github && (
                               <a
                                 href={project.github}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider text-terminal-green hover:text-white transition-colors"
+                                className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-terminal-green hover:text-white transition-colors"
                               >
-                                <Github size={11} />
+                                <Github size={12} />
                                 Code
                               </a>
                             )}
@@ -463,19 +458,19 @@ export default function Home() {
                               demoIsInternal ? (
                                 <Link
                                   to={project.demo}
-                                  className="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider text-terminal-cyan hover:text-white transition-colors"
+                                  className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-terminal-cyan hover:text-white transition-colors"
                                 >
-                                  <ExternalLink size={11} />
-                                  Try demo
+                                  <ExternalLink size={12} />
+                                  Demo
                                 </Link>
                               ) : (
                                 <a
                                   href={project.demo}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 text-[9px] font-bold uppercase tracking-wider text-terminal-cyan hover:text-white transition-colors"
+                                  className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-terminal-cyan hover:text-white transition-colors"
                                 >
-                                  <ExternalLink size={11} />
+                                  <ExternalLink size={12} />
                                   Live
                                 </a>
                               )
@@ -491,29 +486,28 @@ export default function Home() {
           </section>
 
           {/* SERVICES SECTION */}
-          <section id="services" className="border-l-2 border-terminal-green pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green before:rounded-full before:shadow-[0_0_8px_rgba(230,57,70,0.8)]">
-              <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2.5">
-                <span className="w-8 h-0.5 bg-terminal-green inline-block shadow-[0_0_8px_rgba(230,57,70,0.8)]" />
-                <span>// 04. SERVICES</span>
-              </h2>
+          <section id="services" className="space-y-6 scroll-mt-20">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+              <span>// 04. SERVICES</span>
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {services.map((service) => (
                 <div
                   key={service.title}
-                  className="bg-terminal-card border border-terminal-green/15 p-5 rounded hover:border-terminal-cyan/45 transition-all flex flex-col justify-between"
+                  className="bg-terminal-card border border-white/5 hover:border-terminal-cyan/30 p-5 rounded-xl transition-all flex flex-col justify-between"
                 >
                   <div>
                     <div className="text-2xl mb-2">{service.icon}</div>
-                    <h3 className="text-xs font-bold text-white uppercase tracking-wider mb-2">
+                    <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-2">
                       {service.title}
                     </h3>
-                    <p className="text-[10px] text-terminal-muted leading-relaxed mb-4">
+                    <p className="text-xs text-terminal-muted leading-relaxed mb-4 font-sans">
                       {service.desc}
                     </p>
                   </div>
-                  <ul className="space-y-1.5 border-t border-terminal-green/5 pt-3">
+                  <ul className="space-y-1.5 border-t border-white/5 pt-3">
                     {service.features.map((feature) => (
-                      <li key={feature} className="text-[9px] text-terminal-cyan flex items-center gap-1.5">
+                      <li key={feature} className="text-[10px] text-terminal-cyan flex items-center gap-1.5">
                         <span className="w-1 h-1 bg-terminal-cyan rounded-full" />
                         {feature}
                       </li>
@@ -525,12 +519,11 @@ export default function Home() {
           </section>
 
           {/* ARTICLES SECTION */}
-          <section id="blog" className="border-l-2 border-terminal-green pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green before:rounded-full before:shadow-[0_0_8px_rgba(230,57,70,0.8)]">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2.5">
-              <span className="w-8 h-0.5 bg-terminal-green inline-block shadow-[0_0_8px_rgba(230,57,70,0.8)]" />
+          <section id="blog" className="space-y-6 scroll-mt-20">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
               <span>// 05. ARTICLES</span>
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-3">
               {blogLoading ? (
                 <div className="text-xs text-terminal-cyan animate-pulse">
                   {">"} Syncing with publication database...
@@ -540,17 +533,17 @@ export default function Home() {
                   <div
                     key={post.title}
                     onClick={() => setSelectedBlogPost(post)}
-                    className="block p-5 border border-terminal-green/10 rounded-lg bg-terminal-card hover:border-terminal-cyan/35 hover:bg-terminal-cyan/5 transition-all group cursor-pointer"
+                    className="p-5 border border-white/5 rounded-xl bg-terminal-card hover:border-terminal-cyan/30 hover:bg-[#121622] transition-all group cursor-pointer"
                   >
                     <div className="flex justify-between text-[9px] text-terminal-cyan mb-1.5 font-bold uppercase tracking-wider">
                       <span>{post.date}</span>
-                      <span>Transmitted // Record</span>
+                      <span>Transmitted Record</span>
                     </div>
-                    <h3 className="text-xs font-bold text-white mb-2 group-hover:text-terminal-cyan transition-colors flex items-center gap-1.5">
+                    <h3 className="text-sm font-bold text-white mb-1.5 group-hover:text-terminal-cyan transition-colors flex items-center gap-1.5">
                       {post.title}
-                      <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity text-terminal-muted" />
+                      <ExternalLink size={13} className="opacity-0 group-hover:opacity-100 transition-opacity text-terminal-muted" />
                     </h3>
-                    <p className="text-[11px] text-terminal-text/75 line-clamp-2 leading-relaxed font-sans">
+                    <p className="text-xs text-terminal-text/75 line-clamp-2 leading-relaxed font-sans">
                       {post.desc}
                     </p>
                   </div>
@@ -560,27 +553,26 @@ export default function Home() {
           </section>
 
           {/* TESTIMONIALS SECTION */}
-          <section id="testimonials" className="border-l-2 border-terminal-green pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green before:rounded-full before:shadow-[0_0_8px_rgba(230,57,70,0.8)]">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2.5">
-              <span className="w-8 h-0.5 bg-terminal-green inline-block shadow-[0_0_8px_rgba(230,57,70,0.8)]" />
+          <section id="testimonials" className="space-y-6 scroll-mt-20">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
               <span>// 06. TESTIMONIALS</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {testimonials.map((test, idx) => (
                 <div
                   key={idx}
-                  className="bg-terminal-card border border-terminal-green/10 p-5 rounded text-xs flex flex-col justify-between"
+                  className="bg-terminal-card border border-white/5 p-5 rounded-xl text-xs flex flex-col justify-between"
                 >
-                  <p className="text-terminal-text/80 italic mb-4 leading-relaxed font-sans">
+                  <p className="text-terminal-text/85 italic mb-4 leading-relaxed font-sans">
                     "{test.text}"
                   </p>
-                  <div className="flex items-center gap-2.5 border-t border-terminal-green/5 pt-3">
-                    <div className="w-8 h-8 rounded bg-terminal-green/10 border border-terminal-green/25 text-terminal-green font-bold text-xs flex items-center justify-center flex-shrink-0">
+                  <div className="flex items-center gap-2.5 border-t border-white/5 pt-3">
+                    <div className="w-8 h-8 rounded-full bg-terminal-green/10 border border-terminal-green/25 text-terminal-green font-bold text-xs flex items-center justify-center flex-shrink-0">
                       {test.initials}
                     </div>
                      <div className="min-w-0">
-                       <h3 className="font-bold text-white text-[11px] truncate">{test.name}</h3>
-                       <p className="text-[9px] text-terminal-cyan truncate">{test.role} @ {test.company}</p>
+                       <h3 className="font-bold text-white text-xs truncate">{test.name}</h3>
+                       <p className="text-[10px] text-terminal-cyan truncate">{test.role} @ {test.company}</p>
                      </div>
                   </div>
                 </div>
@@ -588,15 +580,12 @@ export default function Home() {
             </div>
           </section>
 
-          {/* CONTACT SECTION WITH FORM & DECRYPT GAME */}
-          <section id="contact" className="border-l-2 border-terminal-green pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green before:rounded-full before:shadow-[0_0_8px_rgba(0,255,159,0.8)]">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2.5">
-              <span className="w-8 h-0.5 bg-terminal-green inline-block shadow-[0_0_8px_rgba(0,255,159,0.8)]" />
+          {/* CONTACT SECTION */}
+          <section id="contact" className="space-y-6 scroll-mt-20">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
               <span>// 07. CONTACT</span>
             </h2>
-            <div className="w-full bg-terminal-card border border-terminal-green/15 p-6 md:p-8 rounded-lg glow-border-cyan relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-terminal-green/5 to-transparent pointer-events-none" />
-
+            <div className="w-full bg-terminal-card border border-white/10 p-6 md:p-8 rounded-xl relative overflow-hidden">
               <div className="flex flex-col justify-center relative z-10 h-full max-w-2xl mx-auto">
                 <DecryptGame
                   isUnlockedInitially={isContactUnlocked}

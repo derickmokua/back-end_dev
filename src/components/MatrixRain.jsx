@@ -85,7 +85,7 @@ export default function MatrixRain() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 w-screen h-screen pointer-events-none z-0 opacity-30 md:opacity-35 transition-opacity duration-1000"
+      className="fixed inset-0 w-screen h-screen pointer-events-none z-0 opacity-15 md:opacity-20 transition-opacity duration-1000"
     />
   );
 }
