@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useTransform } from 'framer-motion';
 
-const MatrixCanvas = ({ opacity = 0.12, scrollY }) => {
+const MatrixCanvas = ({ opacity = 0.20, scrollY }) => {
   const y = useTransform(scrollY, [0, 500], [0, -50]);
   const canvasRef = useRef(null);
   const rafRef = useRef(null);
@@ -24,8 +24,15 @@ const MatrixCanvas = ({ opacity = 0.12, scrollY }) => {
     const render = () => {
       ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
       ctx.fillRect(0, 0, width, height);
-      ctx.fillStyle = '#00ff88';
       for (let i = 0; i < drops.length; i++) {
+        const rand = Math.random();
+        if (rand > 0.92) {
+          ctx.fillStyle = '#EF4444';
+        } else if (rand > 0.85) {
+          ctx.fillStyle = '#B91C1C';
+        } else {
+          ctx.fillStyle = '#E63946';
+        }
         const text = chars[Math.floor(Math.random() * chars.length)];
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
         if (drops[i] * fontSize > height && Math.random() > 0.975) {

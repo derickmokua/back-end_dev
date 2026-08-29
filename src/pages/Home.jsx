@@ -8,6 +8,7 @@ import {
   Menu,
   X,
   ArrowUp,
+  Activity,
   Linkedin
 } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -182,7 +183,7 @@ export default function Home() {
               className="text-lg font-bold tracking-tighter hover:glow-green transition-all flex items-center gap-0.5"
             >
               <span className="text-terminal-cyan/70 font-mono">root@</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-terminal-green to-terminal-cyan font-black">mokua</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-terminal-green to-terminal-cyan font-black">derick</span>
               <span className="text-terminal-green animate-pulse font-black text-xl leading-none">_</span>
             </Link>
 
@@ -254,12 +255,12 @@ export default function Home() {
         <main className="max-w-4xl mx-auto px-6 pt-28 pb-20 space-y-24 md:space-y-32">
           
           {/* HERO SECTION — eager TerminalSection so LCP text is not behind a lazy chunk */}
-          <TerminalSection command="visitor@mokua-host: ~/sys/boot">
+          <TerminalSection command="visitor@derick-host: ~/sys/boot">
             <div className="absolute top-0 -left-10 w-72 h-72 bg-terminal-green/5 rounded-full blur-3xl pointer-events-none" />
 
             <div className="space-y-6">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-terminal-green bg-terminal-green/5 rounded border border-terminal-green/20">
-                <span className="w-1.5 h-1.5 bg-terminal-green rounded-full animate-ping" />
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-emerald-400 bg-emerald-500/10 rounded border border-emerald-500/30">
+                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping" />
                 Available for new projects
               </div>
 
@@ -278,16 +279,15 @@ export default function Home() {
                 </span>
               </div>
 
-              <p className="max-w-2xl text-sm md:text-base text-terminal-text/80 leading-relaxed pl-4 border-l border-terminal-green/25 font-sans">
-                I build secure, AI-powered backend systems for teams across Africa and beyond —
-                turning complex ideas into reliable products that scale.
+              <p className="max-w-2xl text-sm md:text-base text-terminal-text/80 leading-relaxed pl-4 border-l-2 border-terminal-green font-sans">
+                I build secure, AI powered backend systems for teams across Africa and beyond turning complex ideas into reliable products that scale.
               </p>
 
               <div className="flex flex-wrap gap-3 pt-4">
                 <a
                   href="#contact"
                   onClick={(e) => scrollToSection(e, "#contact")}
-                  className="px-5 py-3 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold rounded text-xs uppercase tracking-wider transition-all hover:shadow-[0_0_15px_rgba(0,255,159,0.3)] flex items-center gap-2"
+                  className="px-5 py-3 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold rounded text-xs uppercase tracking-wider transition-all hover:shadow-[0_0_15px_rgba(230,57,70,0.25)] flex items-center gap-2"
                 >
                   Get In Touch
                 </a>
@@ -303,27 +303,29 @@ export default function Home() {
           </TerminalSection>
 
           {/* ABOUT SECTION */}
-          <section id="about" className="space-y-6">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
-              // 01. ABOUT
+          <section id="about" className="border-l-2 border-terminal-green pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green before:rounded-full before:shadow-[0_0_8px_rgba(230,57,70,0.8)]">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2.5">
+              <span className="w-8 h-0.5 bg-terminal-green inline-block shadow-[0_0_8px_rgba(230,57,70,0.8)]" />
+              <span>// 01. ABOUT</span>
             </h2>
-            <div className="space-y-4 text-sm md:text-base text-terminal-text/85 leading-loose font-sans pl-4 border-l-2 border-terminal-green/20">
+            <div className="space-y-4 text-sm md:text-base text-terminal-text/85 leading-loose font-sans">
               <p>
-                I'm Derick Mokua — a backend developer and AI engineer based in Nairobi, Kenya.
+                I'm Derick Mokua a backend developer and AI engineer based in Nairobi, Kenya.
               </p>
               <p>
-                I build <strong className="text-terminal-green font-bold">secure, scalable backend systems</strong> and integrate AI into real-world products. My focus is on making powerful technology work reliably in environments where reliability matters most.
+                I build <strong className="text-terminal-green font-bold">secure, scalable backend systems</strong> and integrate AI into real world products. My focus is on making powerful technology work reliably in environments where reliability matters most.
               </p>
               <p>
-                Currently researching how to make AI models safer and more trustworthy for high-stakes use cases across Africa.
+                Currently researching how to make AI models safer and more trustworthy for high stakes use cases across Africa.
               </p>
             </div>
           </section>
 
           {/* SKILLS SECTION */}
-          <section id="skills" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
-              // 02. TECHNICAL_ARSENAL
+          <section id="skills" className="border-l-2 border-terminal-green pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green before:rounded-full before:shadow-[0_0_8px_rgba(230,57,70,0.8)]">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2.5">
+              <span className="w-8 h-0.5 bg-terminal-green inline-block shadow-[0_0_8px_rgba(230,57,70,0.8)]" />
+              <span>// 02. TECHNICAL_ARSENAL</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {skills.map((category) => (
@@ -358,9 +360,10 @@ export default function Home() {
           </section>
 
           {/* PROJECTS SECTION */}
-          <section id="projects" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
-              // 03. SELECTED_WORKS
+          <section id="projects" className="border-l-2 border-terminal-green pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green before:rounded-full before:shadow-[0_0_8px_rgba(230,57,70,0.8)]">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2.5">
+              <span className="w-8 h-0.5 bg-terminal-green inline-block shadow-[0_0_8px_rgba(230,57,70,0.8)]" />
+              <span>// 03. SELECTED_WORKS</span>
             </h2>
             <div className="space-y-4">
               {/* Flagship */}
@@ -488,9 +491,10 @@ export default function Home() {
           </section>
 
           {/* SERVICES SECTION */}
-          <section id="services" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
-              <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
-                // 04. SERVICES
+          <section id="services" className="border-l-2 border-terminal-green pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green before:rounded-full before:shadow-[0_0_8px_rgba(230,57,70,0.8)]">
+              <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2.5">
+                <span className="w-8 h-0.5 bg-terminal-green inline-block shadow-[0_0_8px_rgba(230,57,70,0.8)]" />
+                <span>// 04. SERVICES</span>
               </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {services.map((service) => (
@@ -521,9 +525,10 @@ export default function Home() {
           </section>
 
           {/* ARTICLES SECTION */}
-          <section id="blog" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
-              // 05. ARTICLES
+          <section id="blog" className="border-l-2 border-terminal-green pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green before:rounded-full before:shadow-[0_0_8px_rgba(230,57,70,0.8)]">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2.5">
+              <span className="w-8 h-0.5 bg-terminal-green inline-block shadow-[0_0_8px_rgba(230,57,70,0.8)]" />
+              <span>// 05. ARTICLES</span>
             </h2>
             <div className="space-y-4">
               {blogLoading ? (
@@ -555,9 +560,10 @@ export default function Home() {
           </section>
 
           {/* TESTIMONIALS SECTION */}
-          <section id="testimonials" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
-              // 06. TESTIMONIALS
+          <section id="testimonials" className="border-l-2 border-terminal-green pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green before:rounded-full before:shadow-[0_0_8px_rgba(230,57,70,0.8)]">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2.5">
+              <span className="w-8 h-0.5 bg-terminal-green inline-block shadow-[0_0_8px_rgba(230,57,70,0.8)]" />
+              <span>// 06. TESTIMONIALS</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {testimonials.map((test, idx) => (
@@ -582,29 +588,61 @@ export default function Home() {
             </div>
           </section>
 
-          {/* CONTACT */}
-          <section id="contact" className="border-l-2 border-terminal-green/20 pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green/40 before:rounded-full">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase">
-              // 07. CONTACT
+          {/* CONTACT SECTION WITH FORM & DECRYPT GAME */}
+          <section id="contact" className="border-l-2 border-terminal-green pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green before:rounded-full before:shadow-[0_0_8px_rgba(230,57,70,0.8)]">
+            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2.5">
+              <span className="w-8 h-0.5 bg-terminal-green inline-block shadow-[0_0_8px_rgba(230,57,70,0.8)]" />
+              <span>// 07. CONTACT</span>
             </h2>
-            <div className="w-full bg-terminal-card border border-terminal-green/15 p-8 md:p-12 rounded-lg glow-border-cyan relative overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-terminal-card border border-terminal-green/15 p-6 md:p-8 rounded-lg glow-border-cyan relative overflow-hidden">
               <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-terminal-green/5 to-transparent pointer-events-none" />
-              <div className="relative z-10 max-w-xl mx-auto space-y-6 text-center md:text-left">
+
+              {/* Coordinates left column: locked by decryption game */}
+              <div className="flex flex-col justify-center relative z-10 h-full">
+                <DecryptGame
+                  isUnlockedInitially={isContactUnlocked}
+                  onUnlocked={() => setIsContactUnlocked(true)}
+                />
+              </div>
+
+              {/* Direct Contact Buttons right column */}
+              <div className="bg-black/50 p-6 md:p-8 rounded border border-terminal-green/20 flex flex-col justify-center space-y-6 relative z-10">
                 <div className="space-y-2">
-                  <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">
-                    Let&apos;s work together
+                  <div className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping" />
+                    SECURE CHANNELS ONLINE
+                  </div>
+                  <h3 className="text-base md:text-lg font-bold text-white tracking-tight">
+                    Establish Direct Comms
                   </h3>
-                  <p className="text-sm md:text-base text-terminal-text/80 leading-relaxed font-sans">
-                    Open to new projects, collaborations, and interesting problems.
-                    Send a message — I usually reply within a day.
+                  <p className="text-xs text-terminal-muted leading-relaxed">
+                    Skip intermediary payload transmission. Establish direct, encrypted communications via WhatsApp or secure email.
                   </p>
                 </div>
-                <Suspense fallback={<p className="text-terminal-muted text-sm">Loading contact…</p>}>
-                  <DecryptGame
-                    isUnlockedInitially={isContactUnlocked}
-                    onUnlocked={() => setIsContactUnlocked(true)}
-                  />
-                </Suspense>
+
+                <div className="space-y-3.5 pt-2">
+                  <a
+                    href="https://wa.me/254716883375"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-3.5 px-4 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold uppercase rounded flex items-center justify-center gap-2.5 transition-all hover:shadow-[0_0_15px_rgba(230,57,70,0.3)] text-xs tracking-wider"
+                  >
+                    <Smartphone size={15} />
+                    <span>Connect on WhatsApp</span>
+                  </a>
+
+                  <a
+                    href="mailto:derickmokua@outlook.com"
+                    className="w-full py-3.5 px-4 border border-terminal-green/30 hover:border-terminal-green hover:bg-terminal-green/10 text-terminal-green font-bold uppercase rounded flex items-center justify-center gap-2.5 transition-all text-xs tracking-wider"
+                  >
+                    <Mail size={15} />
+                    <span>Send Secure Email</span>
+                  </a>
+                </div>
+
+                <div className="text-[10px] text-terminal-muted/60 font-mono text-center pt-2">
+                  // PGP Encryption Key Available Upon Request
+                </div>
               </div>
             </div>
           </section>

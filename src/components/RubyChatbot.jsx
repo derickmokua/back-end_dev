@@ -112,12 +112,12 @@ export default function RubyChatbot() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-40 px-4 h-11 bg-terminal-card border border-terminal-green/30 hover:border-terminal-green text-terminal-green rounded-full flex items-center gap-2.5 shadow-[0_0_15px_rgba(0,255,159,0.1)] hover:shadow-[0_0_25px_rgba(0,255,159,0.2)] transition-all hover:scale-105 focus:outline-none select-none font-bold uppercase tracking-wider text-[10px] relative"
+            className="fixed bottom-6 right-6 z-40 px-4 h-11 bg-terminal-card border border-terminal-green/30 hover:border-terminal-green text-terminal-green rounded-full flex items-center gap-2.5 shadow-[0_0_15px_rgba(230,57,70,0.15)] hover:shadow-[0_0_25px_rgba(230,57,70,0.25)] transition-all hover:scale-105 focus:outline-none select-none font-bold uppercase tracking-wider text-[10px] relative"
             title="Chat with Ruby AI"
           >
             <div className="relative flex items-center justify-center w-2 h-2 flex-shrink-0">
-              <span className="w-1.5 h-1.5 bg-terminal-green rounded-full animate-ping absolute" />
-              <span className="w-1.5 h-1.5 bg-terminal-green rounded-full absolute" />
+              <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping absolute" />
+              <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full absolute" />
             </div>
             <Bot size={13} className="text-terminal-cyan" />
             <span>Ask Ruby AI</span>
@@ -132,7 +132,7 @@ export default function RubyChatbot() {
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.95 }}
-            className="fixed bottom-0 right-0 sm:bottom-6 sm:right-6 z-40 w-full sm:w-[360px] h-[100dvh] sm:h-[450px] bg-terminal-card border-t sm:border border-terminal-green/30 rounded-none sm:rounded-xl shadow-[0_0_30px_rgba(0,255,159,0.15)] flex flex-col justify-between overflow-hidden glow-border-green"
+            className="fixed bottom-0 right-0 sm:bottom-6 sm:right-6 z-40 w-full sm:w-[360px] h-[100dvh] sm:h-[450px] bg-terminal-card border-t sm:border border-terminal-green/30 rounded-none sm:rounded-xl shadow-[0_0_30px_rgba(230,57,70,0.18)] flex flex-col justify-between overflow-hidden glow-border-green"
           >
             {/* Linux Terminal Header bar */}
             <div className="bg-black/95 p-3 border-b border-terminal-green/15 flex items-center justify-between select-none relative z-10 flex-shrink-0">

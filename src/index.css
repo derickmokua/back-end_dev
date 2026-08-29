@@ -4,12 +4,12 @@
 
 @layer base {
   :root {
-    --terminal-bg: #0a0a0f;
-    --terminal-card: #111113;
-    --terminal-green: #00ff9f;
-    --terminal-cyan: #00e5ff;
-    --terminal-text: #e5e7eb;
-    --terminal-muted: #9ca3af;
+    --terminal-bg: #0A0A0A;
+    --terminal-card: #111111;
+    --terminal-green: #E63946;
+    --terminal-cyan: #B91C1C;
+    --terminal-text: #E5E5E5;
+    --terminal-muted: #A0A0A0;
   }
 
   body {
@@ -30,7 +30,7 @@
     height: 6px;
   }
   ::-webkit-scrollbar-track {
-    background: #0a0a0f;
+    background: #0A0A0A;
   }
   ::-webkit-scrollbar-thumb {
     background: #1f1f2e;
@@ -44,23 +44,23 @@
 
 @layer utilities {
   .glow-green {
-    text-shadow: 0 0 10px rgba(0, 255, 159, 0.7), 0 0 20px rgba(0, 255, 159, 0.3);
+    text-shadow: 0 0 10px rgba(230, 57, 70, 0.6), 0 0 20px rgba(230, 57, 70, 0.25);
   }
 
   .glow-cyan {
-    text-shadow: 0 0 10px rgba(0, 229, 255, 0.7), 0 0 20px rgba(0, 229, 255, 0.3);
+    text-shadow: 0 0 10px rgba(185, 28, 28, 0.6), 0 0 20px rgba(185, 28, 28, 0.25);
   }
 
   .glow-border-green {
-    box-shadow: 0 0 10px rgba(0, 255, 159, 0.2), inset 0 0 10px rgba(0, 255, 159, 0.1);
+    box-shadow: 0 0 10px rgba(230, 57, 70, 0.18), inset 0 0 10px rgba(230, 57, 70, 0.08);
   }
 
   .glow-border-green-heavy {
-    box-shadow: 0 0 15px rgba(0, 255, 159, 0.5), inset 0 0 15px rgba(0, 255, 159, 0.2);
+    box-shadow: 0 0 15px rgba(230, 57, 70, 0.35), inset 0 0 15px rgba(230, 57, 70, 0.15);
   }
 
   .glow-border-cyan {
-    box-shadow: 0 0 10px rgba(0, 229, 255, 0.2), inset 0 0 10px rgba(0, 229, 255, 0.1);
+    box-shadow: 0 0 10px rgba(185, 28, 28, 0.18), inset 0 0 10px rgba(185, 28, 28, 0.08);
   }
 }
 
@@ -148,7 +148,7 @@
 .ruby-message i {
   font-style: italic !important;
   color: var(--terminal-cyan) !important;
-  text-shadow: 0 0 5px rgba(0, 229, 255, 0.2);
+  text-shadow: 0 0 5px rgba(185, 28, 28, 0.2);
 }
 
 .ruby-message ul,
@@ -216,13 +216,13 @@
 
 .social-glow-linkedin:hover {
   color: var(--terminal-cyan) !important;
-  filter: drop-shadow(0 0 3px rgba(0, 229, 255, 0.8)) drop-shadow(0 0 10px rgba(0, 229, 255, 0.5));
+  filter: drop-shadow(0 0 3px rgba(185, 28, 28, 0.8)) drop-shadow(0 0 10px rgba(185, 28, 28, 0.5));
   transform: translateY(-3px) scale(1.18);
 }
 
 .social-glow-whatsapp:hover {
   color: var(--terminal-green) !important;
-  filter: drop-shadow(0 0 3px rgba(0, 255, 159, 0.8)) drop-shadow(0 0 10px rgba(0, 255, 159, 0.5));
+  filter: drop-shadow(0 0 3px rgba(230, 57, 70, 0.8)) drop-shadow(0 0 10px rgba(230, 57, 70, 0.5));
   transform: translateY(-3px) scale(1.18);
 }
 
@@ -236,8 +236,8 @@
 .cyber-grid-overlay {
   background-size: 50px 50px;
   background-image: 
-    linear-gradient(to right, rgba(0, 255, 159, 0.015) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 255, 159, 0.015) 1px, transparent 1px);
+    linear-gradient(to right, rgba(230, 57, 70, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(230, 57, 70, 0.02) 1px, transparent 1px);
 }
 
 /* Hide scrollbars but keep functionality */

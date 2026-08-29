@@ -30,7 +30,7 @@ export default function ArchitectureDiagram() {
               markerHeight="6"
               orient="auto-start-reverse"
             >
-              <path d="M 0 2 L 8 5 L 0 8 z" fill="#00ff9f" />
+              <path d="M 0 2 L 8 5 L 0 8 z" fill="#E63946" />
             </marker>
             <marker
               id="arrow-cyan"
@@ -41,7 +41,7 @@ export default function ArchitectureDiagram() {
               markerHeight="6"
               orient="auto-start-reverse"
             >
-              <path d="M 0 2 L 8 5 L 0 8 z" fill="#00e5ff" />
+              <path d="M 0 2 L 8 5 L 0 8 z" fill="#B91C1C" />
             </marker>
             <marker
               id="arrow-purple"

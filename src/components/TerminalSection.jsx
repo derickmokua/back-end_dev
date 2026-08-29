@@ -1,8 +1,8 @@
 import React from 'react';
 
-export default function TerminalSection({ id, command = "visitor@mokua-host: ~", children }) {
+export default function TerminalSection({ id, command = "visitor@derick-host: ~", children }) {
   return (
-    <section id={id} className="w-full bg-terminal-bg/85 backdrop-blur-md rounded-lg border border-terminal-green/30 shadow-[0_0_30px_rgba(0,255,159,0.05)] flex flex-col overflow-hidden relative glow-border-green">
+    <section id={id} className="w-full bg-terminal-bg/85 backdrop-blur-md rounded-lg border border-terminal-green/30 shadow-[0_0_30px_rgba(230,57,70,0.08)] flex flex-col overflow-hidden relative glow-border-green">
       
       {/* Linux Terminal Top Bar */}
       <div className="h-8 bg-black/90 border-b border-terminal-green/20 flex items-center justify-between px-3 select-none flex-shrink-0 z-10 relative">

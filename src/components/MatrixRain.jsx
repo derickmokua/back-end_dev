@@ -34,20 +34,22 @@ export default function MatrixRain() {
 
     const draw = () => {
       // Draw semi-transparent black background to create trail effect
-      ctx.fillStyle = "rgba(10, 10, 15, 0.05)"; // matches --terminal-bg slightly
+      ctx.fillStyle = "rgba(10, 10, 10, 0.05)"; // matches --terminal-bg slightly
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      ctx.fillStyle = "#00ff9f"; // matches --terminal-green
       ctx.font = `${fontSize}px "JetBrains Mono", monospace`;
 
       for (let i = 0; i < drops.length; i++) {
         const text = charArray[Math.floor(Math.random() * charArray.length)];
         
-        // Randomly make some characters cyan for the terminal aesthetic
-        if (Math.random() > 0.95) {
-          ctx.fillStyle = "#00e5ff";
+        // Sleek red-team cybersecurity colors: balanced crimson without being too loud
+        const rand = Math.random();
+        if (rand > 0.92) {
+          ctx.fillStyle = "#EF4444"; // Vivid crimson accent
+        } else if (rand > 0.85) {
+          ctx.fillStyle = "#B91C1C"; // Darker red secondary
         } else {
-          ctx.fillStyle = "#00ff9f";
+          ctx.fillStyle = "#E63946"; // Standard deep crimson
         }
 
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
@@ -83,7 +85,7 @@ export default function MatrixRain() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 w-screen h-screen pointer-events-none z-0 bg-terminal-bg opacity-10 md:opacity-15 transition-opacity duration-1000"
+      className="fixed inset-0 w-screen h-screen pointer-events-none z-0 bg-terminal-bg opacity-20 md:opacity-25 transition-opacity duration-1000"
     />
   );
 }

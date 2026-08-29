@@ -19,12 +19,14 @@ module.exports = {
           900: '#1a1400',
         },
         terminal: {
-          bg: '#0a0a0f',
-          card: '#111113',
-          green: '#00ff9f',
-          cyan: '#00e5ff',
-          text: '#e5e7eb',
-          muted: '#9ca3af',
+          bg: '#0A0A0A',
+          card: '#111111',
+          green: '#E63946', // Primary deep crimson red
+          cyan: '#B91C1C', // Secondary darker red for hovers and borders
+          red: '#E63946',
+          crimson: '#B91C1C',
+          text: '#E5E5E5',
+          muted: '#A0A0A0',
         }
       },
     },

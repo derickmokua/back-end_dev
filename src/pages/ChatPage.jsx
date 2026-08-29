@@ -115,7 +115,7 @@ export default function ChatPage() {
     <div className="min-h-screen bg-terminal-bg text-terminal-text font-mono flex flex-col selection:bg-terminal-green selection:text-black relative">
       <MatrixRain />
       <div className="relative z-10 flex-1 flex flex-col p-4 md:p-8 max-w-5xl mx-auto w-full">
-        <TerminalSection id="chat" command="visitor@mokua-host: ~/secure-comms">
+        <TerminalSection id="chat" command="visitor@derick-host: ~/secure-comms">
           <div className="flex flex-col h-[85vh] -mx-6 md:-mx-8 -my-6 md:-my-8">
             {/* Header */}
             <header className="bg-terminal-bg/85 backdrop-blur-md border-b border-terminal-green/10 p-4 sticky top-0 z-10 select-none shadow-lg rounded-t-lg">
