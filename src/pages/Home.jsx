@@ -9,7 +9,11 @@ import {
   X,
   ArrowUp,
   Activity,
-  Linkedin
+  Linkedin,
+  Search,
+  Layers,
+  Check,
+  Copy
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -22,12 +26,15 @@ import {
 } from "../data/portfolioData";
 // Hero shell is tiny and wraps LCP text — keep eager
 import TerminalSection from "../components/TerminalSection";
+import InteractiveHeroCLI from "../components/InteractiveHeroCLI";
 // Decorative / below-fold / interaction-only — lazy
 const MatrixRain = lazy(() => import("../components/MatrixRain"));
 const DecryptGame = lazy(() => import("../components/DecryptGame"));
 const RubyChatbot = lazy(() => import("../components/RubyChatbot"));
 const BirthdayAnimation = lazy(() => import("../components/effects/BirthdayAnimation"));
 const BlogModal = lazy(() => import("../components/BlogModal"));
+const CommandPalette = lazy(() => import("../components/CommandPalette"));
+const ArchitectureModal = lazy(() => import("../components/ArchitectureModal"));
 import useHashnodePosts from "../hooks/useHashnode";
 
 export default function Home() {
@@ -35,6 +42,9 @@ export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [selectedBlogPost, setSelectedBlogPost] = useState(null);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [isArchModalOpen, setIsArchModalOpen] = useState(false);
+  const [emailCopied, setEmailCopied] = useState(false);
 
   const [isContactUnlocked, setIsContactUnlocked] = useState(false);
   // Mount non-critical UI after idle so first paint stays HTML → small JS only
@@ -46,6 +56,18 @@ export default function Home() {
   const [isBirthday, setIsBirthday] = useState(false);
 
   const fullHeroText = "> initializing_secure_ops_tunnel...";
+
+  // Global shortcut: Ctrl+K or Cmd+K
+  useEffect(() => {
+    const handleGlobalKey = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleGlobalKey);
+    return () => window.removeEventListener('keydown', handleGlobalKey);
+  }, []);
 
   // Check Birthday
   useEffect(() => {
@@ -188,7 +210,7 @@ export default function Home() {
             </Link>
 
             {/* Desktop Links */}
-            <div className="hidden md:flex gap-6 items-center text-xs font-bold uppercase tracking-wider">
+            <div className="hidden md:flex gap-5 items-center text-xs font-bold uppercase tracking-wider">
               <a href="#about" onClick={(e) => scrollToSection(e, "#about")} className="hover:text-terminal-green transition-colors">About</a>
               <a href="#skills" onClick={(e) => scrollToSection(e, "#skills")} className="hover:text-terminal-green transition-colors">Skills</a>
               <a href="#projects" onClick={(e) => scrollToSection(e, "#projects")} className="hover:text-terminal-green transition-colors">Projects</a>
@@ -196,6 +218,24 @@ export default function Home() {
               <a href="#blog" onClick={(e) => scrollToSection(e, "#blog")} className="hover:text-terminal-green transition-colors">Articles</a>
               <a href="#testimonials" onClick={(e) => scrollToSection(e, "#testimonials")} className="hover:text-terminal-green transition-colors">Testimonials</a>
               <a href="#contact" onClick={(e) => scrollToSection(e, "#contact")} className="hover:text-terminal-green transition-colors">Contact</a>
+
+              {/* Live Telemetry Pill */}
+              <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 bg-[#08090E] border border-terminal-green/20 rounded-full text-[10px] text-terminal-muted font-mono select-none">
+                <span className="w-1.5 h-1.5 bg-terminal-green rounded-full animate-ping" />
+                <span className="text-terminal-green font-bold">LIVE</span>
+                <span className="text-terminal-muted/60">// NAIROBI UTC+3</span>
+              </div>
+
+              {/* Command Palette Trigger */}
+              <button
+                onClick={() => setIsCommandPaletteOpen(true)}
+                className="flex items-center gap-1.5 px-2.5 py-1 bg-white/5 hover:bg-terminal-green/10 text-terminal-muted hover:text-terminal-green border border-white/10 hover:border-terminal-green/30 rounded text-[10px] font-mono transition-colors"
+                title="Open Command Palette (Ctrl+K)"
+              >
+                <Search size={11} />
+                <span className="hidden xl:inline">Search</span>
+                <kbd className="text-[9px] px-1 bg-white/10 rounded">⌘K</kbd>
+              </button>
               
               <a
                 href="https://github.com/derickmokua"
@@ -209,6 +249,13 @@ export default function Home() {
             </div>
 
             <div className="flex md:hidden items-center gap-2">
+              <button
+                onClick={() => setIsCommandPaletteOpen(true)}
+                className="p-1.5 text-terminal-green hover:bg-terminal-green/5 rounded transition-colors focus:outline-none"
+                title="Search"
+              >
+                <Search size={16} />
+              </button>
               <a
                 href="https://github.com/derickmokua"
                 target="_blank"
@@ -281,7 +328,7 @@ export default function Home() {
                 I build secure, AI powered backend systems for teams across Africa and beyond turning complex ideas into reliable products that scale.
               </p>
 
-              <div className="flex flex-wrap gap-3 pt-2">
+              <div className="flex flex-wrap items-center gap-3 pt-2">
                 <a
                   href="#contact"
                   onClick={(e) => scrollToSection(e, "#contact")}
@@ -296,7 +343,23 @@ export default function Home() {
                 >
                   View My Work
                 </a>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText("derickmokua@outlook.com");
+                    setEmailCopied(true);
+                    setTimeout(() => setEmailCopied(false), 2000);
+                  }}
+                  className="px-4 py-3 bg-[#08090E] border border-white/10 hover:border-terminal-green/30 text-terminal-text hover:text-terminal-green rounded-lg text-xs uppercase tracking-wider transition-all flex items-center gap-2 font-mono"
+                  title="Copy email to clipboard"
+                >
+                  {emailCopied ? <Check size={13} className="text-terminal-green" /> : <Copy size={13} />}
+                  <span>{emailCopied ? "Email Copied" : "Copy Email"}</span>
+                </button>
               </div>
+
+              {/* Interactive Hero CLI Command Prompt */}
+              <InteractiveHeroCLI />
             </div>
           </TerminalSection>
 
@@ -395,17 +458,27 @@ export default function Home() {
                           </span>
                         ))}
                       </div>
-                      {projects[0].github && (
-                        <a
-                          href={projects[0].github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider border border-terminal-green/30 text-terminal-green hover:bg-terminal-green/10 rounded-lg transition-all"
+                      <div className="flex items-center gap-2.5">
+                        <button
+                          type="button"
+                          onClick={() => setIsArchModalOpen(true)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold uppercase tracking-wider bg-terminal-cyan/10 hover:bg-terminal-cyan text-terminal-cyan hover:text-black border border-terminal-cyan/30 rounded-lg transition-all"
                         >
-                          <Github size={13} />
-                          Code
-                        </a>
-                      )}
+                          <Layers size={13} />
+                          Architecture
+                        </button>
+                        {projects[0].github && (
+                          <a
+                            href={projects[0].github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider border border-terminal-green/30 text-terminal-green hover:bg-terminal-green/10 rounded-lg transition-all"
+                          >
+                            <Github size={13} />
+                            Code
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
                 )}
@@ -688,6 +761,26 @@ export default function Home() {
             <BlogModal
               post={selectedBlogPost}
               onClose={() => setSelectedBlogPost(null)}
+            />
+          </Suspense>
+        )}
+
+        {/* Global Command Palette */}
+        {isCommandPaletteOpen && (
+          <Suspense fallback={null}>
+            <CommandPalette
+              isOpen={isCommandPaletteOpen}
+              onClose={() => setIsCommandPaletteOpen(false)}
+            />
+          </Suspense>
+        )}
+
+        {/* Architecture Pipeline Modal */}
+        {isArchModalOpen && (
+          <Suspense fallback={null}>
+            <ArchitectureModal
+              isOpen={isArchModalOpen}
+              onClose={() => setIsArchModalOpen(false)}
             />
           </Suspense>
         )}
