@@ -369,7 +369,7 @@ export default function Home() {
               <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
                 <span>// 01. ABOUT</span>
               </h2>
-              <div className="space-y-4 text-sm md:text-base text-terminal-text/85 leading-relaxed font-sans max-w-3xl">
+              <div className="space-y-4 text-sm md:text-base text-terminal-text leading-relaxed font-sans max-w-3xl">
                 <p>
                   I'm Derick Mokua a backend developer and AI engineer based in Nairobi, Kenya.
                 </p>
@@ -399,7 +399,7 @@ export default function Home() {
                       <h3 className="text-xs font-bold text-terminal-cyan uppercase tracking-wider font-mono">
                         {category.category}
                       </h3>
-                      <span className="text-[10px] text-terminal-muted/60 font-mono">
+                      <span className="text-[10px] text-terminal-cyan font-mono font-bold">
                         {category.items.length} tools
                       </span>
                     </div>
@@ -444,7 +444,7 @@ export default function Home() {
                         {projects[0].status}
                       </span>
                     </div>
-                    <p className="text-sm text-terminal-text/85 leading-relaxed mb-5 font-sans">
+                    <p className="text-sm text-terminal-text leading-relaxed mb-5 font-sans">
                       {projects[0].desc}
                     </p>
                     <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
@@ -462,6 +462,7 @@ export default function Home() {
                         <button
                           type="button"
                           onClick={() => setIsArchModalOpen(true)}
+                          aria-label={`Open system architecture diagram for ${projects[0].title.split(":")[0]}`}
                           className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold uppercase tracking-wider bg-terminal-cyan/10 hover:bg-terminal-cyan text-terminal-cyan hover:text-black border border-terminal-cyan/30 rounded-lg transition-all"
                         >
                           <Layers size={13} />
@@ -472,6 +473,7 @@ export default function Home() {
                             href={projects[0].github}
                             target="_blank"
                             rel="noopener noreferrer"
+                            aria-label={`View source code for ${projects[0].title.split(":")[0]} on GitHub`}
                             className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider border border-terminal-green/30 text-terminal-green hover:bg-terminal-green/10 rounded-lg transition-all"
                           >
                             <Github size={13} />
@@ -487,6 +489,7 @@ export default function Home() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {projects.slice(1).map((project) => {
                     const demoIsInternal = project.demo && project.demo.startsWith("/");
+                    const projectBaseTitle = project.title.split(":")[0];
                     return (
                       <div
                         key={project.title}
@@ -495,7 +498,7 @@ export default function Home() {
                         <div>
                           <div className="flex justify-between items-start gap-2 mb-2">
                             <h4 className="text-sm font-bold text-white leading-tight">
-                              {project.title.split(":")[0]}
+                              {projectBaseTitle}
                             </h4>
                             <span className="text-[9px] bg-terminal-cyan/10 border border-terminal-cyan/20 text-terminal-cyan px-2 py-0.5 rounded uppercase font-bold tracking-tight">
                               {project.status}
@@ -523,6 +526,7 @@ export default function Home() {
                                   href={project.github}
                                   target="_blank"
                                   rel="noopener noreferrer"
+                                  aria-label={`View source code for ${projectBaseTitle} on GitHub`}
                                   className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-terminal-green hover:text-white transition-colors"
                                 >
                                   <Github size={12} />
@@ -533,6 +537,7 @@ export default function Home() {
                                 demoIsInternal ? (
                                   <Link
                                     to={project.demo}
+                                    aria-label={`Open interactive demo for ${projectBaseTitle}`}
                                     className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-terminal-cyan hover:text-white transition-colors"
                                   >
                                     <ExternalLink size={12} />
@@ -543,6 +548,7 @@ export default function Home() {
                                     href={project.demo}
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    aria-label={`Open live project for ${projectBaseTitle}`}
                                     className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-terminal-cyan hover:text-white transition-colors"
                                   >
                                     <ExternalLink size={12} />
@@ -621,7 +627,7 @@ export default function Home() {
                         {post.title}
                         <ExternalLink size={13} className="opacity-0 group-hover:opacity-100 transition-opacity text-terminal-muted" />
                       </h3>
-                      <p className="text-xs text-terminal-text/75 line-clamp-2 leading-relaxed font-sans">
+                      <p className="text-xs text-terminal-text line-clamp-2 leading-relaxed font-sans">
                         {post.desc}
                       </p>
                     </div>
@@ -643,7 +649,7 @@ export default function Home() {
                     key={idx}
                     className="bg-[#08090E]/60 border border-white/10 hover:border-terminal-green/30 p-5 md:p-6 rounded-xl text-xs flex flex-col justify-between transition-all"
                   >
-                    <p className="text-terminal-text/85 italic mb-4 leading-relaxed font-sans text-xs">
+                    <p className="text-terminal-text italic mb-4 leading-relaxed font-sans text-xs">
                       "{test.text}"
                     </p>
                     <div className="flex items-center gap-3 border-t border-white/5 pt-3.5">
@@ -688,6 +694,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 title="X (Twitter)"
+                aria-label="Visit Derick Mokua on X (Twitter)"
                 className="text-terminal-muted social-icon-btn social-glow-x"
               >
                 {/* Real X logo */}
@@ -701,6 +708,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 title="LinkedIn"
+                aria-label="Visit Derick Mokua on LinkedIn"
                 className="text-terminal-muted social-icon-btn social-glow-linkedin"
               >
                 <Linkedin size={16} />
@@ -711,6 +719,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Telegram"
+                aria-label="Contact Derick Mokua on Telegram"
                 className="text-terminal-muted social-icon-btn social-glow-telegram"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden>
@@ -723,6 +732,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 title="TikTok"
+                aria-label="Visit Derick Mokua on TikTok"
                 className="text-terminal-muted social-icon-btn social-glow-tiktok"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

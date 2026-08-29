@@ -27,7 +27,7 @@ module.exports = {
           red: '#FF3B56',   // Vivid Crimson Security Red (Alerts, security tags)
           amber: '#FFB800', // Terminal Gold
           text: '#F1F5F9',  // High-contrast readable body text
-          muted: '#94A3B8', // Readable secondary text (passes WCAG AA)
+          muted: '#CBD5E1', // High-contrast readable secondary text (passes WCAG AAA > 7:1)
         }
       },
     },
