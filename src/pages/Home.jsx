@@ -9,9 +9,7 @@ import {
   X,
   ArrowUp,
   Activity,
-  Linkedin,
-  Smartphone,
-  Mail
+  Linkedin
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
@@ -591,60 +589,19 @@ export default function Home() {
           </section>
 
           {/* CONTACT SECTION WITH FORM & DECRYPT GAME */}
-          <section id="contact" className="border-l-2 border-terminal-green pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green before:rounded-full before:shadow-[0_0_8px_rgba(230,57,70,0.8)]">
+          <section id="contact" className="border-l-2 border-terminal-green pl-4 space-y-6 md:pl-6 relative before:absolute before:-left-[9px] before:top-1.5 before:w-4 before:h-4 before:bg-terminal-bg before:border-2 before:border-terminal-green before:rounded-full before:shadow-[0_0_8px_rgba(0,255,159,0.8)]">
             <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2.5">
-              <span className="w-8 h-0.5 bg-terminal-green inline-block shadow-[0_0_8px_rgba(230,57,70,0.8)]" />
+              <span className="w-8 h-0.5 bg-terminal-green inline-block shadow-[0_0_8px_rgba(0,255,159,0.8)]" />
               <span>// 07. CONTACT</span>
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-terminal-card border border-terminal-green/15 p-6 md:p-8 rounded-lg glow-border-cyan relative overflow-hidden">
+            <div className="w-full bg-terminal-card border border-terminal-green/15 p-6 md:p-8 rounded-lg glow-border-cyan relative overflow-hidden">
               <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-terminal-green/5 to-transparent pointer-events-none" />
 
-              {/* Coordinates left column: locked by decryption game */}
-              <div className="flex flex-col justify-center relative z-10 h-full">
+              <div className="flex flex-col justify-center relative z-10 h-full max-w-2xl mx-auto">
                 <DecryptGame
                   isUnlockedInitially={isContactUnlocked}
                   onUnlocked={() => setIsContactUnlocked(true)}
                 />
-              </div>
-
-              {/* Direct Contact Buttons right column */}
-              <div className="bg-black/50 p-6 md:p-8 rounded border border-terminal-green/20 flex flex-col justify-center space-y-6 relative z-10">
-                <div className="space-y-2">
-                  <div className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping" />
-                    SECURE CHANNELS ONLINE
-                  </div>
-                  <h3 className="text-base md:text-lg font-bold text-white tracking-tight">
-                    Establish Direct Comms
-                  </h3>
-                  <p className="text-xs text-terminal-muted leading-relaxed">
-                    Skip intermediary payload transmission. Establish direct, encrypted communications via WhatsApp or secure email.
-                  </p>
-                </div>
-
-                <div className="space-y-3.5 pt-2">
-                  <a
-                    href="https://wa.me/254716883375"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-3.5 px-4 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold uppercase rounded flex items-center justify-center gap-2.5 transition-all hover:shadow-[0_0_15px_rgba(230,57,70,0.3)] text-xs tracking-wider"
-                  >
-                    <Smartphone size={15} />
-                    <span>Connect on WhatsApp</span>
-                  </a>
-
-                  <a
-                    href="mailto:derickmokua@outlook.com"
-                    className="w-full py-3.5 px-4 border border-terminal-green/30 hover:border-terminal-green hover:bg-terminal-green/10 text-terminal-green font-bold uppercase rounded flex items-center justify-center gap-2.5 transition-all text-xs tracking-wider"
-                  >
-                    <Mail size={15} />
-                    <span>Send Secure Email</span>
-                  </a>
-                </div>
-
-                <div className="text-[10px] text-terminal-muted/60 font-mono text-center pt-2">
-                  // PGP Encryption Key Available Upon Request
-                </div>
               </div>
             </div>
           </section>
