@@ -26,12 +26,12 @@ const MatrixCanvas = ({ opacity = 0.20, scrollY }) => {
       ctx.fillRect(0, 0, width, height);
       for (let i = 0; i < drops.length; i++) {
         const rand = Math.random();
-        if (rand > 0.92) {
-          ctx.fillStyle = '#EF4444';
-        } else if (rand > 0.85) {
-          ctx.fillStyle = '#B91C1C';
+        if (rand > 0.94) {
+          ctx.fillStyle = '#FFFFFF';
+        } else if (rand > 0.75) {
+          ctx.fillStyle = '#00FF9F';
         } else {
-          ctx.fillStyle = '#E63946';
+          ctx.fillStyle = '#00B871';
         }
         const text = chars[Math.floor(Math.random() * chars.length)];
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);

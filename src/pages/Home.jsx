@@ -184,8 +184,8 @@ export default function Home() {
               onClick={scrollToTop}
               className="text-lg font-bold tracking-tighter hover:glow-green transition-all flex items-center gap-0.5"
             >
-              <span className="text-terminal-cyan/70 font-mono">root@</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-terminal-green to-terminal-cyan font-black">derick</span>
+              <span className="text-terminal-cyan font-mono">root@</span>
+              <span className="text-terminal-green font-black">derick</span>
               <span className="text-terminal-green animate-pulse font-black text-xl leading-none">_</span>
             </Link>
 
@@ -268,7 +268,7 @@ export default function Home() {
 
               <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-white leading-tight">
                 Backend Architect &{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-terminal-green to-terminal-cyan">
+                <span className="text-terminal-green">
                   AI Safety Researcher
                 </span>
               </h1>
