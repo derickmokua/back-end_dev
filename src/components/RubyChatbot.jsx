@@ -12,10 +12,10 @@ const INITIAL_MESSAGE = {
 };
 
 const SUGGESTIONS = [
-  { label: "🏗️ Tech Stack", query: "What is Derick's backend tech stack?" },
-  { label: "🔐 Zero-Trust", query: "How does Derick approach zero-trust and API security?" },
-  { label: "🧠 AI Safety", query: "Explain Derick's AI safety and LLM research." },
-  { label: "🐔 KukuConnect", query: "Tell me about the KukuConnect architecture." },
+  { label: "Tech Stack", query: "What is Derick's backend tech stack?" },
+  { label: "Zero-Trust", query: "How does Derick approach zero-trust and API security?" },
+  { label: "AI Safety", query: "Explain Derick's AI safety and LLM research." },
+  { label: "KukuConnect", query: "Tell me about the KukuConnect architecture." },
 ];
 
 export default function RubyChatbot() {
