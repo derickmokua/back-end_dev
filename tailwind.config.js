@@ -19,14 +19,15 @@ module.exports = {
           900: '#1a1400',
         },
         terminal: {
-          bg: '#0A0A0A',
-          card: '#111111',
-          green: '#E63946', // Primary deep crimson red
-          cyan: '#B91C1C', // Secondary darker red for hovers and borders
-          red: '#E63946',
-          crimson: '#B91C1C',
-          text: '#E5E5E5',
-          muted: '#A0A0A0',
+          bg: '#08090E',
+          card: '#0F121A',
+          cardHover: '#161B26',
+          green: '#00FF9F', // Neon Cyber Emerald (Primary CTA, terminal prompts, online status)
+          cyan: '#00E5FF',  // Electric Cyber Cyan (Secondary accents, links, articles)
+          red: '#FF3B56',   // Vivid Crimson Security Red (Alerts, security tags)
+          amber: '#FFB800', // Terminal Gold
+          text: '#F1F5F9',  // High-contrast readable body text
+          muted: '#94A3B8', // Readable secondary text (passes WCAG AA)
         }
       },
     },
