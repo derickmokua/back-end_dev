@@ -301,295 +301,309 @@ export default function Home() {
           </TerminalSection>
 
           {/* ABOUT SECTION */}
-          <section id="about" className="space-y-6 scroll-mt-20">
-            <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
-              <span>// 01. ABOUT</span>
-            </h2>
-            <div className="space-y-4 text-sm md:text-base text-terminal-text/85 leading-relaxed font-sans max-w-3xl">
-              <p>
-                I'm Derick Mokua a backend developer and AI engineer based in Nairobi, Kenya.
-              </p>
-              <p>
-                I build <strong className="text-terminal-green font-semibold">secure, scalable backend systems</strong> and integrate AI into real world products. My focus is on making powerful technology work reliably in environments where reliability matters most.
-              </p>
-              <p className="text-terminal-muted text-sm">
-                Currently researching how to make AI models safer and more trustworthy for high stakes use cases across Africa.
-              </p>
+          <TerminalSection id="about" command="visitor@derick-host: ~/about">
+            <div className="space-y-6">
+              <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+                <span>// 01. ABOUT</span>
+              </h2>
+              <div className="space-y-4 text-sm md:text-base text-terminal-text/85 leading-relaxed font-sans max-w-3xl">
+                <p>
+                  I'm Derick Mokua a backend developer and AI engineer based in Nairobi, Kenya.
+                </p>
+                <p>
+                  I build <strong className="text-terminal-green font-semibold">secure, scalable backend systems</strong> and integrate AI into real world products. My focus is on making powerful technology work reliably in environments where reliability matters most.
+                </p>
+                <p className="text-terminal-muted text-sm">
+                  Currently researching how to make AI models safer and more trustworthy for high stakes use cases across Africa.
+                </p>
+              </div>
             </div>
-          </section>
+          </TerminalSection>
 
           {/* SKILLS SECTION */}
-          <section id="skills" className="space-y-6 scroll-mt-20">
-            <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
-              <span>// 02. SKILLS</span>
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {skills.map((category) => (
-                <div 
-                  key={category.category} 
-                  className="bg-terminal-card border border-white/10 hover:border-terminal-green/30 p-5 rounded-xl space-y-4 transition-all"
-                >
-                  <div className="flex items-center justify-between border-b border-white/5 pb-2.5">
-                    <h3 className="text-xs font-bold text-terminal-cyan uppercase tracking-wider font-mono">
-                      {category.category}
-                    </h3>
-                    <span className="text-[10px] text-terminal-muted/60 font-mono">
-                      {category.items.length} tools
-                    </span>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {category.items.map((skill) => (
-                      <span
-                        key={skill.name}
-                        className="bg-[#08090E] border border-white/10 hover:border-terminal-green/30 text-terminal-text hover:text-terminal-green text-xs px-3 py-1.5 rounded-lg transition-colors font-sans font-medium"
-                      >
-                        {skill.name}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* PROJECTS SECTION */}
-          <section id="projects" className="space-y-6 scroll-mt-20">
-            <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
-              <span>// 03. PROJECTS</span>
-            </h2>
-            <div className="space-y-5">
-              {/* Flagship */}
-              {projects[0] && (
-                <div className="w-full bg-terminal-card border border-white/10 hover:border-terminal-green/30 p-6 sm:p-7 rounded-xl transition-all group">
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
-                    <div>
-                      <h3 className="text-lg font-bold text-white group-hover:text-terminal-green transition-colors">
-                        {projects[0].title.split(":")[0]}
+          <TerminalSection id="skills" command="visitor@derick-host: ~/skills">
+            <div className="space-y-6">
+              <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+                <span>// 02. SKILLS</span>
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {skills.map((category) => (
+                  <div 
+                    key={category.category} 
+                    className="bg-[#08090E]/60 border border-white/10 hover:border-terminal-green/30 p-5 rounded-xl space-y-4 transition-all"
+                  >
+                    <div className="flex items-center justify-between border-b border-white/5 pb-2.5">
+                      <h3 className="text-xs font-bold text-terminal-cyan uppercase tracking-wider font-mono">
+                        {category.category}
                       </h3>
-                      {projects[0].subtitle && (
-                        <span className="text-[10px] text-terminal-muted uppercase tracking-wide">
-                          {projects[0].subtitle}
-                        </span>
-                      )}
+                      <span className="text-[10px] text-terminal-muted/60 font-mono">
+                        {category.items.length} tools
+                      </span>
                     </div>
-                    <span className="bg-terminal-green/10 border border-terminal-green/25 text-terminal-green text-[10px] px-3 py-0.5 rounded-full uppercase font-bold tracking-wide">
-                      {projects[0].status}
-                    </span>
-                  </div>
-                  <p className="text-sm text-terminal-text/85 leading-relaxed mb-5 font-sans">
-                    {projects[0].desc}
-                  </p>
-                  <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-                    <div className="flex flex-wrap gap-1.5">
-                      {projects[0].tags.map((tag) => (
+                    <div className="flex flex-wrap gap-2">
+                      {category.items.map((skill) => (
                         <span
-                          key={tag}
-                          className="bg-[#08090E] border border-white/10 text-terminal-cyan text-[10px] px-2.5 py-1 rounded-md"
+                          key={skill.name}
+                          className="bg-black/50 border border-white/10 hover:border-terminal-green/30 text-terminal-text hover:text-terminal-green text-xs px-3 py-1.5 rounded-lg transition-colors font-sans font-medium"
                         >
-                          {tag}
+                          {skill.name}
                         </span>
                       ))}
                     </div>
-                    {projects[0].github && (
-                      <a
-                        href={projects[0].github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider border border-terminal-green/30 text-terminal-green hover:bg-terminal-green/10 rounded-lg transition-all"
-                      >
-                        <Github size={13} />
-                        Code
-                      </a>
-                    )}
                   </div>
-                </div>
-              )}
+                ))}
+              </div>
+            </div>
+          </TerminalSection>
 
-              {/* Other projects */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {projects.slice(1).map((project) => {
-                  const demoIsInternal = project.demo && project.demo.startsWith("/");
-                  return (
-                    <div
-                      key={project.title}
-                      className="bg-terminal-card border border-white/5 hover:border-terminal-green/30 p-5 rounded-xl transition-all flex flex-col justify-between"
-                    >
+          {/* PROJECTS SECTION */}
+          <TerminalSection id="projects" command="visitor@derick-host: ~/projects">
+            <div className="space-y-6">
+              <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+                <span>// 03. PROJECTS</span>
+              </h2>
+              <div className="space-y-5">
+                {/* Flagship */}
+                {projects[0] && (
+                  <div className="w-full bg-[#08090E]/60 border border-white/10 hover:border-terminal-green/30 p-6 sm:p-7 rounded-xl transition-all group">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
                       <div>
-                        <div className="flex justify-between items-start gap-2 mb-2">
-                          <h4 className="text-sm font-bold text-white leading-tight">
-                            {project.title.split(":")[0]}
-                          </h4>
-                          <span className="text-[9px] bg-terminal-cyan/10 border border-terminal-cyan/20 text-terminal-cyan px-2 py-0.5 rounded uppercase font-bold tracking-tight">
-                            {project.status}
+                        <h3 className="text-lg font-bold text-white group-hover:text-terminal-green transition-colors">
+                          {projects[0].title.split(":")[0]}
+                        </h3>
+                        {projects[0].subtitle && (
+                          <span className="text-[10px] text-terminal-muted uppercase tracking-wide">
+                            {projects[0].subtitle}
                           </span>
-                        </div>
-                        <p className="text-xs text-terminal-muted leading-relaxed mb-4 font-sans">
-                          {project.desc}
-                        </p>
-                      </div>
-                      <div className="space-y-3">
-                        <div className="flex flex-wrap gap-1">
-                          {project.tags.slice(0, 3).map((tag) => (
-                            <span
-                              key={tag}
-                              className="bg-[#08090E] text-terminal-cyan border border-white/10 text-[9px] px-2 py-0.5 rounded"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                        {(project.github || project.demo) && (
-                          <div className="flex items-center gap-3 pt-2 border-t border-white/5">
-                            {project.github && (
-                              <a
-                                href={project.github}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-terminal-green hover:text-white transition-colors"
-                              >
-                                <Github size={12} />
-                                Code
-                              </a>
-                            )}
-                            {project.demo && (
-                              demoIsInternal ? (
-                                <Link
-                                  to={project.demo}
-                                  className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-terminal-cyan hover:text-white transition-colors"
-                                >
-                                  <ExternalLink size={12} />
-                                  Demo
-                                </Link>
-                              ) : (
-                                <a
-                                  href={project.demo}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-terminal-cyan hover:text-white transition-colors"
-                                >
-                                  <ExternalLink size={12} />
-                                  Live
-                                </a>
-                              )
-                            )}
-                          </div>
                         )}
                       </div>
+                      <span className="bg-terminal-green/10 border border-terminal-green/25 text-terminal-green text-[10px] px-3 py-0.5 rounded-full uppercase font-bold tracking-wide">
+                        {projects[0].status}
+                      </span>
                     </div>
-                  );
-                })}
+                    <p className="text-sm text-terminal-text/85 leading-relaxed mb-5 font-sans">
+                      {projects[0].desc}
+                    </p>
+                    <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+                      <div className="flex flex-wrap gap-1.5">
+                        {projects[0].tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="bg-black/60 border border-white/10 text-terminal-cyan text-[10px] px-2.5 py-1 rounded-md"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      {projects[0].github && (
+                        <a
+                          href={projects[0].github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider border border-terminal-green/30 text-terminal-green hover:bg-terminal-green/10 rounded-lg transition-all"
+                        >
+                          <Github size={13} />
+                          Code
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Other projects */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {projects.slice(1).map((project) => {
+                    const demoIsInternal = project.demo && project.demo.startsWith("/");
+                    return (
+                      <div
+                        key={project.title}
+                        className="bg-[#08090E]/60 border border-white/10 hover:border-terminal-green/30 p-5 rounded-xl transition-all flex flex-col justify-between"
+                      >
+                        <div>
+                          <div className="flex justify-between items-start gap-2 mb-2">
+                            <h4 className="text-sm font-bold text-white leading-tight">
+                              {project.title.split(":")[0]}
+                            </h4>
+                            <span className="text-[9px] bg-terminal-cyan/10 border border-terminal-cyan/20 text-terminal-cyan px-2 py-0.5 rounded uppercase font-bold tracking-tight">
+                              {project.status}
+                            </span>
+                          </div>
+                          <p className="text-xs text-terminal-muted leading-relaxed mb-4 font-sans">
+                            {project.desc}
+                          </p>
+                        </div>
+                        <div className="space-y-3">
+                          <div className="flex flex-wrap gap-1">
+                            {project.tags.slice(0, 3).map((tag) => (
+                              <span
+                                key={tag}
+                                className="bg-black/50 text-terminal-cyan border border-white/10 text-[9px] px-2 py-0.5 rounded"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                          {(project.github || project.demo) && (
+                            <div className="flex items-center gap-3 pt-2 border-t border-white/5">
+                              {project.github && (
+                                <a
+                                  href={project.github}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-terminal-green hover:text-white transition-colors"
+                                >
+                                  <Github size={12} />
+                                  Code
+                                </a>
+                              )}
+                              {project.demo && (
+                                demoIsInternal ? (
+                                  <Link
+                                    to={project.demo}
+                                    className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-terminal-cyan hover:text-white transition-colors"
+                                  >
+                                    <ExternalLink size={12} />
+                                    Demo
+                                  </Link>
+                                ) : (
+                                  <a
+                                    href={project.demo}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-terminal-cyan hover:text-white transition-colors"
+                                  >
+                                    <ExternalLink size={12} />
+                                    Live
+                                  </a>
+                                )
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-          </section>
+          </TerminalSection>
 
           {/* SERVICES SECTION */}
-          <section id="services" className="space-y-6 scroll-mt-20">
-            <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
-              <span>// 04. SERVICES</span>
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {services.map((service) => (
-                <div
-                  key={service.title}
-                  className="bg-terminal-card border border-white/10 hover:border-terminal-green/30 p-5 md:p-6 rounded-xl transition-all flex flex-col justify-between"
-                >
-                  <div>
-                    <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-2.5 font-mono">
-                      {service.title}
-                    </h3>
-                    <p className="text-xs text-terminal-muted leading-relaxed mb-4 font-sans">
-                      {service.desc}
-                    </p>
-                  </div>
-                  <ul className="space-y-2 border-t border-white/5 pt-3.5">
-                    {service.features.map((feature) => (
-                      <li key={feature} className="text-xs text-terminal-cyan flex items-center gap-2 font-mono">
-                        <span className="w-1.5 h-1.5 bg-terminal-cyan rounded-full" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* ARTICLES SECTION */}
-          <section id="blog" className="space-y-6 scroll-mt-20">
-            <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
-              <span>// 05. ARTICLES</span>
-            </h2>
-            <div className="space-y-3.5">
-              {blogLoading ? (
-                <div className="text-xs text-terminal-cyan animate-pulse font-mono">
-                  {">"} Syncing with publication database...
-                </div>
-              ) : (
-                activePosts.map((post) => (
+          <TerminalSection id="services" command="visitor@derick-host: ~/services">
+            <div className="space-y-6">
+              <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+                <span>// 04. SERVICES</span>
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {services.map((service) => (
                   <div
-                    key={post.title}
-                    onClick={() => setSelectedBlogPost(post)}
-                    className="p-5 md:p-6 border border-white/10 rounded-xl bg-terminal-card hover:border-terminal-green/30 hover:bg-[#121622] transition-all group cursor-pointer"
+                    key={service.title}
+                    className="bg-[#08090E]/60 border border-white/10 hover:border-terminal-green/30 p-5 md:p-6 rounded-xl transition-all flex flex-col justify-between"
                   >
-                    <div className="flex justify-between text-[10px] text-terminal-cyan mb-2 font-mono font-bold uppercase tracking-wider">
-                      <span>{post.date}</span>
-                      <span>Transmitted Record</span>
+                    <div>
+                      <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-2.5 font-mono">
+                        {service.title}
+                      </h3>
+                      <p className="text-xs text-terminal-muted leading-relaxed mb-4 font-sans">
+                        {service.desc}
+                      </p>
                     </div>
-                    <h3 className="text-sm font-bold text-white mb-2 group-hover:text-terminal-green transition-colors flex items-center gap-1.5 font-sans">
-                      {post.title}
-                      <ExternalLink size={13} className="opacity-0 group-hover:opacity-100 transition-opacity text-terminal-muted" />
-                    </h3>
-                    <p className="text-xs text-terminal-text/75 line-clamp-2 leading-relaxed font-sans">
-                      {post.desc}
-                    </p>
+                    <ul className="space-y-2 border-t border-white/5 pt-3.5">
+                      {service.features.map((feature) => (
+                        <li key={feature} className="text-xs text-terminal-cyan flex items-center gap-2 font-mono">
+                          <span className="w-1.5 h-1.5 bg-terminal-cyan rounded-full" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                ))
-              )}
-            </div>
-          </section>
-
-          {/* TESTIMONIALS SECTION */}
-          <section id="testimonials" className="space-y-6 scroll-mt-20">
-            <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
-              <span>// 06. TESTIMONIALS</span>
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {testimonials.map((test, idx) => (
-                <div
-                  key={idx}
-                  className="bg-terminal-card border border-white/10 hover:border-terminal-green/30 p-5 md:p-6 rounded-xl text-xs flex flex-col justify-between transition-all"
-                >
-                  <p className="text-terminal-text/85 italic mb-4 leading-relaxed font-sans text-xs">
-                    "{test.text}"
-                  </p>
-                  <div className="flex items-center gap-3 border-t border-white/5 pt-3.5">
-                    <div className="w-8 h-8 rounded-full bg-terminal-green/10 border border-terminal-green/25 text-terminal-green font-bold text-xs flex items-center justify-center flex-shrink-0 font-mono">
-                      {test.initials}
-                    </div>
-                     <div className="min-w-0">
-                       <h3 className="font-bold text-white text-xs truncate font-sans">{test.name}</h3>
-                       <p className="text-[10px] text-terminal-cyan truncate font-mono">{test.role} @ {test.company}</p>
-                     </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* CONTACT SECTION */}
-          <section id="contact" className="space-y-6 scroll-mt-20">
-            <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
-              <span>// 07. CONTACT</span>
-            </h2>
-            <div className="w-full bg-terminal-card border border-white/10 p-6 md:p-8 rounded-xl relative overflow-hidden">
-              <div className="flex flex-col justify-center relative z-10 h-full max-w-2xl mx-auto">
-                <DecryptGame
-                  isUnlockedInitially={isContactUnlocked}
-                  onUnlocked={() => setIsContactUnlocked(true)}
-                />
+                ))}
               </div>
             </div>
-          </section>
+          </TerminalSection>
+
+          {/* ARTICLES SECTION */}
+          <TerminalSection id="blog" command="visitor@derick-host: ~/articles">
+            <div className="space-y-6">
+              <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+                <span>// 05. ARTICLES</span>
+              </h2>
+              <div className="space-y-3.5">
+                {blogLoading ? (
+                  <div className="text-xs text-terminal-cyan animate-pulse font-mono">
+                    {">"} Syncing with publication database...
+                  </div>
+                ) : (
+                  activePosts.map((post) => (
+                    <div
+                      key={post.title}
+                      onClick={() => setSelectedBlogPost(post)}
+                      className="p-5 md:p-6 border border-white/10 rounded-xl bg-[#08090E]/60 hover:border-terminal-green/30 hover:bg-[#121622] transition-all group cursor-pointer"
+                    >
+                      <div className="flex justify-between text-[10px] text-terminal-cyan mb-2 font-mono font-bold uppercase tracking-wider">
+                        <span>{post.date}</span>
+                        <span>Transmitted Record</span>
+                      </div>
+                      <h3 className="text-sm font-bold text-white mb-2 group-hover:text-terminal-green transition-colors flex items-center gap-1.5 font-sans">
+                        {post.title}
+                        <ExternalLink size={13} className="opacity-0 group-hover:opacity-100 transition-opacity text-terminal-muted" />
+                      </h3>
+                      <p className="text-xs text-terminal-text/75 line-clamp-2 leading-relaxed font-sans">
+                        {post.desc}
+                      </p>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          </TerminalSection>
+
+          {/* TESTIMONIALS SECTION */}
+          <TerminalSection id="testimonials" command="visitor@derick-host: ~/testimonials">
+            <div className="space-y-6">
+              <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+                <span>// 06. TESTIMONIALS</span>
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {testimonials.map((test, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-[#08090E]/60 border border-white/10 hover:border-terminal-green/30 p-5 md:p-6 rounded-xl text-xs flex flex-col justify-between transition-all"
+                  >
+                    <p className="text-terminal-text/85 italic mb-4 leading-relaxed font-sans text-xs">
+                      "{test.text}"
+                    </p>
+                    <div className="flex items-center gap-3 border-t border-white/5 pt-3.5">
+                      <div className="w-8 h-8 rounded-full bg-terminal-green/10 border border-terminal-green/25 text-terminal-green font-bold text-xs flex items-center justify-center flex-shrink-0 font-mono">
+                        {test.initials}
+                      </div>
+                       <div className="min-w-0">
+                         <h3 className="font-bold text-white text-xs truncate font-sans">{test.name}</h3>
+                         <p className="text-[10px] text-terminal-cyan truncate font-mono">{test.role} @ {test.company}</p>
+                       </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </TerminalSection>
+
+          {/* CONTACT SECTION */}
+          <TerminalSection id="contact" command="visitor@derick-host: ~/contact">
+            <div className="space-y-6">
+              <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+                <span>// 07. CONTACT</span>
+              </h2>
+              <div className="w-full relative overflow-hidden">
+                <div className="flex flex-col justify-center relative z-10 h-full max-w-2xl mx-auto">
+                  <DecryptGame
+                    isUnlockedInitially={isContactUnlocked}
+                    onUnlocked={() => setIsContactUnlocked(true)}
+                  />
+                </div>
+              </div>
+            </div>
+          </TerminalSection>
 
           {/* Footer */}
           <footer className="border-t border-terminal-green/10 pt-8 text-[10px] text-terminal-muted font-mono flex flex-col items-center gap-5 select-none pb-10">
