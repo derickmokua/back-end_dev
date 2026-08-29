@@ -30,6 +30,7 @@ export default function BlogModal({ post, onClose }) {
           </div>
           <button
             onClick={onClose}
+            aria-label="Close article modal"
             className="p-1 text-terminal-muted hover:text-white border border-terminal-green/10 rounded focus:outline-none"
           >
             <X size={16} />

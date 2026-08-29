@@ -73,6 +73,7 @@ export default function ArchitectureModal({ isOpen, onClose }) {
           </div>
           <button 
             onClick={onClose}
+            aria-label="Close architecture modal"
             className="text-terminal-muted hover:text-white transition-colors p-1"
             title="Close (Esc)"
           >
@@ -97,6 +98,7 @@ export default function ArchitectureModal({ isOpen, onClose }) {
               <button
                 key={step.id}
                 onClick={() => setActiveStep(idx)}
+                aria-label={`Inspect ${step.title}`}
                 className={`p-3 rounded-lg border text-left transition-all flex flex-col justify-between ${
                   activeStep === idx
                     ? 'bg-terminal-green/10 border-terminal-green text-white shadow-[0_0_15px_rgba(0,255,159,0.15)]'
@@ -132,7 +134,7 @@ export default function ArchitectureModal({ isOpen, onClose }) {
               </span>
             </div>
 
-            <p className="text-xs text-terminal-text/90 font-sans leading-relaxed">
+            <p className="text-xs text-terminal-text font-sans leading-relaxed">
               {pipeline[activeStep].summary}
             </p>
 
@@ -142,7 +144,7 @@ export default function ArchitectureModal({ isOpen, onClose }) {
               </div>
               <ul className="space-y-1.5">
                 {pipeline[activeStep].details.map((detail, idx) => (
-                  <li key={idx} className="text-xs text-terminal-text/80 flex items-start gap-2 font-sans">
+                  <li key={idx} className="text-xs text-terminal-text flex items-start gap-2 font-sans">
                     <ArrowRight size={13} className="text-terminal-green flex-shrink-0 mt-0.5" />
                     <span>{detail}</span>
                   </li>
@@ -157,6 +159,7 @@ export default function ArchitectureModal({ isOpen, onClose }) {
           <span>Target SLA: 99.95% Availability</span>
           <button
             onClick={onClose}
+            aria-label="Close architecture inspector"
             className="px-3 py-1 bg-terminal-green/10 hover:bg-terminal-green text-terminal-green hover:text-black font-bold uppercase rounded transition-colors"
           >
             Close Inspector

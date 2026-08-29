@@ -66,10 +66,12 @@ export default function InteractiveHeroCLI({ onCommandExecuted }) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Try typing 'help', 'skills', 'projects', or 'whoami'..."
+          aria-label="Terminal command prompt"
           className="w-full bg-transparent text-xs text-terminal-text placeholder-terminal-muted/50 focus:outline-none"
         />
         <button
           type="submit"
+          aria-label="Execute command"
           className="px-2 py-0.5 bg-terminal-green/10 hover:bg-terminal-green text-terminal-green hover:text-black rounded text-[10px] font-bold uppercase transition-colors flex items-center gap-1"
         >
           <CornerDownLeft size={11} />
@@ -84,6 +86,7 @@ export default function InteractiveHeroCLI({ onCommandExecuted }) {
           <button
             key={item}
             type="button"
+            aria-label={`Run ${item} command`}
             onClick={() => runQuick(item)}
             className="px-2 py-0.5 bg-white/5 hover:bg-terminal-green/10 border border-white/10 hover:border-terminal-green/30 text-terminal-text hover:text-terminal-green rounded transition-colors"
           >

@@ -164,6 +164,7 @@ export default function CommandPalette({ isOpen, onClose }) {
           </div>
           <button 
             onClick={onClose}
+            aria-label="Close command palette"
             className="text-terminal-muted hover:text-white transition-colors p-1"
             title="Close (Esc)"
           >
@@ -183,6 +184,7 @@ export default function CommandPalette({ isOpen, onClose }) {
               setSelectedIndex(0);
             }}
             placeholder="Type a command, section, or action..."
+            aria-label="Search commands, sections, and actions"
             className="w-full bg-transparent text-sm text-white placeholder-terminal-muted/60 focus:outline-none"
           />
           <kbd className="hidden sm:inline-block px-2 py-0.5 text-[10px] text-terminal-muted bg-white/5 border border-white/10 rounded">
