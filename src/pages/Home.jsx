@@ -9,7 +9,9 @@ import {
   X,
   ArrowUp,
   Activity,
-  Linkedin
+  Linkedin,
+  Smartphone,
+  Mail
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
