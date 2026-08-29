@@ -2,53 +2,55 @@ export const skills = [
   {
     category: "Backend Architecture",
     items: [
-      { name: 'Django / FastAPI', level: 95, icon: '⚡' },
-      { name: 'Rust', level: 75, icon: '🦀' },
-      { name: 'PostgreSQL', level: 90, icon: '🗄️' },
-      { name: 'Microservices', level: 85, icon: '🧩' }
+      { name: 'Django / FastAPI', level: 95 },
+      { name: 'Rust', level: 75 },
+      { name: 'PostgreSQL', level: 90 },
+      { name: 'Microservices', level: 85 }
     ]
   },
   {
-    category: "Security Moat",
+    category: "Security Engineering",
     items: [
-      { name: 'Zero-Trust Arch.', level: 88, icon: '🛡️' },
-      { name: 'System Hardening', level: 92, icon: '🏰' },
-      { name: 'AuthZ / OAuth2', level: 90, icon: '🔑' }
+      { name: 'Zero-Trust Architecture', level: 88 },
+      { name: 'System Hardening', level: 92 },
+      { name: 'AuthZ / OAuth2', level: 90 },
+      { name: 'Penetration Testing', level: 85 }
     ]
   },
   {
-    category: "AI Research",
+    category: "AI & Distributed Systems",
     items: [
-      { name: 'Gemini API', level: 95, icon: '✨' },
-      { name: 'Model Evaluation', level: 85, icon: '📊' },
-      { name: 'USSD-AI Gateways', level: 80, icon: '📱' },
-      { name: 'RAG Pipelines', level: 88, icon: '🧠' }
+      { name: 'Gemini API', level: 95 },
+      { name: 'RAG Pipelines', level: 88 },
+      { name: 'Model Evaluation', level: 85 },
+      { name: 'USSD-AI Gateways', level: 80 }
     ]
   }
 ];
 
 export const projects = [
   {
-    title: 'KukuConnect (Flagship)',
-    subtitle: 'Applied AI safety deployment',
-    desc: 'Case Study in Applied AI Safety. Mitigating hallucinations in veterinary diagnostics using Gemini API and RAG, secured by a Zero-Trust data pipeline.',
+    title: 'KukuConnect',
+    subtitle: 'Applied AI safety & farm telemetry platform',
+    desc: 'Case study in applied AI safety. Mitigating hallucinations in veterinary diagnostics using Gemini API and RAG, secured by an end-to-end Zero-Trust data pipeline.',
     tags: ['Gemini API', 'RAG', 'Zero-Trust', 'FastAPI', 'PostgreSQL'],
     status: 'Research Active',
     github: 'https://github.com/derickmokua/Kukuconnect-FMS',
     demo: null,
   },
   {
-    title: 'Saibae: A Study in Autonomous Agent Alignment',
-    desc: 'Technical exploration of constrained behavior and safe user-interaction design in autonomous agents.',
+    title: 'Saibae: Agent Alignment',
+    subtitle: 'Autonomous agent safety study',
+    desc: 'Technical exploration of constrained behavior and safe user-interaction design in autonomous generative agents.',
     tags: ['Python', 'Alignment Research', 'NLP'],
     status: 'Active',
     github: null,
-    // Live assistant on this site
     demo: '/chat',
   },
   {
     title: 'ALX Travel App',
-    desc: 'Robust booking and itinerary management system built for scalability.',
+    subtitle: 'Scalable booking platform',
+    desc: 'Robust booking and itinerary management system built with high-throughput database concurrency and reliability.',
     tags: ['Python', 'Django', 'PostgreSQL'],
     status: 'Production',
     github: 'https://github.com/derickmokua/alx_travel_app',
@@ -56,7 +58,8 @@ export const projects = [
   },
   {
     title: 'Poultry Management System',
-    desc: 'Farm operations backend for flock tracking, health records, and day-to-day poultry management.',
+    subtitle: 'Operational farm backend',
+    desc: 'Farm operations backend for flock tracking, health records, biosecurity logs, and automated SMS alerts.',
     tags: ['Python', 'Django', 'PostgreSQL'],
     status: 'Production',
     github: 'https://github.com/derickmokua/poultry_management_system',
@@ -67,21 +70,18 @@ export const projects = [
 export const services = [
   {
     title: 'Backend Architecture',
-    icon: '⚙️',
-    desc: 'Building robust, scalable server-side systems with Django, Rust, and FastAPI.',
+    desc: 'Building high-throughput, fault-tolerant server systems with Django, Rust, and FastAPI.',
     features: ['High-performance APIs', 'Microservices', 'Database Design']
   },
   {
     title: 'AI Safety & Integration',
-    icon: '🧠',
-    desc: 'Architecting secure, reliable integrations for frontier models.',
+    desc: 'Architecting secure, reliable integrations for frontier models with deterministic safeguards.',
     features: ['RAG Pipelines', 'Model Evaluation', 'Prompt Engineering']
   },
   {
     title: 'Security Engineering',
-    icon: '🛡️',
-    desc: 'Hardening digital infrastructure for high-stakes environments.',
-    features: ['Zero-Trust', 'Penetration Testing', 'Secure Audits']
+    desc: 'Hardening digital infrastructure and enforcing zero-trust perimeters for high-stakes systems.',
+    features: ['Zero-Trust', 'Security Audits', 'Vulnerability Assessments']
   }
 ];
 

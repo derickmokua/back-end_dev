@@ -191,10 +191,10 @@ export default function Home() {
             <div className="hidden md:flex gap-6 items-center text-xs font-bold uppercase tracking-wider">
               <a href="#about" onClick={(e) => scrollToSection(e, "#about")} className="hover:text-terminal-green transition-colors">About</a>
               <a href="#skills" onClick={(e) => scrollToSection(e, "#skills")} className="hover:text-terminal-green transition-colors">Skills</a>
-              <a href="#services" onClick={(e) => scrollToSection(e, "#services")} className="hover:text-terminal-cyan transition-colors">Services</a>
               <a href="#projects" onClick={(e) => scrollToSection(e, "#projects")} className="hover:text-terminal-green transition-colors">Projects</a>
-              <a href="#blog" onClick={(e) => scrollToSection(e, "#blog")} className="hover:text-terminal-cyan transition-colors">Articles</a>
-              <a href="#testimonials" onClick={(e) => scrollToSection(e, "#testimonials")} className="hover:text-terminal-green transition-colors">Signals</a>
+              <a href="#services" onClick={(e) => scrollToSection(e, "#services")} className="hover:text-terminal-green transition-colors">Services</a>
+              <a href="#blog" onClick={(e) => scrollToSection(e, "#blog")} className="hover:text-terminal-green transition-colors">Articles</a>
+              <a href="#testimonials" onClick={(e) => scrollToSection(e, "#testimonials")} className="hover:text-terminal-green transition-colors">Testimonials</a>
               <a href="#contact" onClick={(e) => scrollToSection(e, "#contact")} className="hover:text-terminal-green transition-colors">Contact</a>
               
               <a
@@ -233,17 +233,17 @@ export default function Home() {
             <div
               className="md:hidden w-full bg-terminal-card border-b border-terminal-green/25 p-6 flex flex-col gap-4 text-xs font-bold uppercase tracking-wider shadow-2xl animate-fade-slide-in"
             >
-              <a href="#about" onClick={(e) => scrollToSection(e, "#about")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-green">About</a>
-              <a href="#skills" onClick={(e) => scrollToSection(e, "#skills")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-green">Skills</a>
-              <a href="#services" onClick={(e) => scrollToSection(e, "#services")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-cyan">Services</a>
-              <a href="#projects" onClick={(e) => scrollToSection(e, "#projects")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-green">Projects</a>
-              <a href="#blog" onClick={(e) => scrollToSection(e, "#blog")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-cyan">Articles</a>
-              <a href="#testimonials" onClick={(e) => scrollToSection(e, "#testimonials")} className="py-2 border-b border-terminal-green/5 hover:text-terminal-green">Signals</a>
+              <a href="#about" onClick={(e) => scrollToSection(e, "#about")} className="py-2 border-b border-white/5 hover:text-terminal-green">About</a>
+              <a href="#skills" onClick={(e) => scrollToSection(e, "#skills")} className="py-2 border-b border-white/5 hover:text-terminal-green">Skills</a>
+              <a href="#projects" onClick={(e) => scrollToSection(e, "#projects")} className="py-2 border-b border-white/5 hover:text-terminal-green">Projects</a>
+              <a href="#services" onClick={(e) => scrollToSection(e, "#services")} className="py-2 border-b border-white/5 hover:text-terminal-green">Services</a>
+              <a href="#blog" onClick={(e) => scrollToSection(e, "#blog")} className="py-2 border-b border-white/5 hover:text-terminal-green">Articles</a>
+              <a href="#testimonials" onClick={(e) => scrollToSection(e, "#testimonials")} className="py-2 border-b border-white/5 hover:text-terminal-green">Testimonials</a>
               <a href="#contact" onClick={(e) => scrollToSection(e, "#contact")} className="py-2 hover:text-terminal-green font-bold">Contact</a>
               <Link
                 to="/chat"
                 onClick={() => setIsMenuOpen(false)}
-                className="py-2 border-t border-terminal-green/10 mt-1 text-terminal-cyan flex items-center gap-2 font-bold"
+                className="py-2 border-t border-white/10 mt-1 text-terminal-cyan flex items-center gap-2 font-bold"
               >
                 <Terminal size={14} /> Ruby AI Assistant
               </Link>
@@ -254,24 +254,22 @@ export default function Home() {
         {/* Main stacked sections */}
         <main className="max-w-4xl mx-auto px-6 pt-28 pb-20 space-y-24 md:space-y-32">
           
-          {/* HERO SECTION — eager TerminalSection so LCP text is not behind a lazy chunk */}
+          {/* HERO SECTION */}
           <TerminalSection command="visitor@derick-host: ~/sys/boot">
-            <div className="absolute top-0 -left-10 w-72 h-72 bg-terminal-green/5 rounded-full blur-3xl pointer-events-none" />
-
             <div className="space-y-6">
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-emerald-400 bg-emerald-500/10 rounded border border-emerald-500/30">
-                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping" />
-                Available for new projects
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 text-[10px] font-bold tracking-wider text-terminal-green bg-terminal-green/10 rounded-full border border-terminal-green/25 font-mono">
+                <span className="w-1.5 h-1.5 bg-terminal-green rounded-full animate-ping" />
+                AVAILABLE FOR NEW PROJECTS
               </div>
 
-              <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-white leading-tight">
+              <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-white leading-tight font-sans">
                 Backend Architect &{" "}
                 <span className="text-terminal-green">
                   AI Safety Researcher
                 </span>
               </h1>
 
-              <div className="flex items-center gap-2 text-terminal-muted text-xs sm:text-sm font-bold min-h-[22px] overflow-hidden">
+              <div className="flex items-center gap-2 text-terminal-muted text-xs sm:text-sm font-bold min-h-[22px] overflow-hidden font-mono">
                 <Terminal size={14} className="text-terminal-green flex-shrink-0" />
                 <span className="truncate">
                   {typedHero}
@@ -279,22 +277,22 @@ export default function Home() {
                 </span>
               </div>
 
-              <p className="max-w-2xl text-sm md:text-base text-terminal-text/80 leading-relaxed pl-4 border-l-2 border-terminal-green font-sans">
+              <p className="max-w-2xl text-sm md:text-base text-terminal-text/85 leading-relaxed font-sans">
                 I build secure, AI powered backend systems for teams across Africa and beyond turning complex ideas into reliable products that scale.
               </p>
 
-              <div className="flex flex-wrap gap-3 pt-4">
+              <div className="flex flex-wrap gap-3 pt-2">
                 <a
                   href="#contact"
                   onClick={(e) => scrollToSection(e, "#contact")}
-                  className="px-5 py-3 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold rounded text-xs uppercase tracking-wider transition-all hover:shadow-[0_0_15px_rgba(230,57,70,0.25)] flex items-center gap-2"
+                  className="px-5 py-3 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold rounded-lg text-xs uppercase tracking-wider transition-all flex items-center gap-2"
                 >
                   Get In Touch
                 </a>
                 <a
                   href="#projects"
                   onClick={(e) => scrollToSection(e, "#projects")}
-                  className="px-5 py-3 border border-terminal-green/30 hover:border-terminal-green hover:bg-terminal-green/5 text-terminal-green rounded text-xs uppercase tracking-wider transition-all flex items-center gap-2"
+                  className="px-5 py-3 border border-terminal-green/30 hover:border-terminal-green hover:bg-terminal-green/10 text-terminal-green rounded-lg text-xs uppercase tracking-wider transition-all flex items-center gap-2"
                 >
                   View My Work
                 </a>
@@ -304,10 +302,10 @@ export default function Home() {
 
           {/* ABOUT SECTION */}
           <section id="about" className="space-y-6 scroll-mt-20">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+            <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
               <span>// 01. ABOUT</span>
             </h2>
-            <div className="space-y-4 text-sm md:text-base text-terminal-text/90 leading-relaxed font-sans max-w-3xl">
+            <div className="space-y-4 text-sm md:text-base text-terminal-text/85 leading-relaxed font-sans max-w-3xl">
               <p>
                 I'm Derick Mokua a backend developer and AI engineer based in Nairobi, Kenya.
               </p>
@@ -322,17 +320,17 @@ export default function Home() {
 
           {/* SKILLS SECTION */}
           <section id="skills" className="space-y-6 scroll-mt-20">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
-              <span>// 02. TECHNICAL_ARSENAL</span>
+            <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+              <span>// 02. SKILLS</span>
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {skills.map((category) => (
                 <div 
                   key={category.category} 
-                  className="bg-terminal-card border border-white/5 hover:border-terminal-green/20 p-5 rounded-xl space-y-4 transition-all"
+                  className="bg-terminal-card border border-white/10 hover:border-terminal-green/30 p-5 rounded-xl space-y-4 transition-all"
                 >
                   <div className="flex items-center justify-between border-b border-white/5 pb-2.5">
-                    <h3 className="text-xs font-bold text-terminal-cyan uppercase tracking-wider">
+                    <h3 className="text-xs font-bold text-terminal-cyan uppercase tracking-wider font-mono">
                       {category.category}
                     </h3>
                     <span className="text-[10px] text-terminal-muted/60 font-mono">
@@ -343,10 +341,9 @@ export default function Home() {
                     {category.items.map((skill) => (
                       <span
                         key={skill.name}
-                        className="bg-[#08090E] border border-white/10 hover:border-terminal-green/30 text-terminal-text hover:text-terminal-green text-xs px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 font-sans"
+                        className="bg-[#08090E] border border-white/10 hover:border-terminal-green/30 text-terminal-text hover:text-terminal-green text-xs px-3 py-1.5 rounded-lg transition-colors font-sans font-medium"
                       >
-                        <span className="text-xs">{skill.icon}</span>
-                        <span className="font-medium">{skill.name}</span>
+                        {skill.name}
                       </span>
                     ))}
                   </div>
@@ -357,8 +354,8 @@ export default function Home() {
 
           {/* PROJECTS SECTION */}
           <section id="projects" className="space-y-6 scroll-mt-20">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
-              <span>// 03. SELECTED_WORKS</span>
+            <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+              <span>// 03. PROJECTS</span>
             </h2>
             <div className="space-y-5">
               {/* Flagship */}
@@ -487,28 +484,27 @@ export default function Home() {
 
           {/* SERVICES SECTION */}
           <section id="services" className="space-y-6 scroll-mt-20">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+            <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
               <span>// 04. SERVICES</span>
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {services.map((service) => (
                 <div
                   key={service.title}
-                  className="bg-terminal-card border border-white/5 hover:border-terminal-cyan/30 p-5 rounded-xl transition-all flex flex-col justify-between"
+                  className="bg-terminal-card border border-white/10 hover:border-terminal-green/30 p-5 md:p-6 rounded-xl transition-all flex flex-col justify-between"
                 >
                   <div>
-                    <div className="text-2xl mb-2">{service.icon}</div>
-                    <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-2">
+                    <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-2.5 font-mono">
                       {service.title}
                     </h3>
                     <p className="text-xs text-terminal-muted leading-relaxed mb-4 font-sans">
                       {service.desc}
                     </p>
                   </div>
-                  <ul className="space-y-1.5 border-t border-white/5 pt-3">
+                  <ul className="space-y-2 border-t border-white/5 pt-3.5">
                     {service.features.map((feature) => (
-                      <li key={feature} className="text-[10px] text-terminal-cyan flex items-center gap-1.5">
-                        <span className="w-1 h-1 bg-terminal-cyan rounded-full" />
+                      <li key={feature} className="text-xs text-terminal-cyan flex items-center gap-2 font-mono">
+                        <span className="w-1.5 h-1.5 bg-terminal-cyan rounded-full" />
                         {feature}
                       </li>
                     ))}
@@ -520,12 +516,12 @@ export default function Home() {
 
           {/* ARTICLES SECTION */}
           <section id="blog" className="space-y-6 scroll-mt-20">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+            <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
               <span>// 05. ARTICLES</span>
             </h2>
-            <div className="space-y-3">
+            <div className="space-y-3.5">
               {blogLoading ? (
-                <div className="text-xs text-terminal-cyan animate-pulse">
+                <div className="text-xs text-terminal-cyan animate-pulse font-mono">
                   {">"} Syncing with publication database...
                 </div>
               ) : (
@@ -533,13 +529,13 @@ export default function Home() {
                   <div
                     key={post.title}
                     onClick={() => setSelectedBlogPost(post)}
-                    className="p-5 border border-white/5 rounded-xl bg-terminal-card hover:border-terminal-cyan/30 hover:bg-[#121622] transition-all group cursor-pointer"
+                    className="p-5 md:p-6 border border-white/10 rounded-xl bg-terminal-card hover:border-terminal-green/30 hover:bg-[#121622] transition-all group cursor-pointer"
                   >
-                    <div className="flex justify-between text-[9px] text-terminal-cyan mb-1.5 font-bold uppercase tracking-wider">
+                    <div className="flex justify-between text-[10px] text-terminal-cyan mb-2 font-mono font-bold uppercase tracking-wider">
                       <span>{post.date}</span>
                       <span>Transmitted Record</span>
                     </div>
-                    <h3 className="text-sm font-bold text-white mb-1.5 group-hover:text-terminal-cyan transition-colors flex items-center gap-1.5">
+                    <h3 className="text-sm font-bold text-white mb-2 group-hover:text-terminal-green transition-colors flex items-center gap-1.5 font-sans">
                       {post.title}
                       <ExternalLink size={13} className="opacity-0 group-hover:opacity-100 transition-opacity text-terminal-muted" />
                     </h3>
@@ -554,25 +550,25 @@ export default function Home() {
 
           {/* TESTIMONIALS SECTION */}
           <section id="testimonials" className="space-y-6 scroll-mt-20">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+            <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
               <span>// 06. TESTIMONIALS</span>
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {testimonials.map((test, idx) => (
                 <div
                   key={idx}
-                  className="bg-terminal-card border border-white/5 p-5 rounded-xl text-xs flex flex-col justify-between"
+                  className="bg-terminal-card border border-white/10 hover:border-terminal-green/30 p-5 md:p-6 rounded-xl text-xs flex flex-col justify-between transition-all"
                 >
-                  <p className="text-terminal-text/85 italic mb-4 leading-relaxed font-sans">
+                  <p className="text-terminal-text/85 italic mb-4 leading-relaxed font-sans text-xs">
                     "{test.text}"
                   </p>
-                  <div className="flex items-center gap-2.5 border-t border-white/5 pt-3">
-                    <div className="w-8 h-8 rounded-full bg-terminal-green/10 border border-terminal-green/25 text-terminal-green font-bold text-xs flex items-center justify-center flex-shrink-0">
+                  <div className="flex items-center gap-3 border-t border-white/5 pt-3.5">
+                    <div className="w-8 h-8 rounded-full bg-terminal-green/10 border border-terminal-green/25 text-terminal-green font-bold text-xs flex items-center justify-center flex-shrink-0 font-mono">
                       {test.initials}
                     </div>
                      <div className="min-w-0">
-                       <h3 className="font-bold text-white text-xs truncate">{test.name}</h3>
-                       <p className="text-[10px] text-terminal-cyan truncate">{test.role} @ {test.company}</p>
+                       <h3 className="font-bold text-white text-xs truncate font-sans">{test.name}</h3>
+                       <p className="text-[10px] text-terminal-cyan truncate font-mono">{test.role} @ {test.company}</p>
                      </div>
                   </div>
                 </div>
@@ -582,7 +578,7 @@ export default function Home() {
 
           {/* CONTACT SECTION */}
           <section id="contact" className="space-y-6 scroll-mt-20">
-            <h2 className="text-xs font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
+            <h2 className="text-xs font-mono font-bold tracking-widest text-terminal-green uppercase flex items-center gap-2">
               <span>// 07. CONTACT</span>
             </h2>
             <div className="w-full bg-terminal-card border border-white/10 p-6 md:p-8 rounded-xl relative overflow-hidden">
