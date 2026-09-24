@@ -56,8 +56,8 @@ export default function InteractiveHeroCLI({ onCommandExecuted }) {
   return (
     <div className="pt-2 space-y-3 font-mono">
       {/* CLI Input form */}
-      <form onSubmit={handleCommand} className="flex items-center gap-2 bg-[#08090E] border border-terminal-green/25 rounded-lg px-3 py-2 text-xs text-white">
-        <span className="text-terminal-green flex items-center gap-1 font-bold">
+      <form onSubmit={handleCommand} className="flex items-center gap-2 bg-[#202020] border border-[#343434] focus-within:border-[#FF3B45] rounded-lg px-3 py-2 text-xs text-white transition-colors">
+        <span className="text-[#FF3B45] flex items-center gap-1 font-bold">
           <Terminal size={13} />
           <span>$</span>
         </span>
@@ -67,12 +67,12 @@ export default function InteractiveHeroCLI({ onCommandExecuted }) {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Try typing 'help', 'skills', 'projects', or 'whoami'..."
           aria-label="Terminal command prompt"
-          className="w-full bg-transparent text-xs text-terminal-text placeholder-terminal-muted/50 focus:outline-none"
+          className="w-full bg-transparent text-xs text-[#F5F5F3] placeholder-[#A4A4A0]/50 focus:outline-none"
         />
         <button
           type="submit"
           aria-label="Execute command"
-          className="px-2 py-0.5 bg-terminal-green/10 hover:bg-terminal-green text-terminal-green hover:text-black rounded text-[10px] font-bold uppercase transition-colors flex items-center gap-1"
+          className="px-2.5 py-1 bg-[#FF3B45]/10 hover:bg-[#FF3B45] text-[#FF3B45] hover:text-white rounded text-[10px] font-bold uppercase transition-colors flex items-center gap-1 border border-[#FF3B45]/20"
         >
           <CornerDownLeft size={11} />
           <span className="hidden sm:inline">Exec</span>
@@ -80,15 +80,15 @@ export default function InteractiveHeroCLI({ onCommandExecuted }) {
       </form>
 
       {/* Quick click suggestions */}
-      <div className="flex flex-wrap items-center gap-2 text-[10px] text-terminal-muted select-none">
-        <span className="text-terminal-green/70">Quick Commands:</span>
+      <div className="flex flex-wrap items-center gap-2 text-[10px] text-[#A4A4A0] select-none">
+        <span className="text-[#A4A4A0]">Quick Commands:</span>
         {['whoami', 'skills', 'projects', 'uptime'].map((item) => (
           <button
             key={item}
             type="button"
             aria-label={`Run ${item} command`}
             onClick={() => runQuick(item)}
-            className="px-2 py-0.5 bg-white/5 hover:bg-terminal-green/10 border border-white/10 hover:border-terminal-green/30 text-terminal-text hover:text-terminal-green rounded transition-colors"
+            className="px-2 py-0.5 bg-[#202020] hover:bg-[#FF3B45]/10 border border-[#343434] hover:border-[#FF3B45]/40 text-[#A4A4A0] hover:text-[#F5F5F3] rounded transition-colors"
           >
             {item}
           </button>
@@ -97,8 +97,8 @@ export default function InteractiveHeroCLI({ onCommandExecuted }) {
 
       {/* Output Console Box */}
       {output && (
-        <div className="p-3 bg-[#08090E] border-l-2 border-terminal-green rounded-r-lg text-xs text-terminal-cyan leading-relaxed animate-fade-in">
-          <span className="text-terminal-green font-bold mr-2">&gt;&gt;</span>
+        <div className="p-3 bg-[#202020] border-l-2 border-[#FF3B45] border-t border-r border-b border-[#343434] rounded-r-lg text-xs text-[#F5F5F3] leading-relaxed animate-fade-in">
+          <span className="text-[#FF3B45] font-bold mr-2">&gt;&gt;</span>
           {output}
         </div>
       )}

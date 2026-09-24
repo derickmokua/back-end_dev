@@ -103,6 +103,11 @@ export default defineConfig(({ mode }) => {
       },
     ],
     base: '/',
+    resolve: {
+      alias: {
+        '@': resolve(__dirname, './src'),
+      },
+    },
     define: {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
     },

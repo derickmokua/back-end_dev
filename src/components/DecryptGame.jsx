@@ -35,15 +35,15 @@ export default function DecryptGame({ isUnlockedInitially, onUnlocked }) {
 
   if (stage === "loading") {
     return (
-      <div className="bg-black/70 border border-terminal-cyan/25 rounded-lg p-10 md:p-12 flex flex-col justify-center items-center gap-5 min-h-[220px]">
-        <div className="w-12 h-12 rounded-full border-2 border-terminal-cyan/30 border-t-terminal-cyan animate-spin" />
+      <div className="bg-[#202020] border border-[#343434] rounded-xl p-8 md:p-10 flex flex-col justify-center items-center gap-5 min-h-[200px]">
+        <div className="w-10 h-10 rounded-full border-2 border-[#343434] border-t-[#FF3B45] animate-spin" />
         <div className="text-center space-y-1">
-          <p className="font-semibold text-white text-base">Getting things ready…</p>
-          <p className="text-sm text-terminal-cyan">{progress}%</p>
+          <p className="font-semibold text-white text-sm font-sans">Connecting channels…</p>
+          <p className="text-xs text-[#FF3B45] font-mono font-bold">{progress}%</p>
         </div>
-        <div className="w-full max-w-xs bg-black border border-terminal-cyan/20 h-2 rounded overflow-hidden">
+        <div className="w-full max-w-xs bg-[#181818] border border-[#343434] h-1.5 rounded-full overflow-hidden">
           <div
-            className="bg-terminal-cyan h-full rounded transition-all duration-100"
+            className="bg-[#FF3B45] h-full rounded-full transition-all duration-100"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -52,27 +52,27 @@ export default function DecryptGame({ isUnlockedInitially, onUnlocked }) {
   }
 
   return (
-    <div className="bg-black/50 border border-terminal-green/25 rounded-lg p-8 md:p-10 flex flex-col gap-6">
-      <p className="text-terminal-text/75 leading-relaxed text-sm md:text-base font-sans text-center md:text-left">
+    <div className="bg-[#202020] border border-[#343434] rounded-xl p-6 md:p-8 flex flex-col gap-6">
+      <p className="text-[#A4A4A0] leading-relaxed text-sm font-sans">
         WhatsApp is usually fastest. Email works great too.
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
         <a
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="px-6 py-4 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold rounded-lg text-base transition-all hover:shadow-[0_0_18px_rgba(0,255,159,0.35)] flex items-center justify-center gap-2.5"
+          className="px-5 py-3.5 bg-[#FF3B45] hover:bg-[#E62A34] text-white font-bold rounded-lg text-sm transition-all shadow-lg shadow-[#FF3B45]/20 hover:shadow-[#FF3B45]/35 flex items-center justify-center gap-2.5 font-sans"
         >
-          <WhatsAppIcon size={18} />
-          WhatsApp
+          <WhatsAppIcon size={17} />
+          WhatsApp Direct
         </a>
         <a
           href={`mailto:${EMAIL}`}
-          className="px-6 py-4 border border-terminal-green/40 hover:border-terminal-green hover:bg-terminal-green/10 text-terminal-green font-bold rounded-lg text-base transition-all flex items-center justify-center gap-2.5"
+          className="px-5 py-3.5 bg-[#181818] hover:bg-[#252525] border border-[#343434] hover:border-[#FF3B45] text-white font-bold rounded-lg text-sm transition-all flex items-center justify-center gap-2.5 font-sans"
         >
-          <Mail size={18} />
-          Email
+          <Mail size={17} className="text-[#FF3B45]" />
+          Email Directly
         </a>
       </div>
     </div>

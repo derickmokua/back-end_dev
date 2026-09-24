@@ -6,9 +6,6 @@ import { marked } from "marked";
 import DOMPurify from "dompurify";
 import BirthdayAnimation from "../components/effects/BirthdayAnimation";
 
-import MatrixRain from "../components/MatrixRain";
-import TerminalSection from "../components/TerminalSection";
-
 const INITIAL_MESSAGE = {
   id: 1,
   text: "Connection established. I am **Ruby**, Derick's AI security & architecture proxy. Query me regarding his work in **Backend Architecture**, **Zero-Trust APIs**, or **LLM Safety**.",
@@ -61,7 +58,7 @@ export default function ChatPage() {
       setTimeout(() => {
         const botMsg = {
           id: Date.now() + 1,
-          text: "**Initializing protocol: CAKE_DAY** 🎂\n\nCommencing gold confetti payload... **Happy Birthday, Derick!** Wishing you a secure, high-performance year ahead! 🚀",
+          text: "**Initializing protocol: CAKE_DAY** 🎂\n\nCommencing celebration payload... **Happy Birthday, Derick!** Wishing you a secure, high-performance year ahead! 🚀",
           sender: "bot",
           timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         };
@@ -127,147 +124,144 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="min-h-screen bg-terminal-bg text-terminal-text font-mono flex flex-col selection:bg-terminal-green selection:text-black relative">
-      <MatrixRain />
+    <div className="min-h-screen bg-[#181818] text-[#F5F5F3] font-mono flex flex-col relative selection:bg-[#FF3B45] selection:text-white">
       <div className="relative z-10 flex-1 flex flex-col p-4 md:p-8 max-w-5xl mx-auto w-full">
-        <TerminalSection id="chat" command="visitor@derick-host: ~/secure-comms">
-          <div className="flex flex-col h-[85vh] -mx-6 md:-mx-8 -my-6 md:-my-8 bg-[#08090E]/90">
-            {/* Header */}
-            <header className="bg-[#05060A]/95 backdrop-blur-md border-b border-terminal-green/20 p-4 sticky top-0 z-10 select-none shadow-lg rounded-t-lg">
-              <div className="max-w-4xl mx-auto flex items-center justify-between">
-                <Link
-                  to="/"
-                  className="flex items-center gap-2 text-terminal-muted hover:text-terminal-green transition-colors text-xs font-bold uppercase tracking-wider"
-                >
-                  <ArrowLeft size={16} />
-                  <span>Return to base</span>
-                </Link>
-                
-                <div className="flex items-center gap-3">
-                  <div className="relative">
-                    <div className="w-9 h-9 rounded-full bg-terminal-green/10 border border-terminal-green/30 flex items-center justify-center text-terminal-green shadow-[0_0_12px_rgba(0,255,159,0.25)]">
-                      <Bot size={20} />
-                    </div>
-                    <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-terminal-green border-2 border-terminal-bg rounded-full animate-pulse" />
-                  </div>
-                  <div>
-                    <h1 className="font-bold text-white text-sm leading-none flex items-center gap-1.5">
-                      <span>RUBY_AI v1.5</span>
-                      <ShieldCheck size={14} className="text-terminal-green" />
-                    </h1>
-                    <p className="text-[9px] text-terminal-green font-mono tracking-wider uppercase mt-1 flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 bg-terminal-green rounded-full animate-ping" />
-                      SECURE_ZERO_TRUST_CHANNEL
-                    </p>
-                  </div>
-                </div>
-                
-                <button
-                  onClick={handleResetChat}
-                  className="p-1.5 text-terminal-muted hover:text-terminal-cyan transition-colors text-xs flex items-center gap-1.5 focus:outline-none"
-                  title="Clear chat"
-                >
-                  <Trash2 size={15} />
-                  <span className="hidden sm:inline text-[10px] font-bold uppercase">Reset</span>
-                </button>
-              </div>
-            </header>
-
-            {/* Main chat viewport */}
-            <main className="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 flex flex-col justify-between overflow-hidden">
-              {/* Messages scroll list */}
-              <div
-                ref={containerRef}
-                className="flex-1 overflow-y-auto space-y-4 pb-4 scrollbar-thin scrollbar-thumb-terminal-green/20"
+        <div className="w-full bg-[#202020] border border-[#343434] rounded-2xl shadow-2xl flex flex-col h-[88vh] overflow-hidden">
+          {/* Header */}
+          <header className="bg-[#202020] border-b border-[#343434] p-4 sticky top-0 z-10 select-none flex-shrink-0">
+            <div className="flex items-center justify-between">
+              <Link
+                to="/"
+                className="flex items-center gap-2 text-[#A4A4A0] hover:text-[#FF3B45] transition-colors text-xs font-bold uppercase tracking-wider"
               >
-                {messages.map((msg) => (
-                  <div
-                    key={msg.id}
-                    className={`flex items-start gap-3 ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
-                  >
-                    {msg.sender === "bot" && (
-                      <div className="w-7 h-7 rounded-full bg-terminal-green/10 border border-terminal-green/30 flex items-center justify-center text-terminal-green flex-shrink-0 mt-0.5 shadow-[0_0_8px_rgba(0,255,159,0.2)]">
-                        <Bot size={14} />
-                      </div>
-                    )}
-
-                    <div className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"} max-w-[85%] md:max-w-[75%]`}>
-                      <div
-                        className={`px-4 py-3 rounded-lg text-xs md:text-sm leading-relaxed shadow-lg ${
-                          msg.sender === "user"
-                            ? "bg-terminal-green/15 border border-terminal-green/40 text-terminal-text rounded-tr-none font-sans"
-                            : "bg-[#0F121A] border-l-2 border-l-terminal-green border-y border-r border-terminal-green/20 text-slate-100 rounded-tl-none font-sans"
-                        }`}
-                      >
-                        {renderMessageContent(msg.text)}
-                      </div>
-                      <span className="text-[10px] text-terminal-muted/50 mt-1.5 px-1">{msg.timestamp}</span>
-                    </div>
-
-                    {msg.sender === "user" && (
-                      <div className="w-7 h-7 rounded-full bg-terminal-cyan/10 border border-terminal-cyan/30 flex items-center justify-center text-terminal-cyan flex-shrink-0 mt-0.5 shadow-[0_0_8px_rgba(0,229,255,0.2)]">
-                        <User size={14} />
-                      </div>
-                    )}
+                <ArrowLeft size={16} />
+                <span>Return to Portfolio</span>
+              </Link>
+              
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <div className="w-9 h-9 rounded-full bg-[#FF3B45]/10 border border-[#FF3B45]/30 flex items-center justify-center text-[#FF3B45]">
+                    <Bot size={18} />
                   </div>
-                ))}
+                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-[#FF3B45] border-2 border-[#202020] rounded-full animate-pulse" />
+                </div>
+                <div>
+                  <h1 className="font-bold text-white text-sm leading-none flex items-center gap-1.5 font-sans">
+                    <span>RUBY_AI v1.5</span>
+                    <ShieldCheck size={14} className="text-[#FF3B45]" />
+                  </h1>
+                  <p className="text-[10px] text-[#A4A4A0] font-mono tracking-wider uppercase mt-1 flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 bg-[#FF3B45] rounded-full animate-ping" />
+                    ZERO_TRUST_CHANNEL // NAIROBI
+                  </p>
+                </div>
+              </div>
+              
+              <button
+                onClick={handleResetChat}
+                className="p-1.5 text-[#A4A4A0] hover:text-white border border-[#343434] rounded-lg hover:border-[#FF3B45] transition-colors text-xs flex items-center gap-1.5 focus:outline-none"
+                title="Clear chat"
+              >
+                <Trash2 size={14} />
+                <span className="hidden sm:inline text-[10px] font-bold uppercase">Reset</span>
+              </button>
+            </div>
+          </header>
 
-                {isTyping && (
-                  <div className="flex items-center gap-3 justify-start">
-                    <div className="w-7 h-7 rounded-full bg-terminal-green/10 border border-terminal-green/30 flex items-center justify-center text-terminal-green flex-shrink-0">
+          {/* Main chat viewport */}
+          <main className="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 flex flex-col justify-between overflow-hidden">
+            {/* Messages scroll list */}
+            <div
+              ref={containerRef}
+              className="flex-1 overflow-y-auto space-y-4 pb-4"
+            >
+              {messages.map((msg) => (
+                <div
+                  key={msg.id}
+                  className={`flex items-start gap-3 ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+                >
+                  {msg.sender === "bot" && (
+                    <div className="w-7 h-7 rounded-full bg-[#FF3B45]/10 border border-[#FF3B45]/30 flex items-center justify-center text-[#FF3B45] flex-shrink-0 mt-0.5">
                       <Bot size={14} />
                     </div>
-                    <div className="bg-[#0F121A] border border-terminal-cyan/25 px-4 py-3 rounded-lg text-xs text-terminal-cyan flex items-center gap-2">
-                      <Loader2 size={13} className="animate-spin text-terminal-cyan" />
-                      <span>Ruby is synthesizing analysis...</span>
+                  )}
+
+                  <div className={`flex flex-col ${msg.sender === "user" ? "items-end" : "items-start"} max-w-[85%] md:max-w-[75%]`}>
+                    <div
+                      className={`px-4 py-3 rounded-xl text-xs md:text-sm leading-relaxed shadow-lg ${
+                        msg.sender === "user"
+                          ? "bg-[#FF3B45]/15 border border-[#FF3B45]/40 text-[#F5F5F3] rounded-tr-none font-sans"
+                          : "bg-[#181818] border-l-2 border-l-[#FF3B45] border-y border-r border-[#343434] text-[#F5F5F3] rounded-tl-none font-sans"
+                      }`}
+                    >
+                      {renderMessageContent(msg.text)}
                     </div>
+                    <span className="text-[10px] text-[#A4A4A0]/60 mt-1.5 px-1">{msg.timestamp}</span>
                   </div>
-                )}
-              </div>
 
-              {/* Quick Suggestion Chips */}
-              <div className="py-2.5 flex flex-wrap gap-2 select-none">
-                {SUGGESTIONS.map((item) => (
-                  <button
-                    key={item.label}
-                    onClick={() => sendQuery(item.query)}
-                    disabled={isTyping}
-                    className="px-3 py-1.5 border border-terminal-cyan/25 hover:border-terminal-cyan hover:bg-terminal-cyan/10 text-terminal-cyan bg-[#0F121A] rounded-full text-xs transition-all flex items-center gap-1.5 disabled:opacity-50"
-                  >
-                    <Zap size={11} className="text-terminal-cyan" />
-                    <span>{item.label}</span>
-                  </button>
-                ))}
-              </div>
+                  {msg.sender === "user" && (
+                    <div className="w-7 h-7 rounded-full bg-[#181818] border border-[#343434] flex items-center justify-center text-[#A4A4A0] flex-shrink-0 mt-0.5">
+                      <User size={14} />
+                    </div>
+                  )}
+                </div>
+              ))}
 
-              {/* Input box */}
-              <form onSubmit={handleSendMessage} className="bg-[#0F121A] border border-terminal-green/25 focus-within:border-terminal-green/60 rounded-lg p-3 md:p-3.5 flex items-center gap-3 transition-all duration-200 glow-border-green">
-                <span className="text-terminal-green font-bold text-sm md:text-base select-none pl-1">&gt;_</span>
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  placeholder="Ask a technical or architecture question..."
-                  className="flex-1 bg-transparent border-none outline-none focus:ring-0 p-0 text-white placeholder:text-terminal-muted/40 text-xs md:text-sm font-mono"
-                  maxLength={250}
-                />
+              {isTyping && (
+                <div className="flex items-center gap-3 justify-start">
+                  <div className="w-7 h-7 rounded-full bg-[#FF3B45]/10 border border-[#FF3B45]/30 flex items-center justify-center text-[#FF3B45] flex-shrink-0">
+                    <Bot size={14} />
+                  </div>
+                  <div className="bg-[#181818] border border-[#343434] px-4 py-3 rounded-xl text-xs text-[#FF3B45] flex items-center gap-2">
+                    <Loader2 size={13} className="animate-spin text-[#FF3B45]" />
+                    <span>Ruby is synthesizing analysis...</span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Quick Suggestion Chips */}
+            <div className="py-2.5 flex flex-wrap gap-2 select-none">
+              {SUGGESTIONS.map((item) => (
                 <button
-                  type="submit"
-                  disabled={isTyping || !inputValue.trim()}
-                  className="px-4 py-2 bg-terminal-green hover:bg-terminal-green/90 text-black font-bold uppercase rounded text-xs transition-all disabled:bg-terminal-green/10 disabled:text-terminal-green/30 disabled:cursor-not-allowed flex items-center gap-1.5 focus:outline-none shadow-[0_0_10px_rgba(0,255,159,0.3)]"
+                  key={item.label}
+                  onClick={() => sendQuery(item.query)}
+                  disabled={isTyping}
+                  className="px-3 py-1.5 border border-[#343434] hover:border-[#FF3B45] hover:bg-[#FF3B45]/10 text-[#A4A4A0] hover:text-white bg-[#181818] rounded-full text-xs transition-all flex items-center gap-1.5 disabled:opacity-50"
                 >
-                  <Send size={12} />
-                  <span>Send</span>
+                  <Zap size={11} className="text-[#FF3B45]" />
+                  <span>{item.label}</span>
                 </button>
-              </form>
-            </main>
+              ))}
+            </div>
 
-            {showChatConfetti && (
-              <BirthdayAnimation onComplete={() => setShowChatConfetti(false)} HUDEnabled={false} />
-            )}
-          </div>
-        </TerminalSection>
+            {/* Input box */}
+            <form onSubmit={handleSendMessage} className="bg-[#181818] border border-[#343434] focus-within:border-[#FF3B45] rounded-xl p-3 md:p-3.5 flex items-center gap-3 transition-all duration-200">
+              <span className="text-[#FF3B45] font-bold text-sm md:text-base select-none pl-1">&gt;_</span>
+              <input
+                ref={inputRef}
+                type="text"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                placeholder="Ask a technical or architecture question..."
+                className="flex-1 bg-transparent border-none outline-none focus:ring-0 p-0 text-white placeholder:text-[#A4A4A0]/40 text-xs md:text-sm font-mono"
+                maxLength={250}
+              />
+              <button
+                type="submit"
+                disabled={isTyping || !inputValue.trim()}
+                className="px-4 py-2 bg-[#FF3B45] hover:bg-[#E62A34] text-white font-bold uppercase rounded-lg text-xs transition-all disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-1.5 focus:outline-none shadow-md"
+              >
+                <Send size={12} />
+                <span>Send</span>
+              </button>
+            </form>
+          </main>
+
+          {showChatConfetti && (
+            <BirthdayAnimation onComplete={() => setShowChatConfetti(false)} HUDEnabled={false} />
+          )}
+        </div>
       </div>
     </div>
   );

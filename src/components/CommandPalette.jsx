@@ -150,31 +150,31 @@ export default function CommandPalette({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-black/75 backdrop-blur-sm animate-fade-in">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-black/80 backdrop-blur-sm animate-fade-in">
       <div 
-        className="w-full max-w-xl bg-terminal-card border border-terminal-green/30 rounded-xl shadow-2xl overflow-hidden animate-fade-slide-in flex flex-col font-mono"
+        className="w-full max-w-xl bg-[#181818] border border-[#343434] rounded-xl shadow-2xl overflow-hidden animate-fade-slide-in flex flex-col font-mono"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Bar */}
-        <div className="h-9 bg-[#08090E] border-b border-terminal-green/15 flex items-center justify-between px-4">
+        <div className="h-10 bg-[#202020] border-b border-[#343434] flex items-center justify-between px-4">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] text-terminal-green font-bold uppercase tracking-widest">
+            <span className="text-[10px] text-[#FF3B45] font-bold uppercase tracking-widest">
               COMMAND_PALETTE // CTRL+K
             </span>
           </div>
           <button 
             onClick={onClose}
             aria-label="Close command palette"
-            className="text-terminal-muted hover:text-white transition-colors p-1"
+            className="text-[#A4A4A0] hover:text-white transition-colors p-1"
             title="Close (Esc)"
           >
-            <X size={14} />
+            <X size={15} />
           </button>
         </div>
 
         {/* Input */}
-        <div className="p-3 border-b border-white/10 flex items-center gap-3 bg-[#08090E]/50">
-          <Search size={16} className="text-terminal-green flex-shrink-0" />
+        <div className="p-3 border-b border-[#343434] flex items-center gap-3 bg-[#181818]">
+          <Search size={16} className="text-[#FF3B45] flex-shrink-0" />
           <input
             ref={inputRef}
             type="text"
@@ -185,17 +185,17 @@ export default function CommandPalette({ isOpen, onClose }) {
             }}
             placeholder="Type a command, section, or action..."
             aria-label="Search commands, sections, and actions"
-            className="w-full bg-transparent text-sm text-white placeholder-terminal-muted/60 focus:outline-none"
+            className="w-full bg-transparent text-sm text-[#F5F5F3] placeholder-[#A4A4A0]/60 focus:outline-none"
           />
-          <kbd className="hidden sm:inline-block px-2 py-0.5 text-[10px] text-terminal-muted bg-white/5 border border-white/10 rounded">
+          <kbd className="hidden sm:inline-block px-2 py-0.5 text-[10px] text-[#A4A4A0] bg-[#202020] border border-[#343434] rounded">
             ESC
           </kbd>
         </div>
 
         {/* Results List */}
-        <div className="max-h-80 overflow-y-auto p-2 space-y-1 custom-scrollbar">
+        <div className="max-h-80 overflow-y-auto p-2 space-y-1">
           {filteredCommands.length === 0 ? (
-            <div className="py-8 text-center text-xs text-terminal-muted">
+            <div className="py-8 text-center text-xs text-[#A4A4A0]">
               No matching commands found.
             </div>
           ) : (
@@ -206,17 +206,17 @@ export default function CommandPalette({ isOpen, onClose }) {
                 onMouseEnter={() => setSelectedIndex(idx)}
                 className={`w-full px-3 py-2.5 rounded-lg text-left flex items-center justify-between transition-colors text-xs ${
                   selectedIndex === idx
-                    ? 'bg-terminal-green/15 text-white border border-terminal-green/30'
-                    : 'text-terminal-text/80 hover:bg-white/5 border border-transparent'
+                    ? 'bg-[#FF3B45]/10 text-white border border-[#FF3B45]/30'
+                    : 'text-[#F5F5F3]/80 hover:bg-[#202020] border border-transparent'
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-5 h-5 rounded flex items-center justify-center bg-[#08090E]">
+                  <div className="w-6 h-6 rounded flex items-center justify-center bg-[#202020] border border-[#343434]">
                     {cmd.icon}
                   </div>
                   <span className="font-medium font-sans text-xs">{cmd.label}</span>
                 </div>
-                <span className="text-[9px] text-terminal-muted/70 uppercase tracking-wide">
+                <span className="text-[10px] text-[#A4A4A0] uppercase tracking-wide font-mono">
                   {cmd.category}
                 </span>
               </button>
@@ -225,12 +225,12 @@ export default function CommandPalette({ isOpen, onClose }) {
         </div>
 
         {/* Footer info */}
-        <div className="px-4 py-2 border-t border-white/5 bg-[#08090E] flex items-center justify-between text-[10px] text-terminal-muted">
+        <div className="px-4 py-2.5 border-t border-[#343434] bg-[#202020] flex items-center justify-between text-[10px] text-[#A4A4A0]">
           <div className="flex items-center gap-2">
-            <span>Navigate: <kbd className="px-1 bg-white/5 rounded">↑</kbd> <kbd className="px-1 bg-white/5 rounded">↓</kbd></span>
-            <span>Select: <kbd className="px-1 bg-white/5 rounded">↵</kbd></span>
+            <span>Navigate: <kbd className="px-1.5 py-0.5 bg-[#181818] border border-[#343434] rounded">↑</kbd> <kbd className="px-1.5 py-0.5 bg-[#181818] border border-[#343434] rounded">↓</kbd></span>
+            <span>Select: <kbd className="px-1.5 py-0.5 bg-[#181818] border border-[#343434] rounded">↵</kbd></span>
           </div>
-          <span>Derick Mokua // Portfolio</span>
+          <span className="text-[#A4A4A0]">Derick Mokua // Nairobi, KE</span>
         </div>
       </div>
     </div>

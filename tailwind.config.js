@@ -5,29 +5,33 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+        hand: ['Caveat', 'cursive'],
+      },
       colors: {
-        gold: {
-          50: '#fff9e6',
-          100: '#ffedb3',
-          200: '#ffe080',
-          300: '#ffd44d',
-          400: '#ffc71a',
-          500: '#e6b000', // Main gold
-          600: '#b38900',
-          700: '#806200',
-          800: '#4d3b00',
-          900: '#1a1400',
+        bg: '#181818',
+        panel: '#202020',
+        panelHover: '#252525',
+        line: '#343434',
+        fg: '#F5F5F3',
+        mut: '#A4A4A0',
+        acc: {
+          DEFAULT: '#FF3B45',
+          light: '#FF6870',
+          bg: 'rgba(255, 59, 69, 0.12)',
         },
         terminal: {
-          bg: '#08090E',
-          card: '#0F121A',
-          cardHover: '#161B26',
-          green: '#00FF9F', // Neon Cyber Emerald (Primary CTA, terminal prompts, online status)
-          cyan: '#00E5FF',  // Electric Cyber Cyan (Secondary accents, links, articles)
-          red: '#FF3B56',   // Vivid Crimson Security Red (Alerts, security tags)
-          amber: '#FFB800', // Terminal Gold
-          text: '#F1F5F9',  // High-contrast readable body text
-          muted: '#CBD5E1', // High-contrast readable secondary text (passes WCAG AAA > 7:1)
+          bg: '#181818',
+          card: '#202020',
+          cardHover: '#252525',
+          green: '#FF3B45', // Primary Accent Red
+          cyan: '#FF6870',  // Secondary Accent
+          red: '#FF3B45',
+          amber: '#FFB800',
+          text: '#F5F5F3',  // Primary Text
+          muted: '#A4A4A0', // Muted Text
         }
       },
     },
