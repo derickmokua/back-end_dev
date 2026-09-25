@@ -137,7 +137,7 @@ export default function RubyChatbot({ visible = true, onOpenChange }) {
             onClick={() => setIsOpen(true)}
             aria-label="Open Ruby AI chat"
             title="Chat with Ruby AI"
-            className="fixed bottom-20 right-5 z-50 w-14 h-14 rounded-full bg-transparent hover:bg-[#ff2830]/10 active:scale-95 transition-all duration-200 shadow-none hover:shadow-[0_8px_28px_rgba(255,40,48,0.30)] flex items-center justify-center select-none"
+            className="fixed bottom-6 right-5 sm:right-6 z-50 w-14 h-14 rounded-full bg-transparent hover:bg-[#ff2830]/10 active:scale-95 transition-all duration-200 shadow-none hover:shadow-[0_8px_28px_rgba(255,40,48,0.30)] flex items-center justify-center select-none"
           >
             <MessageSquare size={24} className="text-[#ff2830]" strokeWidth={1.75} />
             {/* Live status dot */}
@@ -164,7 +164,7 @@ export default function RubyChatbot({ visible = true, onOpenChange }) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.93, y: 24 }}
             transition={{ type: "spring", stiffness: 380, damping: 30 }}
-            className="fixed bottom-0 right-0 sm:bottom-20 sm:right-5 z-[70] w-full sm:w-[400px] h-[100dvh] sm:h-auto sm:max-h-[560px] bg-[#141414] sm:rounded-2xl border-0 sm:border border-[#2a2a2a] shadow-[0_32px_80px_rgba(0,0,0,0.7)] flex flex-col overflow-hidden"
+            className="fixed bottom-0 right-0 sm:bottom-6 sm:right-6 z-[70] w-full sm:w-[400px] h-[100dvh] sm:h-auto sm:max-h-[560px] bg-[#141414] sm:rounded-2xl border-0 sm:border border-[#2a2a2a] shadow-[0_32px_80px_rgba(0,0,0,0.7)] flex flex-col overflow-hidden"
           >
 
             {/* ── Header ── */}

@@ -5,7 +5,6 @@ import {
   Github,
   Menu,
   X,
-  ArrowUp,
   Linkedin,
   Layers,
   Check,
@@ -250,7 +249,6 @@ const LAB_FOLDERS = [
 export default function Home() {
   const [typedHero, setTypedHero] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showBackToTop, setShowBackToTop] = useState(false);
   const [showFABs, setShowFABs] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [selectedBlogPost, setSelectedBlogPost] = useState(null);
@@ -361,9 +359,6 @@ export default function Home() {
 
       if (shouldShow) setShowFABs(true);
       if (shouldHide) setShowFABs(false);
-
-      // Back-to-top follows same gate
-      setShowBackToTop(currentY > 400);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -481,14 +476,6 @@ export default function Home() {
         {/* HERO SECTION */}
         <section className="hero">
           <div>
-            {/* Status indicator */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#202020] border border-[#333] mb-5 text-[11px] font-mono text-[#a3a3a3]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#ff2830] animate-pulse shrink-0" />
-              <span className="text-[#ff5c63] font-medium">AVAILABLE FOR HIRE</span>
-              <span className="text-[#555]">·</span>
-              <span>Nairobi, KE</span>
-            </div>
-
             <h1>
               I build systems
               <br />
@@ -1089,19 +1076,6 @@ export default function Home() {
             onOpenChange={setIsChatOpen}
           />
         </Suspense>
-      )}
-
-      {/* Back to Top */}
-      {showFABs && !isChatOpen && (
-        <button
-          type="button"
-          onClick={scrollToTop}
-          className="fixed bottom-6 right-5 z-40 w-14 h-14 bg-transparent hover:bg-[#ff2830]/10 text-[#ff2830] rounded-full flex items-center justify-center transition-all duration-200 hover:shadow-[0_8px_28px_rgba(255,40,48,0.30)] animate-fade-scale-in focus:outline-none"
-          title="Back to top"
-          aria-label="Back to top"
-        >
-          <ArrowUp size={22} strokeWidth={1.75} />
-        </button>
       )}
 
       {/* Blog Overlay Modal */}
