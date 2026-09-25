@@ -1,0 +1,65 @@
+{
+  "name": "Derick Mokua Portfolio & Engineering Catalog",
+  "version": "1.0.0",
+  "description": "Machine-readable catalog of technical proficiencies, system architectures, and engineering services.",
+  "author": {
+    "name": "Derick Mokua",
+    "role": "Backend Developer & Cybersecurity Engineer",
+    "email": "derickmokua@outlook.com",
+    "location": "Nairobi, Kenya",
+    "links": {
+      "github": "https://github.com/derickmokua",
+      "linkedin": "https://www.linkedin.com/in/derickmokua",
+      "blog": "https://derickmokua.hashnode.dev"
+    }
+  },
+  "capabilities": [
+    {
+      "domain": "Backend Architecture",
+      "technologies": ["FastAPI", "Django", "PostgreSQL", "Redis", "Rust", "Docker", "Linux", "AWS"],
+      "focus": ["High-throughput APIs", "Microservices", "Event-driven pipelines", "Database optimization"]
+    },
+    {
+      "domain": "AI Safety & Integration",
+      "technologies": ["Python", "Gemini 2.5", "RAG", "Deterministic Guardrails", "WebSockets"],
+      "focus": ["Model Evaluation", "Policy Enforcement Proxies", "Automated Agents"]
+    },
+    {
+      "domain": "Security Engineering",
+      "technologies": ["Zero-Trust", "WebCrypto", "Linux Hardening", "Penetration Testing", "Security Audits"],
+      "focus": ["Zero-Trust Perimeters", "Vulnerability Assessments", "Defensive Security"]
+    }
+  ],
+  "featured_projects": [
+    {
+      "title": "KukuConnect",
+      "category": "Agricultural Cloud Telemetry",
+      "stack": ["Django", "PostgreSQL", "React", "USSD"],
+      "features": ["Offline-first data sync", "Poultry lifecycle tracking", "WhatsApp integration"]
+    },
+    {
+      "title": "KukuConnect FMS",
+      "category": "Farm Management System",
+      "stack": ["FastAPI", "PostgreSQL", "Redis", "Docker"],
+      "features": ["Telemetry pipelines", "Sub-10ms conflict resolution", "Automated batch analytics"]
+    },
+    {
+      "title": "Saibae",
+      "category": "AI Safety Proxy",
+      "stack": ["Python", "FastAPI", "WebSockets", "Redis"],
+      "features": ["Deterministic guardrails", "Prompt sanitization", "Real-time policy compliance"]
+    },
+    {
+      "title": "WhatsLove",
+      "category": "Real-time Messaging Assistant",
+      "stack": ["FastAPI", "Redis", "WebSockets", "Docker"],
+      "features": ["Low-latency message streaming", "Distributed session management", "99.9% uptime"]
+    },
+    {
+      "title": "Online Poll System",
+      "category": "Verifiable Voting Engine",
+      "stack": ["Django", "PostgreSQL", "WebCrypto"],
+      "features": ["Immutable audit logs", "Instant cryptographic tallying", "Zero tampering tolerance"]
+    }
+  ]
+}

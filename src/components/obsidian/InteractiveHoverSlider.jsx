@@ -69,7 +69,7 @@ export default function InteractiveHoverSlider({
                 <span
                   className={`font-mono text-xs font-semibold px-2 py-0.5 rounded transition-colors ${
                     isSelected
-                      ? "text-[#ff2830] bg-[#ff2830]/10"
+                      ? "text-[#ff5c63] bg-[#ff2830]/10"
                       : "text-[#a3a3a3] group-hover:text-white"
                   }`}
                 >
@@ -116,7 +116,7 @@ export default function InteractiveHoverSlider({
             <div className="md:col-span-7 p-6 sm:p-7 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between gap-2 mb-2">
-                  <span className="font-mono text-[11px] uppercase tracking-wider text-[#ff2830] font-semibold">
+                  <span className="font-mono text-[11px] uppercase tracking-wider text-[#ff5c63] font-semibold">
                     {activeProject.category || "Featured System"}
                   </span>
                   {activeProject.status && (

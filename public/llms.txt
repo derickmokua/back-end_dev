@@ -1,0 +1,30 @@
+# Derick Mokua - Backend Developer & Cybersecurity Engineer
+
+> Portfolio, technical specifications, and engineering services of Derick Mokua, Nairobi-based Backend Developer and Cybersecurity Engineer specializing in high-throughput distributed systems, AI integration safety, and zero-trust perimeters.
+
+## Overview
+Derick Mokua designs and builds resilient, fault-tolerant backend infrastructures, real-time data pipelines, and secure AI-enabled applications. With deep expertise across Python, FastAPI, Django, PostgreSQL, Redis, Rust, and Linux systems engineering, he bridges the gap between scalable server design and defensive security.
+
+## Core Engineering Capabilities
+- **Backend Architecture**: High-performance REST/GraphQL/WebSocket APIs, microservices decomposition, database indexing, caching strategies, and concurrency controls.
+- **AI Safety & Integration**: RAG pipeline engineering, deterministic safeguard proxies, frontier model orchestration, and prompt security evaluation.
+- **Defensive Security & Infrastructure**: Zero-trust architecture, automated vulnerability scanning, least-privilege access enforcement, and hardened cloud deployments (AWS, Docker, Linux).
+
+## Featured Projects & Systems
+- **KukuConnect**: Agricultural platform delivering real-time diagnostics, USSD/WhatsApp integrations, and farm management telemetry across unreliable networks.
+- **KukuConnect FMS**: Offline-first farm management system featuring conflict-free synchronization, edge caching, and automated hatch rate monitoring.
+- **Saibae**: Deterministic AI safety proxy intercepting and sanitizing untrusted inputs with sub-second policy validation.
+- **WhatsLove**: High-concurrency WebSocket messaging assistant optimized for low latency and distributed user sessions.
+- **Online Poll System**: Cryptographically audited voting architecture ensuring verifiable integrity and real-time ballot tallying.
+
+## Publications & Research
+- *Beyond the Perimeter: Why Zero Trust is the New Standard for Modern Security*
+- *Defensive Security: Building Resilient Systems in an Ever-Evolving Threat Landscape*
+- *Ethical Hacking 101: Understanding the Rules of Engagement and Data Protection*
+
+## Contact & Profiles
+- Website: https://derickmokua.me
+- Email: derickmokua@outlook.com
+- GitHub: https://github.com/derickmokua
+- LinkedIn: https://www.linkedin.com/in/derickmokua
+- Hashnode Blog: https://derickmokua.hashnode.dev

@@ -12,9 +12,9 @@ function WhatsAppIcon({ size = 18 }) {
   );
 }
 
-export default function DecryptGame({ isUnlockedInitially, onUnlocked }) {
+export default function DecryptGame({ isUnlockedInitially = true, onUnlocked }) {
   const [stage, setStage] = useState(isUnlockedInitially ? "unlocked" : "loading");
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(isUnlockedInitially ? 100 : 0);
 
   useEffect(() => {
     if (stage === "loading") {
@@ -43,8 +43,8 @@ export default function DecryptGame({ isUnlockedInitially, onUnlocked }) {
         </div>
         <div className="w-full max-w-xs bg-[#181818] border border-[#343434] h-1.5 rounded-full overflow-hidden">
           <div
-            className="bg-[#FF3B45] h-full rounded-full transition-all duration-100"
-            style={{ width: `${progress}%` }}
+            className="bg-[#FF3B45] h-full rounded-full transition-transform duration-100 ease-out"
+            style={{ transform: `scaleX(${progress / 100})`, transformOrigin: "left" }}
           />
         </div>
       </div>

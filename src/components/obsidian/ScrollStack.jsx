@@ -120,7 +120,7 @@ export default function ScrollStack({
 
                     <span
                       className={`font-mono text-xs font-semibold tracking-wider uppercase ${
-                        cs.isDominant ? "text-white/90" : "text-[#ff2830]"
+                        cs.isDominant ? "text-white/90" : "text-[#ff5c63]"
                       }`}
                     >
                       {cs.isDominant ? "Dominant Flagship Case Study" : "Production Case Study"}
@@ -189,7 +189,7 @@ export default function ScrollStack({
                         </span>
                         <b
                           className={`font-mono text-sm sm:text-base block mt-0.5 ${
-                            cs.isDominant ? "text-white" : "text-[#ff2830]"
+                            cs.isDominant ? "text-white" : "text-[#ff5c63]"
                           }`}
                         >
                           {m.val}

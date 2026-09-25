@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ExternalLink, Folder, Terminal, Cpu, Database, Shield } from "lucide-react";
+import { Folder, FolderOpen, ChevronRight } from "lucide-react";
 
 export default function FolderPreview({
   label,
@@ -12,6 +12,7 @@ export default function FolderPreview({
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const shouldReduceMotion = useReducedMotion();
+  const active = isSelected || isHovered;
 
   return (
     <div
@@ -28,153 +29,145 @@ export default function FolderPreview({
       onMouseLeave={() => setIsHovered(false)}
       onFocus={() => setIsHovered(true)}
       onBlur={() => setIsHovered(false)}
-      className="group relative cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#ff2830] rounded-2xl select-none"
+      className="group relative cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#ff2830]/60 rounded-2xl select-none"
     >
-      {/* 3D Perspective Box */}
-      <div 
-        className="relative h-64 w-full"
-        style={{ perspective: "1000px" }}
-      >
-        {/* FOLDER TAB (TOP-LEFT) */}
+      {/* Ambient glow on active */}
+      <div
+        className="absolute -inset-px rounded-2xl transition-all duration-500 pointer-events-none"
+        style={{
+          background: active
+            ? "linear-gradient(135deg, rgba(255,40,48,0.12) 0%, transparent 60%)"
+            : "transparent",
+          borderRadius: "16px",
+        }}
+      />
+
+      {/* 3-D folder stack */}
+      <div className="relative h-72 w-full" style={{ perspective: "1000px" }}>
+
+        {/* ── FOLDER TAB ── */}
         <div
-          className={`absolute top-0 left-0 w-28 h-7 rounded-t-xl border-t border-l border-r transition-colors z-0 flex items-center px-3 gap-1.5 ${
-            isSelected || isHovered
-              ? "bg-[#282828] border-[#ff2830]/50 text-white"
-              : "bg-[#222222] border-[#333333] text-[#a3a3a3]"
+          className={`absolute top-0 left-0 h-8 rounded-t-xl z-10 flex items-center px-3 gap-1.5 transition-all duration-300 ${
+            active
+              ? "w-36 bg-[#ff2830] text-white"
+              : "w-28 bg-[#1e1e1e] text-[#a3a3a3] border border-b-0 border-[#2e2e2e]"
           }`}
         >
-          <Folder size={12} className={isSelected || isHovered ? "text-[#ff2830]" : "text-[#a3a3a3]"} />
-          <span className="font-mono text-[9px] uppercase tracking-wider font-semibold truncate">
-            DIR
+          {active
+            ? <FolderOpen size={12} className="text-white shrink-0" />
+            : <Folder size={12} className="text-[#ff5c63] shrink-0" />
+          }
+          <span className="font-mono text-[9px] uppercase tracking-widest font-bold truncate">
+            {active ? "opened" : "DIR"}
           </span>
         </div>
 
-        {/* FOLDER BACK WALL */}
+        {/* ── FOLDER BACK WALL (depth layer) ── */}
         <div
-          className={`absolute top-6 inset-x-0 bottom-0 rounded-2xl border transition-all z-0 ${
-            isSelected || isHovered
-              ? "bg-[#252525] border-[#ff2830]/40 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
-              : "bg-[#1c1c1c] border-[#333333]"
+          className={`absolute top-7 inset-x-0 bottom-0 rounded-b-2xl rounded-tr-2xl border transition-all duration-300 z-0 ${
+            active
+              ? "bg-[#1a1a1a] border-[#ff2830]/35 shadow-[0_20px_60px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.03)]"
+              : "bg-[#161616] border-[#252525] shadow-[0_8px_24px_rgba(0,0,0,0.4)]"
           }`}
         />
 
-        {/* INNER PREVIEW CARDS (ELEVATE & FAN OUT ON HOVER) */}
-        <div className="absolute inset-x-3 top-5 bottom-16 pointer-events-none z-10 flex items-center justify-center">
+        {/* ── PREVIEW CARDS (fan out on hover) ── */}
+        <div className="absolute inset-x-4 top-8 bottom-[72px] pointer-events-none z-10 flex items-center justify-center">
           {previewCards.map((card, idx) => {
             const isFirst = idx === 0;
-            const isSecond = idx === 1;
-
-            const initialY = 10;
-            const targetY = isHovered && !shouldReduceMotion ? (isFirst ? -32 : -20) : 10;
-            const targetRotate = isHovered && !shouldReduceMotion ? (isFirst ? -5 : 4) : (isFirst ? -1 : 1);
-            const targetScale = isHovered && !shouldReduceMotion ? 1.02 : 0.96;
+            const targetY = active && !shouldReduceMotion ? (isFirst ? -28 : -16) : 8;
+            const targetRotate = active && !shouldReduceMotion ? (isFirst ? -6 : 5) : (isFirst ? -1.5 : 1.5);
+            const targetScale = active && !shouldReduceMotion ? (isFirst ? 1.04 : 1.0) : 0.95;
 
             return (
               <motion.div
                 key={card.title || idx}
-                initial={{ y: initialY, rotate: 0 }}
-                animate={{
-                  y: targetY,
-                  rotate: targetRotate,
-                  scale: targetScale
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 24,
-                  delay: shouldReduceMotion ? 0 : idx * 0.04
-                }}
-                className={`absolute w-[88%] h-36 rounded-xl border p-3 flex flex-col justify-between shadow-2xl transition-colors ${
+                animate={{ y: targetY, rotate: targetRotate, scale: targetScale }}
+                transition={{ type: "spring", stiffness: 280, damping: 22, delay: shouldReduceMotion ? 0 : idx * 0.05 }}
+                className={`absolute w-[90%] rounded-xl border p-3 flex flex-col justify-between shadow-2xl ${
                   isFirst
-                    ? "bg-[#161616] border-[#3a3a3a] text-white z-10"
-                    : "bg-[#1a1a1a] border-[#2f2f2f] text-[#f5f5f5] z-5"
+                    ? "bg-[#141414] border-[#2e2e2e] z-10 h-36"
+                    : "bg-[#1a1a1a] border-[#252525] z-5 h-36"
                 }`}
               >
-                {/* Real project preview header */}
-                <div className="flex items-center justify-between border-b border-[#2b2b2b] pb-1.5">
+                {/* Card header */}
+                <div className="flex items-center justify-between pb-2 border-b border-[#252525]">
                   <div className="flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#ff2830]" />
-                    <span className="font-mono text-[9px] font-bold text-[#ff2830] uppercase">
-                      {card.badge || "PROJ"}
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#ff2830] shrink-0" />
+                    <span className="font-mono text-[9px] font-bold text-[#ff5c63] uppercase tracking-wider">
+                      {card.badge || "PROJECT"}
                     </span>
                   </div>
-                  <span className="font-mono text-[9px] text-[#a3a3a3]">
-                    {card.tech || "v2.0"}
-                  </span>
+                  <span className="font-mono text-[9px] text-[#555]">{card.tech}</span>
                 </div>
 
-                {/* Real project title & mini metrics */}
-                <div className="my-auto py-1">
-                  <span className="block font-bold text-xs text-white truncate">
+                {/* Card body */}
+                <div className="py-1.5 flex-1 flex flex-col justify-center gap-0.5">
+                  <span className="block font-bold text-[11px] text-white leading-tight truncate">
                     {card.title}
                   </span>
-                  <small className="block text-[10px] text-[#a3a3a3] font-sans truncate mt-0.5">
+                  <small className="block text-[10px] text-[#666] font-sans leading-snug line-clamp-2">
                     {card.caption}
                   </small>
                 </div>
 
-                {/* Bottom status strip */}
-                <div className="flex items-center justify-between pt-1 border-t border-[#262626] font-mono text-[9px] text-[#888]">
-                  <span>{card.status || "Deployed"}</span>
-                  <span className="text-[#ff2830]">› online</span>
+                {/* Card footer */}
+                <div className="flex items-center justify-between pt-1.5 border-t border-[#252525] font-mono text-[9px]">
+                  <span className="text-[#555]">{card.status || "Deployed"}</span>
+                  <span className="text-[#ff5c63] font-semibold">● online</span>
                 </div>
               </motion.div>
             );
           })}
         </div>
 
-        {/* FOLDER FRONT FLAP (OPENS FORWARD ON HOVER) */}
+        {/* ── FRONT FLAP (lifts on hover) ── */}
         <motion.div
-          animate={
-            isHovered && !shouldReduceMotion
-              ? { rotateX: -18, y: 4 }
-              : { rotateX: 0, y: 0 }
-          }
-          transition={{
-            type: "spring",
-            stiffness: 320,
-            damping: 26
-          }}
+          animate={active && !shouldReduceMotion ? { rotateX: -14, y: 2 } : { rotateX: 0, y: 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 28 }}
           style={{ transformOrigin: "bottom center" }}
-          className={`absolute inset-x-0 bottom-0 top-18 rounded-2xl border p-4 sm:p-5 flex flex-col justify-between z-20 transition-colors backdrop-blur-md shadow-xl ${
-            isSelected || isHovered
-              ? "bg-[#222222]/98 border-[#ff2830]/50"
-              : "bg-[#202020]/96 border-[#333333]"
+          className={`absolute inset-x-0 bottom-0 top-[72px] rounded-2xl border flex flex-col justify-between z-20 transition-colors duration-300 overflow-hidden ${
+            active
+              ? "bg-[#1e1e1e] border-[#ff2830]/45 shadow-[0_2px_24px_rgba(255,40,48,0.12)]"
+              : "bg-[#1c1c1c] border-[#2a2a2a]"
           }`}
         >
-          {/* Top of front flap */}
-          <div className="flex items-start justify-between gap-2">
-            <div>
-              <b className="block font-mono text-sm sm:text-base font-bold text-white group-hover:text-[#ff2830] transition-colors">
-                {label}
-              </b>
-              <small className="block text-xs text-[#a3a3a3] mt-1 leading-snug font-sans">
-                {description}
-              </small>
+          {/* Red accent line at top when active */}
+          <div
+            className={`h-px w-full transition-all duration-300 ${active ? "bg-gradient-to-r from-[#ff2830] via-[#ff5c63] to-transparent" : "bg-transparent"}`}
+          />
+
+          <div className="flex flex-col flex-1 justify-between p-4">
+            {/* Label + arrow */}
+            <div className="flex items-start justify-between gap-2">
+              <div className="min-w-0">
+                <b className={`block font-mono text-[13px] font-bold leading-tight transition-colors duration-200 truncate ${active ? "text-[#ff5c63]" : "text-[#e0e0e0]"}`}>
+                  {label}
+                </b>
+                <small className="block text-[11px] text-[#666] mt-1 leading-snug font-sans">
+                  {description}
+                </small>
+              </div>
+              <div
+                className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-all duration-200 ${
+                  active ? "bg-[#ff2830] text-white" : "bg-[#252525] text-[#555]"
+                }`}
+              >
+                <ChevronRight size={13} strokeWidth={2.5} />
+              </div>
             </div>
 
-            <span
-              className={`w-7 h-7 rounded-lg border flex items-center justify-center font-mono text-xs transition-colors shrink-0 ${
-                isHovered || isSelected
-                  ? "bg-[#ff2830] text-white border-[#ff2830]"
-                  : "bg-[#181818] text-[#a3a3a3] border-[#333333] group-hover:text-white"
-              }`}
-              aria-hidden="true"
-            >
-              ↗
-            </span>
-          </div>
-
-          {/* Bottom metadata tags */}
-          <div className="flex items-center justify-between text-[10px] font-mono pt-2 border-t border-[#303030] text-[#a3a3a3]">
-            <span className="truncate">
-              {items.length} items catalogued
-            </span>
-            <span className="text-[#ff2830] font-semibold">
-              Explore →
-            </span>
+            {/* Bottom meta */}
+            <div className="flex items-center gap-2 pt-3 border-t border-[#252525] font-mono text-[10px]">
+              <span className="text-[#444]">{items.length} files</span>
+              <span className="text-[#333]">·</span>
+              <span className={`truncate ${active ? "text-[#ff5c63]" : "text-[#444]"}`}>
+                {items.slice(0, 2).join(", ")}{items.length > 2 ? " …" : ""}
+              </span>
+            </div>
           </div>
         </motion.div>
+
       </div>
     </div>
   );

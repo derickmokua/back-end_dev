@@ -36,11 +36,11 @@ const CommandPalette = lazy(() => import("../components/CommandPalette"));
 const ArchitectureModal = lazy(() => import("../components/ArchitectureModal"));
 const DecryptGame = lazy(() => import("../components/DecryptGame"));
 
-// Obsidian UI selectively integrated components
-import InteractiveHoverSlider from "../components/obsidian/InteractiveHoverSlider";
-import ScrollStack from "../components/obsidian/ScrollStack";
-import TextFillAnimation from "../components/obsidian/TextFillAnimation";
-import FolderPreview from "../components/obsidian/FolderPreview";
+// Obsidian UI selectively integrated components (lazy-loaded below the fold)
+const InteractiveHoverSlider = lazy(() => import("../components/obsidian/InteractiveHoverSlider"));
+const ScrollStack = lazy(() => import("../components/obsidian/ScrollStack"));
+const TextFillAnimation = lazy(() => import("../components/obsidian/TextFillAnimation"));
+const FolderPreview = lazy(() => import("../components/obsidian/FolderPreview"));
 import TechStackBadges from "../components/TechStackBadges";
 
 const TECH_STACK_ITEMS = [
@@ -57,6 +57,8 @@ const TECH_STACK_ITEMS = [
   "AWS",
   "Rust"
 ];
+
+const SERVICE_ICONS = [Server, Cpu, Shield];
 
 const THINKING = [
   [
@@ -249,6 +251,7 @@ export default function Home() {
   const [typedHero, setTypedHero] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [showFABs, setShowFABs] = useState(false);
   const [selectedBlogPost, setSelectedBlogPost] = useState(null);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isArchModalOpen, setIsArchModalOpen] = useState(false);
@@ -340,12 +343,28 @@ export default function Home() {
   const { posts: apiPosts, loading: blogLoading } = useHashnodePosts();
   const activePosts = apiPosts && apiPosts.length > 0 ? apiPosts : staticBlogPosts;
 
-  // Scroll listener for back-to-top
+  // Unified scroll listener — FABs appear when scrolling DOWN past 60% of page
   useEffect(() => {
+    let lastY = window.scrollY;
     const handleScroll = () => {
-      setShowBackToTop(window.scrollY > 400);
+      const currentY = window.scrollY;
+      const pageH = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = pageH > 0 ? currentY / pageH : 0;
+      const scrollingDown = currentY > lastY;
+      lastY = currentY;
+
+      // Show FABs when scrolling down past 60% of page depth
+      const shouldShow = scrollingDown && progress > 0.45;
+      // Hide FABs when back near top (<15% of page)
+      const shouldHide = progress < 0.15;
+
+      if (shouldShow) setShowFABs(true);
+      if (shouldHide) setShowFABs(false);
+
+      // Back-to-top follows same gate
+      setShowBackToTop(currentY > 400);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -461,6 +480,14 @@ export default function Home() {
         {/* HERO SECTION */}
         <section className="hero">
           <div>
+            {/* Status indicator */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#202020] border border-[#333] mb-5 text-[11px] font-mono text-[#a3a3a3]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#ff2830] animate-pulse shrink-0" />
+              <span className="text-[#ff5c63] font-medium">AVAILABLE FOR HIRE</span>
+              <span className="text-[#555]">·</span>
+              <span>Nairobi, KE</span>
+            </div>
+
             <h1>
               I build systems
               <br />
@@ -474,8 +501,8 @@ export default function Home() {
               <span>Scalable systems</span>
             </div>
 
-            <p className="text-sm md:text-base text-[#f5f5f5]/85 leading-relaxed font-sans mt-4 max-w-xl">
-              I build secure, AI powered backend systems for teams across Africa and beyond turning complex ideas into reliable products that scale.
+            <p className="hero-sub">
+              I build secure, AI-powered backend systems for teams across Africa and beyond — turning complex ideas into reliable products that scale.
             </p>
 
             <div className="btns">
@@ -505,7 +532,7 @@ export default function Home() {
               systems.
               <br />
               <br />
-              <span style={{ color: "#ff2830" }}># KukuConnect Telemetry</span>
+              <span style={{ color: "#ff4d55" }}># KukuConnect Telemetry</span>
               <br />
               <span style={{ color: "#a3a3a3" }}>&gt; Ingress: GSM / USSD [OK]</span>
               <br />
@@ -529,49 +556,59 @@ export default function Home() {
         <section className="sec" id="work">
           <div className="sh mono">
             <span>01</span>
-            <span className="t">Selected work</span>
+            <h2 className="t">Selected work</h2>
             <span className="r">Hover or tap to preview</span>
           </div>
 
-          <InteractiveHoverSlider
-            projects={projects.filter(p => SELECTED_WORK_TITLES.includes(p.title.split(":")[0].trim()))}
-            metrics={PROJECT_METRICS}
-            selectedIndex={selectedProjectIndex}
-            onSelectProject={setSelectedProjectIndex}
-            onOpenArchitecture={() => setIsArchModalOpen(true)}
-            onScrollToCases={(e) => scrollToSection(e, "#cases")}
-          />
+          <Suspense fallback={<div className="h-[420px] rounded-2xl bg-[#202020] border border-[#333333] animate-pulse" />}>
+            <InteractiveHoverSlider
+              projects={projects.filter(p => SELECTED_WORK_TITLES.includes(p.title.split(":")[0].trim()))}
+              metrics={PROJECT_METRICS}
+              selectedIndex={selectedProjectIndex}
+              onSelectProject={setSelectedProjectIndex}
+              onOpenArchitecture={() => setIsArchModalOpen(true)}
+              onScrollToCases={(e) => scrollToSection(e, "#cases")}
+            />
+          </Suspense>
         </section>
 
         {/* 02. CASE STUDIES */}
         <section className="sec" id="cases">
           <div className="sh mono">
             <span>02</span>
-            <span className="t">Case studies</span>
+            <h2 className="t">Case studies</h2>
             <span className="r">Scroll to explore</span>
           </div>
 
-          <ScrollStack
-            onOpenArchitecture={() => setIsArchModalOpen(true)}
-            onSelectProject={setSelectedProjectIndex}
-            onScrollToWork={() => {
-              const el = document.querySelector("#work");
-              if (el) el.scrollIntoView({ behavior: "smooth" });
-            }}
-          />
+          <Suspense fallback={<div className="h-[380px] rounded-2xl bg-[#202020] border border-[#333333] animate-pulse" />}>
+            <ScrollStack
+              onOpenArchitecture={() => setIsArchModalOpen(true)}
+              onSelectProject={setSelectedProjectIndex}
+              onScrollToWork={() => {
+                const el = document.querySelector("#work");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
+            />
+          </Suspense>
         </section>
 
         {/* 03. HOW I THINK & ARCHITECTURE */}
         <section className="sec" id="think">
           <div className="sh mono">
             <span>03</span>
-            <span className="t">How I think</span>
+            <h2 className="t">How I think</h2>
           </div>
 
           <div className="space-y-6">
-            <TextFillAnimation
-              text="I care about the part after the demo: unreliable networks, messy data, permissions, failure states and whether the system still works on a bad day."
-            />
+            <Suspense fallback={
+              <p className="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-tight leading-snug text-[#f5f5f5] max-w-4xl py-6">
+                I care about the part after the demo: unreliable networks, messy data, permissions, failure states and whether the system still works on a bad day.
+              </p>
+            }>
+              <TextFillAnimation
+                text="I care about the part after the demo: unreliable networks, messy data, permissions, failure states and whether the system still works on a bad day."
+              />
+            </Suspense>
 
             <div className="think">
               <div className="tabs" role="tablist">
@@ -663,7 +700,7 @@ export default function Home() {
         <section className="sec" id="tech">
           <div className="sh mono">
             <span>04</span>
-            <span className="t">Technologies I work with</span>
+            <h2 className="t">Technologies I work with</h2>
             <span className="r">Drag to explore →</span>
           </div>
 
@@ -672,30 +709,78 @@ export default function Home() {
 
         {/* 05. LAB / ARCHIVE */}
         <section className="sec" id="lab">
+          {/* Section header */}
           <div className="sh mono">
             <span>05</span>
-            <span className="t">Lab / Archive</span>
-            <span className="r">Open and explore →</span>
+            <h2 className="t">Lab / Archive</h2>
+            <span className="r">Open a folder to explore →</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {LAB_FOLDERS.map((folder) => (
-              <FolderPreview
-                key={folder.id}
-                label={folder.label}
-                description={folder.description}
-                items={folder.items}
-                previewCards={folder.previewCards}
-                isSelected={selectedProjectIndex === folder.targetProjectIndex}
-                onClick={() => {
-                  setSelectedProjectIndex(folder.targetProjectIndex);
-                  const el = document.querySelector("#work");
-                  if (el) {
-                    el.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
-              />
-            ))}
+          {/* Terminal path sub-header */}
+          <div className="flex items-center gap-2 mb-8 font-mono text-[11px] text-[#555]">
+            <span className="text-[#ff5c63]">~</span>
+            <span>/</span>
+            <span className="text-[#a3a3a3]">derickmokua</span>
+            <span>/</span>
+            <span className="text-[#a3a3a3]">projects</span>
+            <span>/</span>
+            <span className="text-white font-semibold">archive</span>
+            <span className="w-1.5 h-3.5 bg-[#ff2830] animate-pulse ml-1" />
+          </div>
+
+          {/* Folder grid — premium ambient container */}
+          <div className="relative rounded-2xl p-px overflow-hidden">
+            {/* Subtle border gradient */}
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#2a2a2a] via-[#222] to-[#1a1a1a] pointer-events-none" />
+            {/* Dot-grid ambient */}
+            <div
+              className="absolute inset-0 rounded-2xl pointer-events-none opacity-30"
+              style={{
+                backgroundImage: "radial-gradient(circle, #333 1px, transparent 1px)",
+                backgroundSize: "24px 24px",
+              }}
+            />
+            {/* Ambient red glow top-right */}
+            <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#ff2830]/6 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="relative bg-[#0f0f0f]/80 rounded-2xl p-6 lg:p-8">
+              <Suspense fallback={<div className="grid grid-cols-2 lg:grid-cols-4 gap-6 h-72 animate-pulse" />}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {LAB_FOLDERS.map((folder) => (
+                    <FolderPreview
+                      key={folder.id}
+                      label={folder.label}
+                      description={folder.description}
+                      items={folder.items}
+                      previewCards={folder.previewCards}
+                      isSelected={selectedProjectIndex === folder.targetProjectIndex}
+                      onClick={() => {
+                        setSelectedProjectIndex(folder.targetProjectIndex);
+                        const el = document.querySelector("#work");
+                        if (el) el.scrollIntoView({ behavior: "smooth" });
+                      }}
+                    />
+                  ))}
+                </div>
+              </Suspense>
+
+              {/* Bottom stats ribbon */}
+              <div className="mt-8 pt-5 border-t border-[#1e1e1e] flex flex-wrap items-center gap-x-8 gap-y-2 font-mono text-[10px] text-[#555]">
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#ff2830]" />
+                  <span className="text-[#a3a3a3] font-semibold">4</span>&nbsp;directories
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e]" />
+                  <span className="text-[#a3a3a3] font-semibold">3</span>&nbsp;active experiments
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#3b82f6]" />
+                  <span className="text-[#a3a3a3] font-semibold">8</span>&nbsp;catalogued projects
+                </span>
+                <span className="ml-auto text-[#333]">last updated · Sept 2026</span>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -703,22 +788,68 @@ export default function Home() {
         <section className="sec" id="services">
           <div className="sh mono">
             <span>06</span>
-            <span className="t">Engineering Services</span>
+            <h2 className="t">Engineering Services</h2>
+            <span className="r">Architectural capabilities →</span>
           </div>
 
-          <div className="cases">
-            {services.map((s, idx) => (
-              <div key={s.title} className="case">
-                <span className="num font-mono">0{idx + 1}</span>
-                <h3>{s.title}</h3>
-                <p>{s.desc}</p>
-                <div className="chips">
-                  {s.features.map((f) => (
-                    <span key={f} className="chip">{f}</span>
-                  ))}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
+            {services.map((s, idx) => {
+              const ServiceIcon = SERVICE_ICONS[idx % SERVICE_ICONS.length] || Server;
+              return (
+                <div
+                  key={s.title}
+                  className="group relative bg-[#202020] border border-[#333333] rounded-2xl p-6 lg:p-7 flex flex-col justify-between hover:border-[#ff2830]/60 hover:shadow-[0_12px_36px_rgba(255,40,48,0.12)] transition-all duration-300 overflow-hidden"
+                >
+                  {/* Subtle ambient hover glow */}
+                  <div className="absolute -top-12 -right-12 w-32 h-32 bg-[#ff2830]/5 rounded-full blur-2xl group-hover:bg-[#ff2830]/15 transition-all duration-500 pointer-events-none" />
+
+                  <div>
+                    {/* Top Meta Bar */}
+                    <div className="flex items-center justify-between gap-3 mb-6">
+                      <div className="w-11 h-11 rounded-xl bg-[#181818] border border-[#333333] flex items-center justify-center text-[#ff5c63] group-hover:border-[#ff5c63]/50 group-hover:bg-[#ff2830]/10 transition-colors shadow-inner">
+                        <ServiceIcon size={20} strokeWidth={2} />
+                      </div>
+                      <span className="font-mono text-xs text-[#a3a3a3] px-2.5 py-1 rounded-md bg-[#181818] border border-[#333333] tracking-wider">
+                        0{idx + 1} // CAPABILITY
+                      </span>
+                    </div>
+
+                    {/* Title & Description */}
+                    <h3 className="text-xl font-bold text-white tracking-tight mb-2.5 group-hover:text-[#ff5c63] transition-colors">
+                      {s.title}
+                    </h3>
+                    <p className="text-xs lg:text-[13px] text-[#a3a3a3] leading-relaxed mb-6">
+                      {s.desc}
+                    </p>
+
+                    {/* Deliverables / Capabilities List */}
+                    <div className="space-y-2.5 mb-6 pt-4 border-t border-[#333333]/80">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-[#737373] block">
+                        Core Capabilities
+                      </span>
+                      {s.features.map((f) => (
+                        <div key={f} className="flex items-center gap-2.5 text-xs text-[#d4d4d4]">
+                          <div className="w-4 h-4 rounded-full bg-[#ff2830]/10 border border-[#ff5c63]/30 flex items-center justify-center text-[#ff5c63] shrink-0">
+                            <Check size={10} strokeWidth={3} />
+                          </div>
+                          <span className="font-sans">{f}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Consultation Action */}
+                  <a
+                    href="#contact"
+                    onClick={(e) => scrollToSection(e, "#contact")}
+                    className="pt-4 border-t border-[#333333]/60 flex items-center justify-between text-xs font-mono text-[#a3a3a3] group-hover:text-white transition-colors"
+                  >
+                    <span>Request consultation</span>
+                    <ArrowRight size={14} className="text-[#ff5c63] group-hover:translate-x-1.5 transition-transform" />
+                  </a>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
@@ -726,32 +857,86 @@ export default function Home() {
         <section className="sec" id="blog">
           <div className="sh mono">
             <span>07</span>
-            <span className="t">Articles & Research</span>
-            <span className="r">Click to read</span>
+            <h2 className="t">Articles & Research</h2>
+            <span className="r">Interactive publications archive →</span>
           </div>
 
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
             {blogLoading ? (
-              <div className="mono mut text-xs py-4">Syncing publications database...</div>
+              [1, 2, 3].map((n) => (
+                <div
+                  key={n}
+                  className="h-64 rounded-2xl bg-[#202020] border border-[#333333] animate-pulse p-6 flex flex-col justify-between"
+                >
+                  <div className="flex justify-between">
+                    <div className="w-24 h-4 bg-[#2a2a2a] rounded" />
+                    <div className="w-16 h-4 bg-[#2a2a2a] rounded" />
+                  </div>
+                  <div className="space-y-2">
+                    <div className="w-full h-5 bg-[#2a2a2a] rounded" />
+                    <div className="w-3/4 h-5 bg-[#2a2a2a] rounded" />
+                  </div>
+                  <div className="w-full h-12 bg-[#2a2a2a] rounded" />
+                  <div className="w-full h-8 bg-[#2a2a2a] rounded" />
+                </div>
+              ))
             ) : (
               activePosts.map((post) => (
-                <div
+                <article
                   key={post.title}
                   onClick={() => setSelectedBlogPost(post)}
-                  className="p-5 border border-[#333] rounded-xl bg-[#202020] hover:border-[#ff2830] transition-colors cursor-pointer group"
+                  className="group relative bg-[#202020] border border-[#333333] rounded-2xl p-6 lg:p-7 flex flex-col justify-between hover:border-[#ff2830]/60 hover:shadow-[0_12px_36px_rgba(255,40,48,0.12)] transition-all duration-300 cursor-pointer overflow-hidden"
                 >
-                  <div className="flex justify-between text-[10px] mono text-[#ff2830] mb-1.5 font-bold">
-                    <span>{post.date}</span>
-                    <span>Publication Record</span>
+                  {/* Subtle hover accent radial */}
+                  <div className="absolute -top-12 -right-12 w-32 h-32 bg-[#ff2830]/5 rounded-full blur-2xl group-hover:bg-[#ff2830]/15 transition-all duration-500 pointer-events-none" />
+
+                  <div>
+                    {/* Top Meta Bar */}
+                    <div className="flex items-center justify-between gap-2 text-[11px] font-mono mb-4">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#ff2830]/10 border border-[#ff5c63]/30 text-[#ff5c63] text-[10px] font-medium tracking-wide uppercase">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#ff5c63] animate-pulse" />
+                        {post.tags?.[0] ? post.tags[0] : "RESEARCH NOTE"}
+                      </span>
+                      <span className="text-[#a3a3a3]">{post.date}</span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-base lg:text-lg font-bold text-white group-hover:text-[#ff5c63] transition-colors leading-snug tracking-tight mb-3">
+                      {post.title}
+                    </h3>
+
+                    {/* Excerpt */}
+                    <p className="text-xs lg:text-[13px] text-[#a3a3a3] line-clamp-3 leading-relaxed mb-5">
+                      {post.desc}
+                    </p>
+
+                    {/* Tags */}
+                    {post.tags && post.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mb-6">
+                        {post.tags.slice(0, 3).map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#181818] border border-[#333333] text-[#a3a3a3]"
+                          >
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                  <h3 className="text-base font-bold text-white group-hover:text-[#ff2830] transition-colors flex items-center gap-2">
-                    {post.title}
-                    <ExternalLink size={13} className="opacity-0 group-hover:opacity-100 transition-opacity text-mut" />
-                  </h3>
-                  <p className="text-xs text-mut line-clamp-2 mt-1 leading-relaxed">
-                    {post.desc}
-                  </p>
-                </div>
+
+                  {/* Bottom Action Footer */}
+                  <div className="pt-4 border-t border-[#333333]/60 flex items-center justify-between text-xs font-mono text-[#a3a3a3] group-hover:text-white transition-colors">
+                    <span className="inline-flex items-center gap-1.5 text-[#ff5c63] font-medium">
+                      Read publication
+                      <ArrowRight size={13} className="group-hover:translate-x-1.5 transition-transform" />
+                    </span>
+                    <span className="text-[11px] text-[#737373] group-hover:text-[#a3a3a3] flex items-center gap-1">
+                      Open reader
+                      <ExternalLink size={11} />
+                    </span>
+                  </div>
+                </article>
               ))
             )}
           </div>
@@ -761,22 +946,53 @@ export default function Home() {
         <section className="sec" id="testimonials">
           <div className="sh mono">
             <span>08</span>
-            <span className="t">Testimonials</span>
+            <h2 className="t">Testimonials & Endorsements</h2>
+            <span className="r">Collaborator Feedback →</span>
           </div>
 
-          <div className="cases" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6">
             {testimonials.map((t, idx) => (
-              <div key={idx} className="case">
-                <p className="italic text-xs leading-relaxed text-[#f5f5f5]/90 mb-4">
-                  "{t.text}"
-                </p>
-                <div className="flex items-center gap-3 mt-auto pt-3 border-t border-[#333]">
-                  <div className="num font-bold text-xs bg-[#ff2830]/10 border-[#ff2830]/30 text-[#ff2830]">
+              <div
+                key={idx}
+                className="group relative bg-[#202020] border border-[#333333] rounded-2xl p-6 lg:p-7 flex flex-col justify-between hover:border-[#ff2830]/50 hover:shadow-[0_12px_36px_rgba(255,40,48,0.12)] transition-all duration-300 overflow-hidden"
+              >
+                {/* Decorative ambient subtle glow */}
+                <div className="absolute -top-12 -right-12 w-32 h-32 bg-[#ff2830]/5 rounded-full blur-2xl group-hover:bg-[#ff2830]/15 transition-all duration-500 pointer-events-none" />
+
+                <div>
+                  {/* Top status bar: verified badge & star rating */}
+                  <div className="flex items-center justify-between gap-2 mb-4">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#ff2830]/10 border border-[#ff5c63]/30 text-[#ff5c63] text-[10px] font-mono tracking-wider uppercase">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#ff5c63] animate-pulse" />
+                      Verified Endorsement
+                    </span>
+                    <div className="flex items-center gap-0.5 text-[#ff5c63]" aria-label="5 out of 5 stars">
+                      {[...Array(5)].map((_, i) => (
+                        <svg key={i} className="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Quote body */}
+                  <p className="text-[13.5px] lg:text-[14px] text-[#f5f5f5]/90 leading-relaxed font-sans mb-6">
+                    "{t.text}"
+                  </p>
+                </div>
+
+                {/* Author attribution footer */}
+                <div className="pt-4 border-t border-[#333333]/80 flex items-center gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-[#181818] border border-[#ff5c63]/40 flex items-center justify-center font-mono font-bold text-xs text-[#ff5c63] shrink-0 group-hover:border-[#ff2830] group-hover:bg-[#ff2830]/10 transition-colors shadow-inner">
                     {t.initials}
                   </div>
                   <div className="min-w-0">
-                    <b className="block text-xs font-sans text-white truncate">{t.name}</b>
-                    <small className="block mono text-[10px] text-mut truncate">{t.role} @ {t.company}</small>
+                    <b className="block text-sm font-semibold text-white tracking-tight truncate group-hover:text-[#ff5c63] transition-colors">
+                      {t.name}
+                    </b>
+                    <span className="block font-mono text-[11px] text-[#a3a3a3] truncate">
+                      {t.role} <span className="text-[#ff5c63]">@</span> {t.company}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -788,7 +1004,7 @@ export default function Home() {
         <section className="sec" id="contact">
           <div className="sh mono">
             <span>09</span>
-            <span className="t">Let's work together</span>
+            <h2 className="t">Let's work together</h2>
           </div>
 
           <div className="contact">
@@ -838,16 +1054,6 @@ export default function Home() {
 
           <div className="footer-soc">
             <a
-              href="https://github.com/derickmokua"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="GitHub Profile"
-              title="GitHub"
-            >
-              <Github size={16} />
-            </a>
-
-            <a
               href="https://linkedin.com/in/derickmokua"
               target="_blank"
               rel="noreferrer"
@@ -868,14 +1074,6 @@ export default function Home() {
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
               </svg>
             </a>
-
-            <a
-              href="mailto:derickmokua@outlook.com"
-              aria-label="Email"
-              title="Email"
-            >
-              <Mail size={16} />
-            </a>
           </div>
         </div>
       </footer>
@@ -894,11 +1092,11 @@ export default function Home() {
         <button
           type="button"
           onClick={scrollToTop}
-          className="fixed bottom-6 left-6 z-35 w-10 h-10 bg-[#202020] hover:bg-[#ff2830] text-[#a3a3a3] hover:text-white border border-[#333] hover:border-[#ff2830] rounded-full flex items-center justify-center transition-all shadow-xl animate-fade-scale-in focus:outline-none"
+          className="fixed bottom-6 right-5 z-50 w-14 h-14 bg-transparent hover:bg-[#ff2830]/10 text-[#ff2830] rounded-full flex items-center justify-center transition-all duration-200 hover:shadow-[0_8px_28px_rgba(255,40,48,0.30)] animate-fade-scale-in focus:outline-none"
           title="Back to top"
           aria-label="Back to top"
         >
-          <ArrowUp size={16} />
+          <ArrowUp size={22} strokeWidth={1.75} />
         </button>
       )}
 
