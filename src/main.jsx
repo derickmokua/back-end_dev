@@ -10,7 +10,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 );
 
 /**
- * JetBrains Mono is brand polish — not needed for LCP / first paint.
+ * JetBrains Mono is brand polish, not needed for LCP / first paint.
  *
  * Do NOT load on idle with a short timeout: Lighthouse waits for network
  * quiet and would still chain the woff2 (~21KB) into the critical path.

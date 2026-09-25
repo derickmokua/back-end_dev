@@ -9,7 +9,7 @@ dotenv.config()
 
 /**
  * Inline CSS into index.html so PSI doesn't flag /assets/*.css as
- * render-blocking (portfolio CSS is small — fine to inline).
+ * render-blocking (portfolio CSS is small, fine to inline).
  */
 function inlineCssIntoHtml() {
   return {
@@ -28,7 +28,7 @@ function inlineCssIntoHtml() {
       const cssFiles = readdirSync(assetsDir).filter((f) => f.endsWith('.css'))
 
       for (const cssFile of cssFiles) {
-        // Never inline font stylesheets — keep them off the critical path
+        // Never inline font stylesheets: keep them off the critical path
         if (/jetbrains|fontsource|woff/i.test(cssFile)) continue
 
         let css = readFileSync(join(assetsDir, cssFile), 'utf-8')
@@ -112,7 +112,7 @@ export default defineConfig(({ mode }) => {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
     },
     build: {
-      // No source maps in production — smaller download, cleaner PSI
+      // No source maps in production: smaller download, cleaner PSI
       sourcemap: false,
       // Split CSS so async font imports are separate files (not in first HTML)
       cssCodeSplit: true,

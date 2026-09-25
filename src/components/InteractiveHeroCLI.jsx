@@ -22,7 +22,7 @@ export default function InteractiveHeroCLI({ onCommandExecuted }) {
       document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
       setOutput('Navigating to // 07. CONTACT...');
     } else if (cmd === 'whoami') {
-      setOutput('Derick Mokua — Backend Architect & AI Safety Researcher based in Nairobi, Kenya.');
+      setOutput('Derick Mokua | Backend Architect & AI Safety Researcher based in Nairobi, Kenya.');
     } else if (cmd === 'uptime') {
       setOutput('System Uptime: 99.98% // All Microservices Operating Normally.');
     } else if (cmd === 'clear') {
@@ -47,7 +47,7 @@ export default function InteractiveHeroCLI({ onCommandExecuted }) {
         document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
         setOutput('Navigating to // 03. PROJECTS...');
       } else if (commandName === 'whoami') {
-        setOutput('Derick Mokua — Backend Architect & AI Safety Researcher based in Nairobi, Kenya.');
+        setOutput('Derick Mokua | Backend Architect & AI Safety Researcher based in Nairobi, Kenya.');
       }
       setInput('');
     }, 10);

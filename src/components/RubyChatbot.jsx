@@ -18,7 +18,7 @@ const SUGGESTIONS = [
   { label: "KukuConnect", query: "Tell me about the KukuConnect architecture." },
 ];
 
-export default function RubyChatbot() {
+export default function RubyChatbot({ visible = true, onOpenChange }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState([INITIAL_MESSAGE]);
@@ -26,6 +26,10 @@ export default function RubyChatbot() {
   const [isTyping, setIsTyping] = useState(false);
   const containerRef = useRef(null);
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    onOpenChange?.(isOpen);
+  }, [isOpen, onOpenChange]);
 
   const scrollToBottom = () => {
     if (containerRef.current) {
@@ -123,7 +127,7 @@ export default function RubyChatbot() {
 
       {/* ── Floating Launcher ── */}
       <AnimatePresence>
-        {!isOpen && (
+        {!isOpen && visible && (
           <motion.button
             key="launcher"
             initial={{ scale: 0.7, opacity: 0, y: 20 }}
@@ -160,7 +164,7 @@ export default function RubyChatbot() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.93, y: 24 }}
             transition={{ type: "spring", stiffness: 380, damping: 30 }}
-            className="fixed bottom-0 right-0 sm:bottom-20 sm:right-5 z-50 w-full sm:w-[400px] h-[100dvh] sm:h-auto sm:max-h-[560px] bg-[#141414] sm:rounded-2xl border-0 sm:border border-[#2a2a2a] shadow-[0_32px_80px_rgba(0,0,0,0.7)] flex flex-col overflow-hidden"
+            className="fixed bottom-0 right-0 sm:bottom-20 sm:right-5 z-[70] w-full sm:w-[400px] h-[100dvh] sm:h-auto sm:max-h-[560px] bg-[#141414] sm:rounded-2xl border-0 sm:border border-[#2a2a2a] shadow-[0_32px_80px_rgba(0,0,0,0.7)] flex flex-col overflow-hidden"
           >
 
             {/* ── Header ── */}

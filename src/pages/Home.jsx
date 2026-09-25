@@ -252,6 +252,7 @@ export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [showFABs, setShowFABs] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [selectedBlogPost, setSelectedBlogPost] = useState(null);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isArchModalOpen, setIsArchModalOpen] = useState(false);
@@ -343,7 +344,7 @@ export default function Home() {
   const { posts: apiPosts, loading: blogLoading } = useHashnodePosts();
   const activePosts = apiPosts && apiPosts.length > 0 ? apiPosts : staticBlogPosts;
 
-  // Unified scroll listener — FABs appear when scrolling DOWN past 60% of page
+  // Unified scroll listener: FABs appear when scrolling DOWN past 60% of page
   useEffect(() => {
     let lastY = window.scrollY;
     const handleScroll = () => {
@@ -502,7 +503,7 @@ export default function Home() {
             </div>
 
             <p className="hero-sub">
-              I build secure, AI-powered backend systems for teams across Africa and beyond — turning complex ideas into reliable products that scale.
+              I build secure, AI-powered backend systems for teams across Africa and beyond, turning complex ideas into reliable products that scale.
             </p>
 
             <div className="btns">
@@ -728,7 +729,7 @@ export default function Home() {
             <span className="w-1.5 h-3.5 bg-[#ff2830] animate-pulse ml-1" />
           </div>
 
-          {/* Folder grid — premium ambient container */}
+          {/* Folder grid: premium ambient container */}
           <div className="relative rounded-2xl p-px overflow-hidden">
             {/* Subtle border gradient */}
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#2a2a2a] via-[#222] to-[#1a1a1a] pointer-events-none" />
@@ -1083,16 +1084,19 @@ export default function Home() {
       {/* Ruby Chatbot */}
       {mountChatbot && (
         <Suspense fallback={null}>
-          <RubyChatbot />
+          <RubyChatbot 
+            visible={showFABs}
+            onOpenChange={setIsChatOpen}
+          />
         </Suspense>
       )}
 
       {/* Back to Top */}
-      {showBackToTop && (
+      {showFABs && !isChatOpen && (
         <button
           type="button"
           onClick={scrollToTop}
-          className="fixed bottom-6 right-5 z-50 w-14 h-14 bg-transparent hover:bg-[#ff2830]/10 text-[#ff2830] rounded-full flex items-center justify-center transition-all duration-200 hover:shadow-[0_8px_28px_rgba(255,40,48,0.30)] animate-fade-scale-in focus:outline-none"
+          className="fixed bottom-6 right-5 z-40 w-14 h-14 bg-transparent hover:bg-[#ff2830]/10 text-[#ff2830] rounded-full flex items-center justify-center transition-all duration-200 hover:shadow-[0_8px_28px_rgba(255,40,48,0.30)] animate-fade-scale-in focus:outline-none"
           title="Back to top"
           aria-label="Back to top"
         >
