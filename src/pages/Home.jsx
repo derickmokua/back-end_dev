@@ -366,6 +366,25 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Obsidian UI scroll-driven section transitions
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("obsidian-visible");
+          }
+        });
+      },
+      { threshold: 0.05, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    const sections = document.querySelectorAll(".sec");
+    sections.forEach((sec) => observer.observe(sec));
+
+    return () => observer.disconnect();
+  }, []);
+
   // Smooth easing scroll animation (easeInOutCubic)
   const smoothScrollToTarget = (targetY, duration = 750) => {
     const startY = window.pageYOffset;

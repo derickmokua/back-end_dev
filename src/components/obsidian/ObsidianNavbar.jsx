@@ -68,7 +68,7 @@ export default function ObsidianNavbar({
         <div className="hidden lg:flex items-center">
           <div
             onMouseLeave={() => setHoveredIndex(null)}
-            className="flex items-center gap-0.5 px-3 py-1.5 rounded-full bg-[#141414]/90 border border-[#2a2a2a] shadow-[0_4px_24px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-2xl"
+            className="flex items-center gap-1 px-2 py-1 rounded-full bg-transparent border-0 shadow-none"
           >
             {NAV_ITEMS.map((item, index) => {
               const isActive = activeSection === item.href;
@@ -84,7 +84,7 @@ export default function ObsidianNavbar({
                   }}
                   onMouseEnter={() => setHoveredIndex(index)}
                   onFocus={() => setHoveredIndex(index)}
-                  className={`relative px-3 py-1 text-[12px] font-mono transition-all duration-200 select-none outline-none focus-visible:ring-1 focus-visible:ring-[#ff2830] rounded-md ${
+                  className={`relative px-3 py-1.5 text-[12.5px] font-mono transition-all duration-200 select-none border-0 outline-none focus:outline-none rounded-md ${
                     isHovered
                       ? "text-[#ff2830] font-semibold"
                       : isActive
@@ -110,23 +110,20 @@ export default function ObsidianNavbar({
         </div>
 
         {/* Right Actions */}
-        <div className="flex items-center gap-2.5">
-          {/* GitHub Profile Button */}
+        <div className="flex items-center gap-2">
+          {/* GitHub Profile Button (No border) */}
           <a
             href="https://github.com/derickmokua"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-9 h-9 rounded-full bg-[#161616] border border-[#2a2a2a] hover:border-[#ff2830]/40 text-[#a3a3a3] hover:text-[#ff2830] hover:bg-[#ff2830]/10 flex items-center justify-center transition-all duration-200 focus:outline-none shadow-sm"
-            style={{
-              textShadow: "none",
-            }}
+            className="w-9 h-9 rounded-full bg-transparent border-0 hover:bg-[#ff2830]/10 text-[#a3a3a3] hover:text-[#ff2830] flex items-center justify-center transition-all duration-200 focus:outline-none shadow-none"
             title="GitHub Profile"
             aria-label="GitHub Profile"
           >
-            <Github size={16} />
+            <Github size={17} />
           </a>
 
-          {/* Mobile Menu Toggle Button (Border removed) */}
+          {/* Mobile Menu Toggle Button (No border) */}
           <button
             type="button"
             className="lg:hidden w-9 h-9 rounded-xl bg-transparent border-0 hover:bg-[#ff2830]/10 text-[#a3a3a3] hover:text-[#ff2830] flex items-center justify-center transition-all duration-200 focus:outline-none select-none"
@@ -149,7 +146,7 @@ export default function ObsidianNavbar({
                 scrollToSection(e, item.href);
                 setIsMenuOpen(false);
               }}
-              className="group px-3.5 py-2.5 rounded-xl text-xs font-mono text-[#b3b3b3] hover:text-[#ff2830] hover:bg-[#ff2830]/8 transition-all duration-150 flex items-center justify-between"
+              className="group px-3.5 py-2.5 rounded-xl text-xs font-mono text-[#b3b3b3] hover:text-[#ff2830] hover:bg-[#ff2830]/8 border-0 transition-all duration-150 flex items-center justify-between"
             >
               <span className="group-hover:drop-shadow-[0_0_8px_rgba(255,40,48,0.7)] transition-all">
                 {item.label}
@@ -161,7 +158,7 @@ export default function ObsidianNavbar({
           <Link
             to="/chat"
             onClick={() => setIsMenuOpen(false)}
-            className="mt-2 px-3.5 py-2.5 rounded-xl bg-[#ff2830]/10 border border-[#ff2830]/30 text-[#ff2830] hover:bg-[#ff2830]/18 text-xs font-mono font-bold flex items-center gap-2 transition-all shadow-sm"
+            className="mt-2 px-3.5 py-2.5 rounded-xl bg-[#ff2830]/10 border-0 text-[#ff2830] hover:bg-[#ff2830]/18 text-xs font-mono font-bold flex items-center gap-2 transition-all shadow-none"
           >
             <Terminal size={14} /> Launch Ruby AI
           </Link>
