@@ -5,6 +5,7 @@ import {
   Github,
   Menu,
   X,
+  ArrowUp,
   Linkedin,
   Layers,
   Check,
@@ -40,6 +41,7 @@ const InteractiveHoverSlider = lazy(() => import("../components/obsidian/Interac
 const ScrollStack = lazy(() => import("../components/obsidian/ScrollStack"));
 const TextFillAnimation = lazy(() => import("../components/obsidian/TextFillAnimation"));
 const FolderPreview = lazy(() => import("../components/obsidian/FolderPreview"));
+import ObsidianNavbar from "../components/obsidian/ObsidianNavbar";
 import TechStackBadges from "../components/TechStackBadges";
 
 const TECH_STACK_ITEMS = [
@@ -395,80 +397,13 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--fg)] font-sans antialiased selection:bg-[var(--acc)] selection:text-white relative transition-colors duration-200">
 
-      {/* STICKY HEADER */}
-      <nav id="top">
-        <div className="wrap">
-          <Link
-            to="/"
-            onClick={scrollToTop}
-            className="logo border-0 outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 select-none"
-            aria-label="Derick Mokua Home"
-          >
-            <span className="logo-handle border-0 outline-none">
-              <span className="logo-at">@</span>
-              <span className="logo-first">derick</span>
-              <span className="logo-last">mokua</span>
-            </span>
-          </Link>
-
-          <div className="links">
-            <a href="#top" onClick={(e) => scrollToSection(e, "#top")}>Home</a>
-            <a href="#work" onClick={(e) => scrollToSection(e, "#work")}>Work</a>
-            <a href="#cases" onClick={(e) => scrollToSection(e, "#cases")}>Cases</a>
-            <a href="#think" onClick={(e) => scrollToSection(e, "#think")}>About</a>
-            <a href="#services" onClick={(e) => scrollToSection(e, "#services")}>Services</a>
-            <a href="#lab" onClick={(e) => scrollToSection(e, "#lab")}>Lab</a>
-            <a href="#blog" onClick={(e) => scrollToSection(e, "#blog")}>Articles</a>
-            <a href="#testimonials" onClick={(e) => scrollToSection(e, "#testimonials")}>Testimonials</a>
-            <a href="#contact" onClick={(e) => scrollToSection(e, "#contact")}>Contact</a>
-          </div>
-
-          <div className="right">
-            {/* GitHub Profile */}
-            <a
-              href="https://github.com/derickmokua"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2 text-[#a3a3a3] hover:text-white transition-colors focus:outline-none flex items-center justify-center"
-              title="GitHub"
-              aria-label="GitHub Profile"
-            >
-              <Github size={18} />
-            </a>
-
-            {/* Mobile Menu Toggle */}
-            <button
-              className="md:hidden p-2 text-[#a3a3a3] hover:text-white bg-[#202020] border border-[#333] rounded-lg transition-colors"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Nav Drawer */}
-        {isMenuOpen && (
-          <div className="md:hidden w-full bg-[#202020] border-b border-[#333] px-6 py-5 flex flex-col gap-3.5 text-xs font-medium uppercase tracking-wider animate-fade-slide-in shadow-2xl">
-            <a href="#work" onClick={(e) => scrollToSection(e, "#work")} className="py-2 border-b border-[#333] hover:text-[#ff2830]">Work</a>
-            <a href="#cases" onClick={(e) => scrollToSection(e, "#cases")} className="py-2 border-b border-[#333] hover:text-[#ff2830]">Case Studies</a>
-            <a href="#think" onClick={(e) => scrollToSection(e, "#think")} className="py-2 border-b border-[#333] hover:text-[#ff2830]">About & Architecture</a>
-            <a href="#services" onClick={(e) => scrollToSection(e, "#services")} className="py-2 border-b border-[#333] hover:text-[#ff2830]">Services</a>
-            <a href="#lab" onClick={(e) => scrollToSection(e, "#lab")} className="py-2 border-b border-[#333] hover:text-[#ff2830]">Lab / Archive</a>
-            <a href="#blog" onClick={(e) => scrollToSection(e, "#blog")} className="py-2 border-b border-[#333] hover:text-[#ff2830]">Articles</a>
-            <a href="#testimonials" onClick={(e) => scrollToSection(e, "#testimonials")} className="py-2 border-b border-[#333] hover:text-[#ff2830]">Testimonials</a>
-            <a href="#contact" onClick={(e) => scrollToSection(e, "#contact")} className="py-2 hover:text-[#ff2830] font-bold">Contact</a>
-
-            <Link
-              to="/chat"
-              onClick={() => setIsMenuOpen(false)}
-              className="py-2 border-t border-[#333] mt-1 text-[#ff2830] flex items-center gap-2 font-bold"
-            >
-              <Terminal size={14} /> Launch Ruby AI
-            </Link>
-          </div>
-        )}
-      </nav>
+      {/* OBSIDIAN UI STICKY NAVBAR */}
+      <ObsidianNavbar
+        scrollToSection={scrollToSection}
+        scrollToTop={scrollToTop}
+        isMenuOpen={isMenuOpen}
+        setIsMenuOpen={setIsMenuOpen}
+      />
 
       {/* MAIN CONTAINER */}
       <main className="wrap">
@@ -1067,6 +1002,19 @@ export default function Home() {
       </footer>
 
       {/* FLOATING ACTION UTILITIES */}
+
+      {/* Back to Top Scroller (Opposite side of Ruby: Bottom Left) */}
+      {showFABs && !isChatOpen && (
+        <button
+          type="button"
+          onClick={scrollToTop}
+          className="fixed bottom-6 left-5 sm:left-6 z-40 w-14 h-14 bg-transparent hover:bg-[#ff2830]/10 text-[#ff2830] rounded-full flex items-center justify-center transition-all duration-200 hover:shadow-[0_8px_28px_rgba(255,40,48,0.30)] animate-fade-scale-in focus:outline-none select-none"
+          title="Back to top"
+          aria-label="Back to top"
+        >
+          <ArrowUp size={22} strokeWidth={1.75} />
+        </button>
+      )}
 
       {/* Ruby Chatbot */}
       {mountChatbot && (

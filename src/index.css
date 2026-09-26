@@ -190,7 +190,7 @@ nav .wrap {
 }
 
 .links a:hover {
-  color: var(--fg);
+  color: var(--acc);
 }
 
 .right {
