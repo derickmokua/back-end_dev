@@ -191,6 +191,24 @@ nav .wrap {
 
 .links a:hover {
   color: var(--acc);
+  text-shadow: 0 0 10px rgba(255, 40, 48, 0.85), 0 0 20px rgba(255, 40, 48, 0.45);
+}
+
+@keyframes sectionArrivalGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 40, 48, 0);
+  }
+  25% {
+    box-shadow: 0 0 28px -4px rgba(255, 40, 48, 0.22);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 40, 48, 0);
+  }
+}
+
+.section-focus-glow {
+  animation: sectionArrivalGlow 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  border-radius: 1rem;
 }
 
 .right {

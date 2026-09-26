@@ -366,23 +366,56 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Smooth easing scroll animation (easeInOutCubic)
+  const smoothScrollToTarget = (targetY, duration = 750) => {
+    const startY = window.pageYOffset;
+    const diff = targetY - startY;
+    if (Math.abs(diff) < 2) return;
+    let startTime = null;
+
+    const easeInOutCubic = (t) =>
+      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+
+    const step = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const ease = easeInOutCubic(progress);
+      window.scrollTo(0, startY + diff * ease);
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    };
+
+    requestAnimationFrame(step);
+  };
+
   const scrollToSection = (e, href) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     setIsMenuOpen(false);
+
+    if (href === "#top") {
+      smoothScrollToTarget(0, 700);
+      return;
+    }
+
     const element = document.querySelector(href);
     if (element) {
-      const headerOffset = 70;
+      const headerOffset = 64;
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = window.pageYOffset + elementPosition - headerOffset;
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
+      const targetPosition = Math.max(0, window.pageYOffset + elementPosition - headerOffset);
+
+      smoothScrollToTarget(targetPosition, 750);
+
+      // Trigger section arrival highlight animation
+      element.classList.remove("section-focus-glow");
+      void element.offsetWidth; // trigger reflow
+      element.classList.add("section-focus-glow");
     }
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    smoothScrollToTarget(0, 700);
   };
 
   const copyEmail = () => {

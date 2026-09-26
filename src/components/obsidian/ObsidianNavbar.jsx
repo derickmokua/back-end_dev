@@ -1,14 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Github, Menu, X, Terminal, Sparkles } from "lucide-react";
+import { Github, Menu, X, Terminal } from "lucide-react";
 
 const NAV_ITEMS = [
   { label: "Home", href: "#top" },
   { label: "Work", href: "#work" },
   { label: "Cases", href: "#cases" },
   { label: "About", href: "#think" },
-  { label: "Services", href: "#services" },
   { label: "Lab", href: "#lab" },
+  { label: "Services", href: "#services" },
   { label: "Articles", href: "#blog" },
   { label: "Testimonials", href: "#testimonials" },
   { label: "Contact", href: "#contact" },
@@ -22,33 +22,11 @@ export default function ObsidianNavbar({
 }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [activeSection, setActiveSection] = useState("#top");
-  const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, height: 0, top: 0, opacity: 0 });
-  const navContainerRef = useRef(null);
-  const itemsRef = useRef([]);
 
-  // Update pill position when hoveredIndex changes
-  useEffect(() => {
-    if (hoveredIndex !== null && itemsRef.current[hoveredIndex] && navContainerRef.current) {
-      const itemEl = itemsRef.current[hoveredIndex];
-      const containerRect = navContainerRef.current.getBoundingClientRect();
-      const itemRect = itemEl.getBoundingClientRect();
-
-      setPillStyle({
-        left: itemRect.left - containerRect.left,
-        top: itemRect.top - containerRect.top,
-        width: itemRect.width,
-        height: itemRect.height,
-        opacity: 1,
-      });
-    } else {
-      setPillStyle((prev) => ({ ...prev, opacity: 0 }));
-    }
-  }, [hoveredIndex]);
-
-  // Track active section based on scroll
+  // Track active section based on scroll position
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY + 120;
+      const scrollY = window.scrollY + 140;
       for (let i = NAV_ITEMS.length - 1; i >= 0; i--) {
         const item = NAV_ITEMS[i];
         if (item.href === "#top") continue;
@@ -74,38 +52,24 @@ export default function ObsidianNavbar({
         {/* Brand / Logo */}
         <Link
           to="/"
-          onClick={scrollToTop}
+          onClick={(e) => {
+            e.preventDefault();
+            scrollToTop();
+          }}
           className="group flex items-center gap-1 font-mono text-base font-bold tracking-tight select-none outline-none focus-visible:ring-1 focus-visible:ring-[#ff2830] rounded-md px-1 py-0.5"
           aria-label="Derick Mokua Home"
         >
-          <span className="text-[#ff2830] group-hover:drop-shadow-[0_0_8px_rgba(255,40,48,0.6)] transition-all">@</span>
+          <span className="text-[#ff2830] group-hover:drop-shadow-[0_0_8px_rgba(255,40,48,0.7)] transition-all">@</span>
           <span className="text-[#f5f5f5] group-hover:text-white transition-colors">derick</span>
-          <span className="text-[#ff2830] group-hover:drop-shadow-[0_0_8px_rgba(255,40,48,0.6)] transition-all">mokua</span>
+          <span className="text-[#ff2830] group-hover:drop-shadow-[0_0_8px_rgba(255,40,48,0.7)] transition-all">mokua</span>
         </Link>
 
         {/* ── Obsidian Pill Navigation Dock (Desktop) ── */}
         <div className="hidden lg:flex items-center">
           <div
-            ref={navContainerRef}
             onMouseLeave={() => setHoveredIndex(null)}
-            className="relative flex items-center p-1 rounded-full bg-[#161616]/90 border border-[#2a2a2a] shadow-[0_4px_24px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-2xl"
+            className="flex items-center gap-0.5 px-3 py-1.5 rounded-full bg-[#141414]/90 border border-[#2a2a2a] shadow-[0_4px_24px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-2xl"
           >
-            {/* Smooth animated sliding hover pill */}
-            <div
-              className="absolute rounded-full transition-all duration-200 ease-out pointer-events-none"
-              style={{
-                left: `${pillStyle.left}px`,
-                top: `${pillStyle.top}px`,
-                width: `${pillStyle.width}px`,
-                height: `${pillStyle.height}px`,
-                opacity: pillStyle.opacity,
-                background: "rgba(255, 40, 48, 0.12)",
-                border: "1px solid rgba(255, 40, 48, 0.35)",
-                boxShadow: "0 0 16px rgba(255, 40, 48, 0.22)",
-              }}
-            />
-
-            {/* Navigation links */}
             {NAV_ITEMS.map((item, index) => {
               const isActive = activeSection === item.href;
               const isHovered = hoveredIndex === index;
@@ -113,7 +77,6 @@ export default function ObsidianNavbar({
               return (
                 <a
                   key={item.label}
-                  ref={(el) => (itemsRef.current[index] = el)}
                   href={item.href}
                   onClick={(e) => {
                     scrollToSection(e, item.href);
@@ -121,13 +84,18 @@ export default function ObsidianNavbar({
                   }}
                   onMouseEnter={() => setHoveredIndex(index)}
                   onFocus={() => setHoveredIndex(index)}
-                  className={`relative z-10 px-3.5 py-1.5 rounded-full text-[12px] font-mono transition-colors duration-200 select-none outline-none focus-visible:ring-1 focus-visible:ring-[#ff2830] ${
+                  className={`relative px-3 py-1 text-[12px] font-mono transition-all duration-200 select-none outline-none focus-visible:ring-1 focus-visible:ring-[#ff2830] rounded-md ${
                     isHovered
-                      ? "text-[#ff2830] font-semibold drop-shadow-[0_0_6px_rgba(255,40,48,0.4)]"
+                      ? "text-[#ff2830] font-semibold"
                       : isActive
                       ? "text-white font-medium"
-                      : "text-[#a3a3a3]"
+                      : "text-[#a3a3a3] hover:text-[#ff2830]"
                   }`}
+                  style={{
+                    textShadow: isHovered
+                      ? "0 0 10px rgba(255, 40, 48, 0.9), 0 0 20px rgba(255, 40, 48, 0.45)"
+                      : "none",
+                  }}
                 >
                   <span className="flex items-center gap-1.5">
                     {item.label}
@@ -149,13 +117,16 @@ export default function ObsidianNavbar({
             target="_blank"
             rel="noopener noreferrer"
             className="w-9 h-9 rounded-full bg-[#161616] border border-[#2a2a2a] hover:border-[#ff2830]/40 text-[#a3a3a3] hover:text-[#ff2830] hover:bg-[#ff2830]/10 flex items-center justify-center transition-all duration-200 focus:outline-none shadow-sm"
+            style={{
+              textShadow: "none",
+            }}
             title="GitHub Profile"
             aria-label="GitHub Profile"
           >
             <Github size={16} />
           </a>
 
-          {/* Mobile Menu Toggle Button */}
+          {/* Mobile Menu Toggle Button (Border removed) */}
           <button
             type="button"
             className="lg:hidden w-9 h-9 rounded-xl bg-transparent border-0 hover:bg-[#ff2830]/10 text-[#a3a3a3] hover:text-[#ff2830] flex items-center justify-center transition-all duration-200 focus:outline-none select-none"
@@ -178,10 +149,12 @@ export default function ObsidianNavbar({
                 scrollToSection(e, item.href);
                 setIsMenuOpen(false);
               }}
-              className="px-3.5 py-2.5 rounded-xl text-xs font-mono text-[#b3b3b3] hover:text-[#ff2830] hover:bg-[#ff2830]/10 border border-transparent hover:border-[#ff2830]/25 transition-all duration-150 flex items-center justify-between"
+              className="group px-3.5 py-2.5 rounded-xl text-xs font-mono text-[#b3b3b3] hover:text-[#ff2830] hover:bg-[#ff2830]/8 transition-all duration-150 flex items-center justify-between"
             >
-              <span>{item.label}</span>
-              <span className="text-[#555] group-hover:text-[#ff2830] text-[10px]">→</span>
+              <span className="group-hover:drop-shadow-[0_0_8px_rgba(255,40,48,0.7)] transition-all">
+                {item.label}
+              </span>
+              <span className="text-[#555] group-hover:text-[#ff2830] text-[10px] transition-colors">→</span>
             </a>
           ))}
 
